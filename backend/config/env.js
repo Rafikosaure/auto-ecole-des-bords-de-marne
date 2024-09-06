@@ -5,7 +5,14 @@ dotenv.config();
 
 // stores env variables into process.env
 const ENV = {
-  PORT: process.env.PORT,
+  SERVERPORT: process.env.SERVERPORT,
+  SERVERIP: process.env.SERVERIP,
+  DBPORT: process.env.DBPORT,
+  DBNAME: process.env.DBNAME,
+  DBHOST: process.env.DBHOST,
+  DBUSER: process.env.DBUSER,
+  DBPASSWORD: process.env.DBPASSWORD,
+  DBDIALECT: process.env.DBDIALECT,
 }
 
 // exports

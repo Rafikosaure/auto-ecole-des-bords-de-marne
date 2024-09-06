@@ -3,9 +3,11 @@ const app = require("./app").app
 const ENV = require("./config/env").ENV
 
 // sets the server port
-const PORT =  ENV.PORT || 8000;
+const PORT =  ENV.SERVERPORT || 8000;
 
-// listents to incoming requests
+// listens to incoming requests
 app.listen(PORT, () => {
-    console.log(`Listening at http://localhost:${PORT}`);  
+    // warning in case the server is not running on the .env port
+    PORT != ENV.SERVERPORT && console.log("Warning! The server is currently running on a backup port");
+    console.log(`Listening at http://${ENV.SERVERIP}:${PORT}`);
 })
