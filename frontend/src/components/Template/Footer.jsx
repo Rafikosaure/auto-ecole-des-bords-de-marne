@@ -1,9 +1,17 @@
-import React from 'react'
+import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function Footer() {
+
+const Footer = () => {
   return (
-    <div></div>
-  )
-}
+    <footer className="footer bg-light py-3">
+      <Container className="text-center">
+        <Link to="/mentions-legales" className="footer-link">
+          Mentions légales
+        </Link>
+      </Container>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;
