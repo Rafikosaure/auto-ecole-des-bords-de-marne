@@ -13,6 +13,7 @@ const ENV = {
   DBUSER: process.env.DBUSER,
   DBPASSWORD: process.env.DBPASSWORD,
   DBDIALECT: process.env.DBDIALECT,
+  TOKEN: process.env.TOKEN,
 }
 
 // exports

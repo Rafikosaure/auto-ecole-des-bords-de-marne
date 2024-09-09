@@ -1,31 +1,22 @@
+const { Sequelize } = require("sequelize");
+
 const connection = require("../config/db.js").connection;
 const ENV = require("../config/env.js").ENV;
+const adminModel = require("./admin.model.js").default;
  
-// database server authentication and databaase selection
-const authentication = async () => {
-    try {
-        await connection.authenticate();
-        console.log(`Connection to "${ENV.DBNAME}" has been successful`);
-    } catch (error) {
-        console.error(`Unable to connect to "${ENV.DBNAME}" : ${error.message}`);
-    }
-}
 
-// initializes database tables (models)
-const initialization = async () => {
-    try {
-        // models logic goes here
-    } catch (error) {
-        
-    }
-}
+try {
+    // database server authentication and databaase selection
+    connection.authenticate()
+    .then(console.log(`Connection to "${ENV.DBNAME}" has been successful`))
+    
+    // models synchronization
+    adminModel(connection, Sequelize)
+    const { Admin } = connection.models;
+    connection.sync({})
+    .then(console.log(`Synchronized with "${ENV.DBNAME}"`));
 
-// models synchronization
-const synchronization = async () => {
-    await connection.sync({}); 
-    console.log(`Synchronized with "${ENV.DBNAME}"`);
+    exports.Admin = Admin;
+} catch (error) {
+    console.error(`Unable to connect to "${ENV.DBNAME}" : ${error.message}`);
 }
-
-authentication();
-initialization();
-synchronization();

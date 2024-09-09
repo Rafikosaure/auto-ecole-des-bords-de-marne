@@ -1,8 +1,8 @@
-const sequelize = require("sequelize");
+const { Sequelize } = require("sequelize");
 const ENV = require("./env.js").ENV
 
 // creates the connection object used in index.js
-const connection = new sequelize.Sequelize(
+const connection = new Sequelize(
     ENV.DBNAME, //database name
     ENV.DBUSER, //database username
     ENV.DBPASSWORD, //database password

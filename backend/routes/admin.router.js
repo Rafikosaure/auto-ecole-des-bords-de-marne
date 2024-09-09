@@ -7,8 +7,6 @@ const router = express.Router();
 
 // routes
     // CRUD
-        // add
-router.post("/add", controller.addAdmin);
         // get all
 router.get("/getall", controller.getAllAdmin);
         // get one
