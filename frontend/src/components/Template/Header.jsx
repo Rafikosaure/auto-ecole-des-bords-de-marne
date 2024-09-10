@@ -1,26 +1,31 @@
-// import { useState } from "react";
-import { Link} from "react-router-dom";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min'; 
 
 
 const Header = () => {
   return (
-    <header>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/students">liste des étudiants</Link>
-            </li>
-            <li>
-              <Link to="/teachers">liste des Formateurs</Link>
-            </li>
-            <li>
-              <Link to="/admin">Gestion du site</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">logo</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <LinkContainer to="/students">
+              <Nav.Link className="fs-3">liste des étudiants</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/teachers">
+              <Nav.Link className="fs-3">liste des Formateurs</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin">
+              <Nav.Link className="fs-3">Gestion du site</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
+
 export default Header;
