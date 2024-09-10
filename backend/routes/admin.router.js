@@ -8,9 +8,9 @@ const router = express.Router();
 // routes
     // CRUD
         // get all
-router.get("/getall", controller.getAllAdmin);
+router.get("/getall", controller.getAllAdmins);
         // get one
-router.get("get/:id", controller.getAdmin);
+router.get("/get/:id", controller.getAdmin);
         // update one
 router.put("/update/:id", controller.updateAdmin)
         // delete one
