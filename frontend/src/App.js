@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import StudentsPage from "./pages/StudentsPage/StudentsPage";
 import TeachersPage from "./pages/TeachersPage/TeachersPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import AdminRegister from "./pages/AdminRegister/AdminRegister";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min'; 
@@ -16,6 +17,8 @@ function App() {
         <Route path="/students" element={<StudentsPage />} />
         <Route path="/teachers" element={<TeachersPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/adminregister" element={<AdminRegister />} />
+
       </Route>
     </Routes>
   );
