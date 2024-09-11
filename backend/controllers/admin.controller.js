@@ -12,7 +12,7 @@ const getAllAdmins = async (req, res, next) => {
         console.table(admins);
     } catch (error) {
         console.log(error.message);
-        res.status(404).json("Could not get admins", error);
+        res.status(404).json("Could not get admins", error.message);
     }
 }
 
@@ -37,7 +37,7 @@ const updateAdmin = async (req, res, next) => {
         if (!admin) return res.status(404).json("Admin not found");
         // SQL Select query to update selected admin with request's body
         await admin.update(req.body);
-        res.status(200).json({message: "user updated", admin});
+        res.status(200).json({message: "admin updated", admin});
     } catch (error) {
         console.log(error.message);
         res.status(404).json("An error has occured", error.message);  
@@ -51,7 +51,9 @@ const deleteAdmin = async (req, res, next) => {
           // return error if admin not found
           if (!admin) return res.status(404).json("Admin not found");
           res.status(200).json({ message: "Admin Deleted" });
-    } catch (error) {        
+    } catch (error) {
+        console.log(error.message);
+        res.status(404).json("An error has occured", error.message);      
     }
 }
 

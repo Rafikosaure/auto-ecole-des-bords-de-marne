@@ -12,7 +12,7 @@ router.post("/add", controller.addStudent);
         // get all
 router.get("/getall", controller.getAllStudents);
         // get one
-router.get("get/:id", controller.getStudent);
+router.get("/get/:id", controller.getStudent);
         // update one
 router.put("/update/:id", controller.updateStudent)
         // delete one

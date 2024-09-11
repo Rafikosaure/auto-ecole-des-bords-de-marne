@@ -12,7 +12,7 @@ router.post("/add", controller.addInstructor);
         // get all
 router.get("/getall", controller.getAllInstructors);
         // get one
-router.get("get/:id", controller.getInstructor);
+router.get("/get/:id", controller.getInstructor);
         // update one
 router.put("/update/:id", controller.updateInstructor)
         // delete one

@@ -10,11 +10,11 @@ const router = express.Router();
         // add all documents for a student
 router.post("/add/:studentId", controller.addAllDocuments);
         // add one document for a student
-router.post("add/:studentId/:documentId")
+router.post("/add/:studentId/:documentId")
         // get all documents for a student
 router.get("/getall/:studentId", controller.getAllDocuments);
         // get one document for a student
-router.get("get/:studentId/:documentId", controller.getDocument);
+router.get("/get/:studentId/:documentId", controller.getDocument);
         // update all documents of a student
 router.put("/update/:studentId", controller.updateAllDocuments)
         // update one document of a student

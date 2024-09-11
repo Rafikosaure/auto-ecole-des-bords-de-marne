@@ -14,6 +14,7 @@ const ENV = {
   DBPASSWORD: process.env.DBPASSWORD,
   DBDIALECT: process.env.DBDIALECT,
   TOKEN: process.env.TOKEN,
+  FRONTROUTE: process.env.FRONTROUTE
 }
 
 // exports
