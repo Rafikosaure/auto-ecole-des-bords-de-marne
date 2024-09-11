@@ -1,4 +1,4 @@
-export default (connection, DataTypes) => {
+const document =  (connection, DataTypes) => {
     connection.define(
     "Document",
     {
@@ -17,3 +17,5 @@ export default (connection, DataTypes) => {
         }
     );
 };
+
+exports.document = document;

@@ -1,4 +1,4 @@
-export default (connection, DataTypes) => {
+const remark =  (connection, DataTypes) => {
     connection.define(
     "Remark",
     {
@@ -12,3 +12,5 @@ export default (connection, DataTypes) => {
         }
     );
 };
+
+exports.remark = remark;

@@ -1,4 +1,4 @@
-export default (connection, DataTypes) => {
+const instructor =  (connection, DataTypes) => {
     connection.define(
     "Instructor",
     {
@@ -32,3 +32,5 @@ export default (connection, DataTypes) => {
         }
     );
 };
+
+exports.instructor = instructor;
