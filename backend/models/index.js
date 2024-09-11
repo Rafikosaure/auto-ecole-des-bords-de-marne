@@ -1,11 +1,12 @@
 const { Sequelize } = require("sequelize");
 const connection = require("../config/db.js").connection;
 const ENV = require("../config/env.js").ENV;
-const { default: studentModel } = require("./student.model.js");
-const { default: adminModel } = require("./admin.model.js");
-const { default: remarksModel } = require("./remark.model.js");
-const { default: documentModel } = require("./document.model.js");
-const { default: instructorModel } = require("./instructor.model.js");
+
+const adminModel = require("./admin.model.js").admin;
+const studentModel = require("./student.model.js").student;
+const remarksModel = require("./remark.model.js").remark;
+const documentModel = require("./document.model.js").document;
+const instructorModel = require("./instructor.model.js").instructor;
 
 try {
     // database server authentication and database selection
