@@ -1,5 +1,12 @@
 const { Remark, Student, Document } = require("../models/index.js");
 
+const { errorHandler,
+        createError,
+        ErrorNotExist} = require('../middlewares/errorHandler.js');
+
+// error handling
+const context = "student";
+
 const addStudent = async (req, res, next) => {
     try {
         // SQL create query
@@ -8,8 +15,7 @@ const addStudent = async (req, res, next) => {
           });
           res.status(201).json(`Student ${req.body.lastName} ${req.body.firstName} has been registered!`);
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json("An error has occured")
+        return errorHandler(req, res, error, context);
     }
 }
 
@@ -30,10 +36,8 @@ const getAllStudents = async (req, res, next) => {
             ]
         });
         res.status(200).json(students);
-        console.table(students);
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json("Could not get students", error.message);
+        return errorHandler(req, res, error, context);
     }
 }
 
@@ -55,11 +59,10 @@ const getStudent = async (req, res, next) => {
             }
         );
         // error if no student found given the id
-        if(!student) return res.status(404).json("Student not found");
+        if(!student) throw createError(req, ErrorNotExist, context);
         res.status(200).json(student);
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json("An error has occured", error.message);
+        return errorHandler(req, res, error, context);
     }
 }
 
@@ -68,13 +71,12 @@ const updateStudent = async (req, res, next) => {
         // SQL Select query to get one student by ID
         const student = await Student.findByPk(req.params.id);
         // return an error if no student found
-        if (!student) return res.status(404).json("Student not found");
+        if (!student) throw createError(req, ErrorNotExist, context);
         // SQL Select query to update selected student with request's body
         await student.update(req.body)
         res.status(200).json({message: "student updated", student});
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json("An error has occured", error.message);  
+        return errorHandler(req, res, error, context);  
     }
 }
 
@@ -83,11 +85,11 @@ const deleteStudent = async (req, res, next) => {
         // SQL Delete query to delete one student by ID
         const student = await Student.destroy({ where: { id: req.params.id } });
         // return error if student not found
-        if (!student) return res.status(404).json("Student not found");
+        if (!student) throw createError(req, ErrorNotExist, context);
         res.status(200).json({ message: "Student Deleted" });
   } catch (error) {
       console.log(error.message);
-      res.status(404).json("An error has occured", error.message);      
+      return errorHandler(req, res, error, context);
   }
 }
 
