@@ -40,7 +40,11 @@ const updateAdmin = async (req, res, next) => {
         // return an error if no admin found
         if (!admin) throw createError(req, ErrorNotExist, context);
         // SQL Select query to update selected admin with request's body
-        await admin.update(req.body);
+        await admin.update({
+            ...req.body,
+            // password hashing for security
+            password: await passwordHashing(req.body.password),
+        });
         res.status(200).json({message: "admin updated", admin});
     } catch (error) {
         return errorHandler(req, res, error, "admin");
