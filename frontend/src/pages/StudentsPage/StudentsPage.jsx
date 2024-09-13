@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Students from "../../components/Students/Students";
 
-function StudentsPage() {
+const StudentsPage = () => {
   return (
-    <div>StudentsPage</div>
-  )
+    <>
+      <Students />
+    </>
+  );
 }
 
-export default StudentsPage
+export default StudentsPage;
