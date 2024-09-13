@@ -6,19 +6,19 @@ import StudentCard from "./StudentCard.jsx";
 
 const OneStudent = () => {
   const { id } = useParams();
-    const [student, setStudent] = useState([]);
-    
-    useEffect(() => {
-      const fetchStudent = async () => {
-        try {
-          const { data } = await getStudentById(id);
-          setStudent(data);
-        } catch (error) {
-          console.error("Échec de la récupération du cours:", error);
-        }
-      };
-      fetchStudent();
-    }, [id]);
+  const [student, setStudent] = useState([]);
+
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const { data } = await getStudentById(id);
+        setStudent(data);
+      } catch (error) {
+        console.error("Échec de la récupération du cours:", error);
+      }
+    };
+    fetchStudent();
+  }, [id]);
 
   if (!student) {
     return <div>Loading...</div>;

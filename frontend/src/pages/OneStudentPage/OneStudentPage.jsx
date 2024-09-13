@@ -1,6 +1,6 @@
 import OneStudent from "../../components/Students/OneStudent"
 
-function OneStudentPage() {
+const OneStudentPage = () => {
   return (
     <OneStudent/>
   )

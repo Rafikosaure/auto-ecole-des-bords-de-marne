@@ -1,7 +1,7 @@
 import React from "react";
 import Students from "../../components/Students/Students";
 
-function StudentsPage() {
+const StudentsPage = () => {
   return (
     <>
       <Students />
