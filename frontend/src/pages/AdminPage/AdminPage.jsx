@@ -111,14 +111,14 @@ const AdminPage = () => {
           <tr>
             <th>Nom</th>
             <th>Mot de passe</th>
-            <th>Actions</th>
+            
           </tr>
         </thead>
         <tbody>
           {admins.map(admin => (
             <tr key={admin.id}>
               <td>{admin.username}</td>
-              <td>******</td> {/* Masquer le mot de passe en production */}
+              
               <td>
                 <button 
                   className="btn btn-warning btn-sm me-2"

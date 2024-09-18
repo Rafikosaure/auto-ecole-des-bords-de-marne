@@ -15,7 +15,7 @@ const Header = () => {
             <LinkContainer to="/students">
               <Nav.Link className="fs-3">liste des étudiants</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/teachers">
+            <LinkContainer to="/instructors">
               <Nav.Link className="fs-3">liste des Formateurs</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/admin">
