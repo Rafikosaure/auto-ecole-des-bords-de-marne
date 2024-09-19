@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TeachersPage() {
+const TeachersPage = () => {
   return (
     <div>TeachersPage</div>
   )
