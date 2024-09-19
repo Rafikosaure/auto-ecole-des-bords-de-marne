@@ -2,8 +2,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Template from "./components/Template/Template";
 import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
 import StudentsPage from "./pages/StudentsPage/StudentsPage";
-import TeachersPage from "./pages/TeachersPage/TeachersPage";
-import HomePage from "./pages/HomePage/HomePage";
 import InstructorsPage from "./pages/InstructorsPage/InstructorPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminRegister from "./pages/AdminRegister/AdminRegister";
@@ -27,11 +25,9 @@ function App() {
 
         {/* Autres routes */}
         <Route path="/students" element={<StudentPage />} />
-        <Route path="/home" element={<HomePage />} />
         <Route path="/instructors" element={<InstructorsPage />} />
         <Route index element={<StudentsPage />} />
         <Route path="/student/:id" element={<OneStudentPage />} />
-        <Route path="/teachers" element={<TeachersPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/adminregister" element={<AdminRegister />} />
       </Route>
