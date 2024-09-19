@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const ENV = require("./env").ENV
+const ENV = require("./env.js").ENV
 
 // creates the connection object used in index.js
 const connection = new Sequelize(

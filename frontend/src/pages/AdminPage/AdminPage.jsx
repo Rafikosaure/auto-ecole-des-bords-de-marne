@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';  // Pour les requêtes HTTP
 import { useNavigate } from 'react-router-dom';  // Importer useNavigate
-
+import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
+import UpdateStudentForm from "../../components/StudentsAdmin/UpdateStudent";
 const AdminPage = () => {
   const [admins, setAdmins] = useState([]);  // État pour stocker les administrateurs
   const [editingAdmin, setEditingAdmin] = useState(null);  // État pour stocker l'administrateur en cours d'édition
@@ -69,7 +70,9 @@ const AdminPage = () => {
           <h3>Modifier Administrateur</h3>
           <form onSubmit={handleEditSubmit}>
             <div className="mb-3">
-              <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
+              <label htmlFor="username" className="form-label">
+                Nom d'utilisateur
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -81,27 +84,37 @@ const AdminPage = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">Mot de passe</label>
+              <label htmlFor="password" className="form-label">
+                Mot de passe
+              </label>
               <input
                 type="password"
                 className="form-control"
                 id="password"
                 name="password"
-                value={editingAdmin.password || ''}
+                value={editingAdmin.password || ""}
                 onChange={handleEditChange}
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">Enregistrer les modifications</button>
-            <button type="button" className="btn btn-secondary ms-2" onClick={() => setEditingAdmin(null)}>Annuler</button>
+            <button type="submit" className="btn btn-primary">
+              Enregistrer les modifications
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary ms-2"
+              onClick={() => setEditingAdmin(null)}
+            >
+              Annuler
+            </button>
           </form>
         </div>
       )}
 
       {/* Bouton "Rajouter un Administrateur" */}
-      <button 
+      <button
         className="btn btn-success mb-4"
-        onClick={() => navigate('/adminregister')}  // Utilisation de navigate pour rediriger
+        onClick={() => navigate("/adminregister")} // Utilisation de navigate pour rediriger
       >
         Rajouter un Administrateur
       </button>
@@ -115,18 +128,18 @@ const AdminPage = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map(admin => (
+          {admins.map((admin) => (
             <tr key={admin.id}>
               <td>{admin.username}</td>
               
               <td>
-                <button 
+                <button
                   className="btn btn-warning btn-sm me-2"
                   onClick={() => handleEditClick(admin)}
                 >
                   Modifier
                 </button>
-                <button 
+                <button
                   className="btn btn-danger btn-sm"
                   onClick={() => handleDelete(admin.id)}
                 >
@@ -137,6 +150,8 @@ const AdminPage = () => {
           ))}
         </tbody>
       </table>
+      <AddStudentForm />
+      <UpdateStudentForm />
     </div>
   );
 };

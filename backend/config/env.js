@@ -1,19 +1,21 @@
+// imports
 const dotenv = require("dotenv");
 
-dotenv.config();  // Charge les variables d'environnement
+dotenv.config(); 
 
+// stores env variables into process.env
 const ENV = {
-  SERVERPORT: process.env.SERVERPORT || 3001,
-  SERVERIP: process.env.SERVERIP || 'localhost',
-  DBPORT: process.env.DBPORT || 3306,
+  SERVERPORT: process.env.SERVERPORT,
+  SERVERIP: process.env.SERVERIP,
+  DBPORT: process.env.DBPORT,
   DBNAME: process.env.DBNAME,
   DBHOST: process.env.DBHOST,
   DBUSER: process.env.DBUSER,
   DBPASSWORD: process.env.DBPASSWORD,
-  DBDIALECT: process.env.DBDIALECT || 'mysql',
+  DBDIALECT: process.env.DBDIALECT,
   TOKEN: process.env.TOKEN,
   FRONTROUTE: process.env.FRONTROUTE
-};
+}
 
-// Exporte les variables pour les utiliser dans db.js
-module.exports = { ENV };
+// exports
+exports.ENV = ENV;

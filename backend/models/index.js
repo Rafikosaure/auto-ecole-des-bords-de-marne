@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 const connection = require("../config/db.js").connection;
 const ENV = require("../config/env.js").ENV;
+const passwordHashing = require("../middlewares/bcryptPassword.js").passwordHashing;
 
 const adminModel = require("./admin.model.js").admin;
 const studentModel = require("./student.model.js").student;
@@ -34,6 +35,11 @@ try {
 
     // Synchronize the models with the database
     connection.sync()
+    .then(async () => {
+        // checks if an admins exixts in the db and creates default admin root if no admin is in the db
+        !(await Admin.findAndCountAll()).count
+         && (await Admin.create({username: "root", password: await passwordHashing("password")}) && console.log("Default admin 'root' has been created"));
+    })
     .then(console.log(`Synchronized with "${ENV.DBNAME}"`));
 
     // Export models
