@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';  // Pour les requêtes HTTP
 import { useNavigate } from 'react-router-dom';  // Importer useNavigate
-import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
-import UpdateStudentForm from "../../components/StudentsAdmin/UpdateStudent";
+
 const AdminPage = () => {
   const [admins, setAdmins] = useState([]);  // État pour stocker les administrateurs
   const [editingAdmin, setEditingAdmin] = useState(null);  // État pour stocker l'administrateur en cours d'édition
@@ -150,8 +149,7 @@ const AdminPage = () => {
           ))}
         </tbody>
       </table>
-      <AddStudentForm />
-      <UpdateStudentForm />
+    
     </div>
   );
 };
