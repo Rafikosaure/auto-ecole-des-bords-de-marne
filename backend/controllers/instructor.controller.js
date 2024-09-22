@@ -63,8 +63,17 @@ const deleteInstructor = async (req, res, next) => {
         if (!instructor) throw createError(req, ErrorNotExist, context);
         res.status(200).json({ message: "Instructor Deleted" });
   } catch (error) {
-        return errorHandler(req, res, error, context);    
+        return errorHandler(req, res, error, context);
   }
+}
+
+const addDocument = async (req, res, next) => {
+    try {
+        console.log(req.files);
+        res.status(200).json({ message: "kill yourself xd" })
+    } catch (error) {
+        return errorHandler(req, res, error, context);
+    }
 }
 
 
@@ -74,3 +83,4 @@ exports.getAllInstructors = getAllInstructors;
 exports.getInstructor = getInstructor;
 exports.updateInstructor = updateInstructor;
 exports.deleteInstructor = deleteInstructor;
+exports.addDocument = addDocument;
