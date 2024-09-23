@@ -4,7 +4,6 @@ import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
 import StudentsPage from "./pages/StudentsPage/StudentsPage";
 import InstructorsPage from "./pages/InstructorsPage/InstructorPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
-import AdminRegister from "./pages/AdminRegister/AdminRegister";
 import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 import StudentPage from "./pages/StudentsPage/StudentsPage";
 import "./App.css";
@@ -29,7 +28,6 @@ function App() {
         <Route index element={<StudentsPage />} />
         <Route path="/student/:id" element={<OneStudentPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/adminregister" element={<AdminRegister />} />
       </Route>
     </Routes>
   );

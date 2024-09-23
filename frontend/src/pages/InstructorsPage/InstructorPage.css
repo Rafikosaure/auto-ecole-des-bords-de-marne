@@ -1,74 +1,59 @@
-/* Définir la largeur et hauteur minimales */
-html, body {
-    min-width: 375px;
-    min-height: 667px;
-}
-
-/* Styles de base pour la carte */
-.card {
-    width: 100%; /* Prend toute la largeur disponible */
-    margin: 0 auto; /* Centrer horizontalement */
-}
-
-/* Styles pour la table */
-.table {
-    width: 100%; /* Prend toute la largeur disponible */
-}
-
-/* Media queries pour responsive */
-@media (max-width: 1024px) {
-    .container {
-        padding: 0 15px; /* Ajouter un padding horizontal */
+/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
+@media (min-width: 375px) and (min-height: 667px) {
+    body, html {
+        min-width: 375px;
+        min-height: 667px;
+        overflow-x: hidden; /* Évite le débordement horizontal */
     }
-    
-    .card-body {
+}
+
+/* Styles pour les écrans de moins de 1200px (mode colonne) */
+@media (max-width: 1200px) {
+    .instructors-container {
         display: flex;
         flex-direction: column;
+        gap: 20px; /* Espacement entre les cartes */
     }
 
-    .card-body table {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-}
-
-@media (max-width: 820px) {
-    .container {
-        padding: 0 15px;
-    }
-    
     .card-body {
         flex-direction: column;
     }
-    
+
     .table thead {
-        display: none; /* Masquer les en-têtes de table */
+        display: none;
     }
-    
+
     .table, .table tbody, .table tr, .table td {
-        display: block; /* Passer en affichage bloc */
+        display: block;
         width: 100%;
     }
-    
+
     .table tr {
-        margin-bottom: 10px; /* Espacement entre les lignes */
+        margin-bottom: 10px;
     }
-    
+
     .table td {
-        text-align: right; /* Aligner les cellules à droite */
+        text-align: right;
         position: relative;
-        padding-left: 50%; /* Espacer le contenu */
+        padding-left: 50%;
     }
 
     .table td::before {
-        content: attr(data-label); /* Ajouter des labels aux cellules */
+        content: attr(data-label);
         position: absolute;
         left: 0;
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
         font-weight: bold;
+    }
+
+    .d-flex {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .btn-standard {
+        margin-bottom: 10px;
     }
 }
