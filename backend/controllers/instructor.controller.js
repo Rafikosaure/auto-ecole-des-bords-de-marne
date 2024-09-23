@@ -1,5 +1,6 @@
 const { Instructor } = require("../models");
-
+const { ENV } = require("../config/env.js");
+const fs = require('fs');
 const { errorHandler,
     createError,
     ErrorNotExist} = require('../middlewares/errorHandler.js');
@@ -70,8 +71,12 @@ const deleteInstructor = async (req, res, next) => {
 const addDocument = async (req, res, next) => {
     try {
         req.files ? console.log(req.files) : console.log("No file selected");
-        res.status(200).json({ message: "kill yourself xd" })
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
+            console.log(file);
+        })
+        res.status(200).json("ok");
     } catch (error) {
+        res.status(404).json({ message: "error" });
         return errorHandler(req, res, error, context);
     }
 }

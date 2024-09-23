@@ -1,5 +1,6 @@
 const ErrorNotExist = "notExist";
-const ErrorWrongCredentials = "wrongCredentials"
+const ErrorWrongCredentials = "wrongCredentials";
+const ErrorWrongFileFormat = "wrongFileFormat"
 
 const errorHandler = (req, res, error, context) => {
     console.log({"Error":
@@ -18,6 +19,8 @@ const errorHandler = (req, res, error, context) => {
             return res.status(404).json({error: error.name, message: error.message});
         case "WrongCredentials":
             return res.status(404).json({error: error.name, message: error.message});
+        case "WrongFileFormat":
+            return res.status(404).json({error: error.name, message: error.message});
         default:
             return res.status(404).json("An error has occured")
      }
@@ -34,6 +37,9 @@ const createError = (req, issue, context) => {
         case ErrorWrongCredentials:
             error.name = "WrongCredentials";
             error.message = `Wrong credentials`;
+        case ErrorWrongFileFormat:
+            error.name = "WrongFileFormat";
+            error.message = `Supported file formats are : .png .jpg .jpeg .pdf`;
         default:
             break;
     }
@@ -44,3 +50,4 @@ exports.errorHandler = errorHandler;
 exports.createError = createError;
 exports.ErrorNotExist = ErrorNotExist;
 exports.ErrorWrongCredentials = ErrorWrongCredentials;
+exports.ErrorWrongFileFormat = ErrorWrongFileFormat;

@@ -15,24 +15,24 @@ const app = express();
 app.use(express.json());
 
 // used to avoid having frontend requests rejected
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", ENV.FRONTROUTE);
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  return next();
-});
+app.use((error, req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", ENV.FRONTROUTE);
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    return next();
+})
 
-app.use((err, req, res, next) => {
-  const status = err.status || 500;
-  const message = err.message || "Something went wrong";
-  return res.status(status).json({
-    success: false,
-    status,
-    message,
-  });
-});
-app.use(cookieParser());
+app.use((error, req, res, next) => {
+    const status = error.status || 500;
+    const message = error.message || "Something went wrong";
+    return res.status(status).json({
+        success: false,
+        status,
+        message,
+    });
+})
+app.use(cookieParser())
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
