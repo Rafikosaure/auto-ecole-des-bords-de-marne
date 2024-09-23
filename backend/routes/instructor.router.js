@@ -2,9 +2,15 @@
 const express = require("express");
 const controller = require("../controllers/instructor.controller.js");
 const { ENV } = require("../config/env.js");
-
 const multer = require("multer");
+const fs = require("fs")
 
+
+
+if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
+    fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true})
+     && console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`)
+}
 const storage = multer.diskStorage({
     destination: function (req, file, cb){
         cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);

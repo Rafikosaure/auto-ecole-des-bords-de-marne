@@ -69,7 +69,7 @@ const deleteInstructor = async (req, res, next) => {
 
 const addDocument = async (req, res, next) => {
     try {
-        console.log(req.files);
+        req.files ? console.log(req.files) : console.log("No file selected");
         res.status(200).json({ message: "kill yourself xd" })
     } catch (error) {
         return errorHandler(req, res, error, context);
