@@ -7,6 +7,7 @@ const studentRouter = require("./routes/student.router.js").router;
 const instructorRouter = require("./routes/instructor.router.js").router;
 const adminRouter = require("./routes/admin.router.js").router;
 const documentRouter = require("./routes/document.router.js").router;
+const remarkRouter = require("./routes/remark.router.js").router;
 
 // app
 const app = express();
@@ -21,7 +22,7 @@ app.use((error, req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", true);
     return next();
-})
+});
 
 app.use((error, req, res, next) => {
     const status = error.status || 500;
@@ -31,14 +32,15 @@ app.use((error, req, res, next) => {
         status,
         message,
     });
-})
-app.use(cookieParser())
+});
+app.use(cookieParser());
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
 app.use("/api/instructor", instructorRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/document", documentRouter);
+app.use("/api/remark", remarkRouter);
 
 // exports
 exports.app = app;
