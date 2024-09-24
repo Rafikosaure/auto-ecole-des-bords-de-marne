@@ -25,7 +25,7 @@ const errorHandler = (req, res, error, context) => {
         case "SequelizeUniqueConstraintError":
             return res.status(404).json({error: error.message, message: `${context} ${target} already exists`});
         case "SequelizeValidationError":
-            return res.status(404).json({error: error.message, message: `Invalid body`});
+            return res.status(404).json({error: error.message, message: `Invalid body provided`});
         case "DoesNotExistInDb":
             return res.status(404).json({error: error.name, message: error.message});
         case "WrongCredentials":
@@ -35,12 +35,11 @@ const errorHandler = (req, res, error, context) => {
         case "KeyNotProvided":
             return res.status(404).json({error: error.name, message: error.message});
         default:
-            return res.status(404).json("An error has occured");
+            return res.status(404).json({error: error.name, message: "An error has occured"});
      }
 }
 
 const createError = (req, issue, context) => {
-    context = context.charAt(0).toUpperCase() + context.slice(1);
     const error = new Error()
     switch (issue) {
         case errors.ErrorNotExist:

@@ -1,4 +1,4 @@
-const { Instructor } = require("../models");
+const { Instructor, instructorsDocument } = require("../models");
 const { ENV } = require("../config/env.js");
 const fs = require('fs');
 const { errorHandler,
@@ -22,7 +22,14 @@ const addInstructor = async (req, res, next) => {
 const getAllInstructors = async (req, res, next) => {
     try {
         // SQL Select query to get all instructors
-        const instructors = await Instructor.findAll();
+        const instructors = await Instructor.findAll({
+            // includes values from other tables
+            include: [
+                {
+                    model: instructorsDocument,
+                    as: "documents"},
+            ]
+        });
         res.status(200).json(instructors);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
@@ -32,7 +39,16 @@ const getAllInstructors = async (req, res, next) => {
 const getInstructor = async (req, res, next) => {
     try {
         // SQL Select query to get one instructor by ID
-        const instructor = await Instructor.findByPk(req.params.id);
+        const instructor = await Instructor.findByPk(req.params.id,
+            {
+                // includes values from other tables
+                include: [
+                    {
+                        model: instructorsDocument,
+                        as: "documents"},
+                ]
+            }
+        );
         // error if no instructor found given the id
         if(!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         res.status(200).json(instructor);

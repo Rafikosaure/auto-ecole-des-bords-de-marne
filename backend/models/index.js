@@ -6,8 +6,9 @@ const passwordHashing = require("../middlewares/bcryptPassword.js").passwordHash
 const adminModel = require("./admin.model.js").admin;
 const studentModel = require("./student.model.js").student;
 const remarksModel = require("./remark.model.js").remark;
-const documentModel = require("./document.model.js").document;
 const instructorModel = require("./instructor.model.js").instructor;
+const studentDocumentModel = require("./studentsDocument.model.js").studentsDocument;
+const instructorDocumentModel = require("./instructorDocument.model.js").instructorsDocument;
 
 try {
     // database server authentication and database selection
@@ -18,27 +19,32 @@ try {
     adminModel(connection, Sequelize);
     studentModel(connection, Sequelize);
     remarksModel(connection, Sequelize);
-    documentModel(connection, Sequelize);
+    studentDocumentModel(connection, Sequelize);
     instructorModel(connection, Sequelize);
+    instructorDocumentModel(connection, Sequelize);
     
     // models destructuration
-    const { Admin, Student, Remark, Document, Instructor } = connection.models;
+    const { Admin, Student, Remark, studentsDocument, Instructor, instructorsDocument } = connection.models;
 
     // ASSOCIARTIONS
-    //One-to-Many Association between Students and Documents
-    Student.hasMany(Document, {onDelete: "cascade", foreignKey: "studentId", as: "documents"});
+    //One-to-Many Association between Students and studentsDocuments
+    Student.hasMany(studentsDocument, {onDelete: "cascade", foreignKey: "studentId", as: "documents"});
+    studentsDocument.belongsTo(Student, {foreignKey: "studentId", as: "student"});
     //One-to-Many Association between Students and Remarks
     Student.hasMany(Remark, {onDelete: "cascade", foreignKey: "studentId", as: "remarks"});
-    Document.belongsTo(Student, {foreignKey: "studentId", as: "student"});
     Remark.belongsTo(Student, {foreignKey: "studentId", as: "student"})
-
+    //One-to-Many Association between Instructors and instructorsDocuments
+    Instructor.hasMany(instructorsDocument, {onDelete: "cascade", foreignKey: "instructorId", as: "documents"});
+    instructorsDocument.belongsTo(Instructor, {foreignKey: "instructorId", as: "instructor"})
 
     // Synchronize the models with the database
     connection.sync()
     .then(async () => {
         // checks if an admins exixts in the db and creates default admin root if no admin is in the db
-        !(await Admin.findAndCountAll()).count
-         && (await Admin.create({username: ENV.DEFAULTADMINUSERNAME, password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)}) && console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`));
+        if(!(await Admin.findAndCountAll()).count){
+            await Admin.create({username: ENV.DEFAULTADMINUSERNAME, password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)})
+             && console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`)
+        }
     })
     .then(console.log(`Synchronized with "${ENV.DBNAME}"`));
 
@@ -46,8 +52,9 @@ try {
     exports.Admin = Admin;
     exports.Student = Student;
     exports.Remark = Remark;
-    exports.Document = Document;
+    exports.studentsDocument = studentsDocument;
     exports.Instructor = Instructor;
+    exports.instructorsDocument = instructorsDocument;
 
 } catch (error) {
     console.error(`Unable to connect to "${ENV.DBNAME}" : ${error.message}`);

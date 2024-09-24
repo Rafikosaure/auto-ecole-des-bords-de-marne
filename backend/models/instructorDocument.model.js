@@ -1,10 +1,7 @@
-const document =  (connection, DataTypes) => {
+const instructorsDocument =  (connection, DataTypes) => {
     connection.define(
-    "Document",
+    "instructorsDocument",
     {
-        convocationTime: {
-            type: DataTypes.DATE,
-        },
         type: {
             type: DataTypes.STRING,
         },
@@ -18,4 +15,4 @@ const document =  (connection, DataTypes) => {
     );
 };
 
-exports.document = document;
+exports.instructorsDocument = instructorsDocument;

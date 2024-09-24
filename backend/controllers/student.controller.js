@@ -1,4 +1,4 @@
-const { Remark, Student, Document } = require("../models/index.js");
+const { Remark, Student, studentsDocument } = require("../models/index.js");
 
 const { errorHandler,
     createError,
@@ -25,7 +25,7 @@ const getAllStudents = async (req, res, next) => {
                 // includes values from other tables
                 include: [
                     {
-                        model: Document,
+                        model: studentsDocument,
                         as: "documents"},
                     {
                         model: Remark,
@@ -47,7 +47,7 @@ const getStudent = async (req, res, next) => {
                 // includes values from other tables
                 include: [
                     {
-                        model: Document,
+                        model: studentsDocument,
                         as: "documents"},
                     {
                         model: Remark,
