@@ -1,6 +1,7 @@
 // imports
 const express = require("express");
 const controller = require("../controllers/remark.controller.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // router initialization
 const router = express.Router();
@@ -8,14 +9,14 @@ const router = express.Router();
 // routes
     // CRUD
         // add
-router.post("/add", controller.addRemark);
+router.post("/add", verifyToken, controller.addRemark);
         // get all
-router.get("/getall", controller.getAllRemarks);
+router.get("/getall", verifyToken, controller.getAllRemarks);
         // get one
-router.get("/get/:id", controller.getRemark);
+router.get("/get/:id", verifyToken, controller.getRemark);
         // update one
-router.put("/update/:id", controller.updateRemark);
+router.put("/update/:id", verifyToken, controller.updateRemark);
         // delete one
-router.delete("/delete/:id", controller.deleteRemark);
+router.delete("/delete/:id", verifyToken, controller.deleteRemark);
 
 exports.router = router;

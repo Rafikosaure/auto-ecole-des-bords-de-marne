@@ -87,8 +87,8 @@ const loginAdmin = async (req, res, next) => {
         // Creates a token to sign the connection cookie
         const token = jwt.sign({ id: admin.id }, ENV.TOKEN);
         // Sends the cookie as a response with httpOnly attribute to make it inaccessible by the user
-        res.cookie("access_token", token, { httpOnly: true }).status(200).json();
-        console.log("Connexion reussie");
+        res.cookie("access_token", token, { httpOnly: true }).status(200).json({message: "connected"});
+        console.log("connected");
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
     }

@@ -2,14 +2,18 @@ const errors = {
     ErrorNotExist: "notExist",
     ErrorWrongCredentials: "wrongCredentials",
     ErrorWrongFileFormat: "wrongFileFormat",
-    ErrorUndefinedKey: "undefinedKey"
+    ErrorUndefinedKey: "undefinedKey",
+    ErrorNoToken: "noToken",
+    ErrorInvalidToken: "invalidToken"
 }
 
 const contexts = {
     remark: "Remark",
     admin: "Admin",
     instructor: "Instructor",
-    student: "Student"
+    student: "Student",
+    noToken: "NoToken",
+    invalidToken: "invalidToken"
 }
 
 const errorHandler = (req, res, error, context) => {
@@ -26,16 +30,17 @@ const errorHandler = (req, res, error, context) => {
             return res.status(404).json({error: error.message, message: `${context} ${target} already exists`});
         case "SequelizeValidationError":
             return res.status(404).json({error: error.message, message: `Invalid body provided`});
-        case "DoesNotExistInDb":
-            return res.status(404).json({error: error.name, message: error.message});
-        case "WrongCredentials":
-            return res.status(404).json({error: error.name, message: error.message});
-        case "WrongFileFormat":
-            return res.status(404).json({error: error.name, message: error.message});
-        case "KeyNotProvided":
-            return res.status(404).json({error: error.name, message: error.message});
+            case "DoesNotExistInDb":
+            case "WrongCredentials":
+            case "WrongFileFormat":
+            case "KeyNotProvided":
+            case "NoToken":
+            case "InvalidToken":
+            // if error has no status (undefined) it will be 404 by default
+            error.status ??= 404;
+            return res.status(error.status).json({error: error.name, message: error.message});
         default:
-            return res.status(404).json({error: error.name, message: "An error has occured"});
+            return res.status(500).json({error: error.name, message: "An error has occured"});
      }
 }
 
@@ -51,16 +56,26 @@ const createError = (req, issue, context) => {
             error.message = `Invalid credentials provided`;
             break;
         case errors.ErrorWrongFileFormat:
-            error.name = "WrongFileFormat";
-            error.message = `Supported file formats are : .png .jpg .jpeg .pdf`;
-            break;
-        case errors.ErrorWrongFileFormat:
+            // unsupported media type
+            error.status = 415;
             error.name = "WrongFileFormat";
             error.message = `Supported file formats are : .png .jpg .jpeg .pdf`;
             break;
         case errors.ErrorUndefinedKey:
             error.name = "KeyNotProvided";
             error.message = context == contexts.remark &&  `StudentId must be provided`;
+            break;
+        case errors.ErrorNoToken:
+            // if no token unauthorized => 401
+            error.status = 401;
+            error.name = "NoToken";
+            error.message = "Admin must be logged in";
+            break;
+        case errors.ErrorInvalidToken:
+            // if token but wrong token forbidden => 403
+            error.status = 403;
+            error.name = "InvalidToken";
+            error.message = "Connexion token is not valid";
             break;
         default:
             break;

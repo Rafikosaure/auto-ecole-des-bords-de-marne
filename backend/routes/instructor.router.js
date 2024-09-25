@@ -2,6 +2,7 @@
 const express = require("express");
 const controller = require("../controllers/instructor.controller.js");
 const { ENV } = require("../config/env.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
@@ -42,16 +43,16 @@ const router = express.Router();
 // routes
     // CRUD
         // add
-router.post("/add", controller.addInstructor);
+router.post("/add", verifyToken, controller.addInstructor);
         // get all
-router.get("/getall", controller.getAllInstructors);
+router.get("/getall", verifyToken, controller.getAllInstructors);
         // get one
-router.get("/get/:id", controller.getInstructor);
+router.get("/get/:id", verifyToken, controller.getInstructor);
         // update one
-router.put("/update/:id", controller.updateInstructor)
+router.put("/update/:id", verifyToken, controller.updateInstructor)
         // delete one
-router.delete("/delete/:id", controller.deleteInstructor);
+router.delete("/delete/:id", verifyToken, controller.deleteInstructor);
     // DOCUMENTS
-router.post("/document/add", upload.array("file"), controller.addDocument);
+router.post("/document/add", verifyToken, upload.array("file"), controller.addDocument);
 
 exports.router = router;
