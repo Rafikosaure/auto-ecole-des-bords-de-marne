@@ -7,6 +7,7 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
+// creates the assets/instructors folders if they don't exist
 if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
     fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true})
      && console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`)

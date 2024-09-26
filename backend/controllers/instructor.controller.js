@@ -1,11 +1,11 @@
+const fs = require('fs');
+const sharp = require("sharp");
 const { Instructor, instructorsDocument } = require("../models");
 const { ENV } = require("../config/env.js");
-const fs = require('fs');
 const { errorHandler,
         createError,
         contexts,
         errors} = require('../middlewares/errorHandler.js');
-
 
 const addInstructor = async (req, res, next) => {
     try {
@@ -85,13 +85,27 @@ const deleteInstructor = async (req, res, next) => {
 
 const addDocument = async (req, res, next) => {
     try {
-        req.files ? console.log(req.files) : console.log("No file selected");
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
-            console.log(file);
+        // checks if an instructorId is provided with the request
+        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        // checks if any file has been sent with the request
+        if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructor);
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(async file => {
+            // full path to file
+            file = ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file;
+            await instructorsDocument.create({
+                ...req.body,
+                // resizes the file
+                document: await sharp(file).resize(500, 500, { fit: 'contain' }).toBuffer()
+              })
+            // deletes the file from instructor folder 
+            fs.rmSync(file)
         })
-        res.status(200).json("ok");
+        return res.status(200).json({message: "ok"})
     } catch (error) {
-        res.status(404).json({ message: "error" });
+        // wipes the instructor folder incase an error occured
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
+            fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file)
+        })
         return errorHandler(req, res, error, contexts.instructor);
     }
 }
