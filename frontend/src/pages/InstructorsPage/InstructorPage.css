@@ -55,5 +55,219 @@
 
     .btn-standard {
         margin-bottom: 10px;
+        width: 100%; /* Prend toute la largeur en mode smartphone */
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: row; /* Par défaut, les boutons sont en ligne */
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 768px) {
+        .btn-group {
+            flex-direction: column; /* En mode smartphone, empile les boutons */
+            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
+        }
+
+        .btn {
+            flex: 1; /* Les boutons prennent toute la largeur disponible */
+            margin: 5px 0; /* Marge entre les boutons */
+        }
+        
+        .btn-rounded {
+            border-radius: 10px !important; /* Force l'application de cette propriété */
+        }
+    }
+}
+
+/* Styles pour les écrans plus grands (au-dessus de 768px) */
+@media (min-width: 769px) {
+    .btn-standard {
+        width: auto; /* Revenir à la taille normale sur les grands écrans */
+    }
+}
+/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
+@media (min-width: 375px) and (min-height: 667px) {
+    body, html {
+        min-width: 375px;
+        min-height: 667px;
+        overflow-x: hidden; /* Évite le débordement horizontal */
+    }
+}
+
+/* Styles pour les écrans de moins de 1200px (mode colonne) */
+@media (max-width: 1200px) {
+    .instructors-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Espacement entre les cartes */
+    }
+
+    .card-body {
+        flex-direction: column;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 10px;
+    }
+
+    .table td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .d-flex {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .btn-standard {
+        margin-bottom: 10px;
+    }
+
+    .btn-add-instructor {
+        width: 100%; /* Prend toute la largeur en mode smartphone */
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: row; /* Par défaut, les boutons sont en ligne */
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 768px) {
+        .btn-group {
+            flex-direction: column; /* En mode smartphone, empile les boutons */
+            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
+        }
+
+        .btn {
+            flex: 1; /* Les boutons prennent toute la largeur disponible */
+            margin: 5px 0; /* Marge entre les boutons */
+        }
+
+        .btn-rounded {
+            border-radius: 10px !important; /* Force l'application de cette propriété */
+        }
+    }
+}
+
+/* Styles pour les écrans plus grands (au-dessus de 768px) */
+@media (min-width: 769px) {
+    .btn-add-instructor {
+        width: auto; /* Revenir à la taille normale sur les grands écrans */
+    }
+}
+/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
+@media (min-width: 375px) and (min-height: 667px) {
+    body, html {
+        min-width: 375px;
+        min-height: 667px;
+        overflow-x: hidden; /* Évite le débordement horizontal */
+    }
+}
+
+/* Styles pour les écrans de moins de 1200px (mode colonne) */
+@media (max-width: 1200px) {
+    .instructors-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Espacement entre les cartes */
+    }
+
+    .card-body {
+        flex-direction: column;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 10px;
+    }
+
+    .table td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .d-flex {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .btn-standard {
+        margin-bottom: 10px;
+    }
+
+    .btn-add-instructor {
+        width: 100%; /* Prend toute la largeur en mode smartphone */
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: row; /* Par défaut, les boutons sont en ligne */
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 768px) {
+        .btn-group {
+            flex-direction: column; /* En mode smartphone, empile les boutons */
+            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
+        }
+
+        .btn {
+            flex: 1; /* Les boutons prennent toute la largeur disponible */
+            margin: 5px 0; /* Marge entre les boutons */
+        }
+
+        .btn-rounded {
+            border-radius: 10px !important; /* Force l'application de cette propriété */
+        }
+    }
+}
+
+/* Styles pour les écrans plus grands (au-dessus de 768px) */
+@media (min-width: 769px) {
+    .btn-add-instructor {
+        width: auto; /* Revenir à la taille normale sur les grands écrans */
     }
 }
