@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 
+// used to keep hashing consistent across multiple functions
+
 const passwordHashing = async (password) => {
     return await bcrypt.hash(password, 10);
   }
