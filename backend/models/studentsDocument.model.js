@@ -9,7 +9,8 @@ const studentsDocument =  (connection, DataTypes) => {
             type: DataTypes.STRING,
         },
         document: {
-            type: DataTypes.BLOB,
+            // 16,777,215 bytes of data
+            type: DataTypes.BLOB("medium"),
         }
     },
         {

@@ -1,3 +1,4 @@
+// errors references for createError switch case
 const errors = {
     ErrorNotExist: "notExist",
     ErrorWrongCredentials: "wrongCredentials",
@@ -8,24 +9,29 @@ const errors = {
     ErrorNoFileProvided: "noFileProvided"
 }
 
+// errors contexts for error handler messages (where error happens)
 const contexts = {
     remark: "Remark",
     admin: "Admin",
     instructor: "Instructor",
     student: "Student",
-    noToken: "NoToken",
-    invalidToken: "invalidToken"
+    Token: "Token",
+    instructorDocuments: "Instructors documents"
 }
 
+// logs and sents an appropriate response given an error
 const errorHandler = (req, res, error, context) => {
+    // log
     console.log({Error:
         {
             "name" : error.name,
             "message" : error.message
         }}
     );
+    // proper string formatting for more accurate description
     const target = context == "Admin" && req.body.username
                     || (context == "Student" || context == "Instructor") && `${req.body.lastName} ${req.body.firstName}`
+    // responses
     switch (error.name) {
         case "SequelizeUniqueConstraintError":
             return res.status(404).json({error: error.message, message: `${context} ${target} already exists`});
@@ -47,12 +53,13 @@ const errorHandler = (req, res, error, context) => {
      }
 }
 
+// creates an error to be thrown given an issue
 const createError = (req, issue, context) => {
     const error = new Error()
     switch (issue) {
         case errors.ErrorNotExist:
             error.name = "DoesNotExistInDb";
-            req.params.id && (error.message `${context} with id={${req.params.id}} does not exsist`);
+            req.params.id && (error.message = `${context} with id={${req.params.id}} does not exsist`);
             req.body.instructorId && (error.message = `${context} with id={${req.body.instructorId}} does not exsist`);
             break;
         case errors.ErrorWrongCredentials:
@@ -82,7 +89,6 @@ const createError = (req, issue, context) => {
             error.message = "Connexion token is not valid";
             break;
         case errors.ErrorNoFileProvided:
-            error.color = "red";
             error.name = "noFileProvided";
             error.message = "No documents were sent with the request";
             break;

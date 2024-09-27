@@ -6,7 +6,9 @@ const instructorsDocument =  (connection, DataTypes) => {
             type: DataTypes.STRING,
         },
         document: {
-            type: DataTypes.BLOB,
+            // 16,777,215 bytes of data
+            // if any file too large error happens while uploading process the image further with sharp
+            type: DataTypes.BLOB("medium"),
         }
     },
         {

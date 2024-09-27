@@ -17,7 +17,10 @@ const storage = multer.diskStorage({
         cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now());
+        const filename = file.originalname + '-' + Date.now();
+        req.files.files ??= new Array();
+        req.files.files.push(filename);
+        cb(null, filename);
     },
 })
 const upload = multer({
@@ -26,7 +29,24 @@ const upload = multer({
             files: 4
         },
         fileFilter: function(req, file, cb) {
-            var extension = path.extname(file.originalname);
+            const extension = path.extname(file.originalname);
+            if(extension !== ".png"
+                && extension !== ".jpg"
+                && extension !== ".jpeg"
+                && extension !== ".pdf"
+            ) {
+                return(cb(new Error("Format not supported, supported format are .png .jpg .jpeg .pdf")));
+            };
+            cb(null, true)
+        }
+})
+const uploadOne = multer({
+        storage: storage,
+        limits: {
+            files: 1
+        },
+        fileFilter: function(req, file, cb) {
+            const extension = path.extname(file.originalname);
             if(extension !== ".png"
                 && extension !== ".jpg"
                 && extension !== ".jpeg"
@@ -54,6 +74,12 @@ router.put("/update/:id", verifyToken, controller.updateInstructor)
         // delete one
 router.delete("/delete/:id", verifyToken, controller.deleteInstructor);
     // DOCUMENTS
-router.post("/document/add", verifyToken, upload.array("file"), controller.addDocument);
+        // add one or many
+router.post("/document/add", verifyToken, upload.array("documents"), controller.addDocument);
+        // update one
+router.put("/document/update/:id", verifyToken, uploadOne.array("documents"), controller.updateDocument);
+        // delete one
+router.delete("/document/delete/:id", verifyToken, controller.deleteDocument);
+
 
 exports.router = router;
