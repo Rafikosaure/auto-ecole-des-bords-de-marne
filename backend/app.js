@@ -14,6 +14,7 @@ const app = express();
 
 // middlewares
 app.use(express.json());
+app.use(cors());
 
 // used to avoid having frontend requests rejected
 app.use((error, req, res, next) => {
@@ -23,6 +24,12 @@ app.use((error, req, res, next) => {
     res.setHeader("Access-Control-Allow-Credentials", true);
     return next();
 });
+
+app.use(cors({
+    origin: ENV.FRONTROUTE,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 app.use((error, req, res, next) => {
     const status = error.status || 500;
