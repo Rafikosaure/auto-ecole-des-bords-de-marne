@@ -52,7 +52,8 @@ const createError = (req, issue, context) => {
     switch (issue) {
         case errors.ErrorNotExist:
             error.name = "DoesNotExistInDb";
-            error.message = `${context} with id={${req.params.id}} does not exsist`;
+            req.params.id && (error.message `${context} with id={${req.params.id}} does not exsist`);
+            req.body.instructorId && (error.message = `${context} with id={${req.body.instructorId}} does not exsist`);
             break;
         case errors.ErrorWrongCredentials:
             error.name = "WrongCredentials";

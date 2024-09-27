@@ -27,9 +27,19 @@ const getAllInstructors = async (req, res, next) => {
             include: [
                 {
                     model: instructorsDocument,
-                    as: "documents"},
+                    as: "documents"
+                },
             ]
         });
+        // converts documents buffer to base64 for easy frontend integration
+        instructors.map(instructor => {
+            instructor.dataValues.documents.map(instructorsDocument => {
+                data = instructorsDocument.dataValues
+                data.document = Buffer.from(data.document).toString("base64") 
+            })
+            
+        })
+        
         res.status(200).json(instructors);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
@@ -86,21 +96,27 @@ const deleteInstructor = async (req, res, next) => {
 const addDocument = async (req, res, next) => {
     try {
         // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        if(!req.body.instructorId)  throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        // checks if instructorId is valid 
+        if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor)
         // checks if any file has been sent with the request
         if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructor);
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(async file => {
+        // maps over the file saved in instructor directory
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(async (file, index) => {
             // full path to file
             file = ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file;
+            // SQL create query
             await instructorsDocument.create({
                 ...req.body,
+                // type will be null if a filesType array is not provided
+                type: req.body.filesType?.index ?? null,
                 // resizes the file
-                document: await sharp(file).resize(500, 500, { fit: 'contain' }).toBuffer()
-              })
+                document: await sharp(file).resize(500, 500, { fit: 'inside' }).toBuffer()
+              });
             // deletes the file from instructor folder 
             fs.rmSync(file)
         })
-        return res.status(200).json({message: "ok"})
+        return res.status(200).json({message: "The files have been saved"})
     } catch (error) {
         // wipes the instructor folder incase an error occured
         fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
@@ -108,6 +124,14 @@ const addDocument = async (req, res, next) => {
         })
         return errorHandler(req, res, error, contexts.instructor);
     }
+}
+
+const updateDocument = async (req, res, any) => {
+    
+}
+
+const deleteDocument = async (req, res, next) => {
+
 }
 
 
