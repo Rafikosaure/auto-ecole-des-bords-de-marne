@@ -104,22 +104,23 @@ const addDocument = async (req, res, next) => {
         if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructor);
         // maps over the req.files.files array that stores the filenames of the file recieved
         // the actual files are then found in the assets/instructors directory
-        req.files.files.map(async (fileName, index) => {
+        for(const fileName of req.files.files){
             // full path to file
-            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + fileName)
+            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + fileName);
             // SQL create query
             await instructorsDocument.create({
                 ...req.body,
                 // type will be null if a filesType ARRAY is not provided
-                // ?. are here to avoid errors
-                type: eval(req.body?.filesType)?.[index] ?? null,
+                // ?. are here to avoid errors if the filesType ARRAY is not provided
+                // req.files.files.indexOf(fileName) gets the index of the current file in the req.files.files object
+                type: eval(req.body?.filesType)?.[req.files.files.indexOf(fileName)] ?? null,
                 // resizes the file
                 document: await processImage(file)
               });
             // deletes the file from instructor folder
-            fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, fileName))
-        })
-        return res.status(200).json({message: "The files have been saved"})
+            fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, fileName));
+        }
+        return res.status(200).json({message: "The files have been saved"});
     } catch (error) {
         // wipes the entire instructor folder in case an error occured
         fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
@@ -141,20 +142,16 @@ const updateDocument = async (req, res, any) => {
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // full path to file
-        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.files);
-
+        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.files[0]);
         await document.update({
             ...req.body,
-            // type will be null if a filesType ARRAY is not provided
-            type: req.body.filesType?.index ?? null,
             // resizes the file
             document: await processImage(file)
         });
         
         // deletes the file from instructor folder 
-        fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.files))
-
-        return res.status(200).json({message: "The file has been updated"})
+        fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.files[0]));
+        return res.status(200).json({message: "The file has been updated"});
     } catch (error) {
         // wipes the entire instructor folder in case an error occured
         fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
