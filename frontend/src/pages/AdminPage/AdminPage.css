@@ -1,4 +1,4 @@
-/* AdminPage.css */
+/* src/pages/AdminPage.css */
 
 /* Styles généraux */
 .admins-container {
@@ -63,13 +63,16 @@
   gap: 10px; /* Ajoute un espace entre les boutons */
 }
 
-.action-buttons .btn-warning,
-.action-buttons .btn-danger {
-  width: 105px; /* Largeur du bouton */
-  height: 38.5px; /* Hauteur du bouton */
+/* Nouvelle classe commune pour les boutons d'action */
+.action-buttons .admin-action-button {
+  width: 105px; /* Largeur par défaut */
+  height: 38.5px; /* Hauteur par défaut */
   padding: 0; /* Supprime le padding pour respecter les dimensions exactes */
-  font-size: 14px; /* Ajustez la taille de police si nécessaire */
+  font-size: 14px; /* Taille de la police */
   text-align: center; /* Centre le texte à l'intérieur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Styles pour le bouton "Rajouter un Administrateur" */
@@ -166,11 +169,12 @@
     gap: 10px; /* Ajoute un espace entre les boutons */
   }
 
-  .action-buttons .btn {
+  .action-buttons .admin-action-button {
     margin: 0; /* Supprime la marge */
     padding: 0.25rem 0.4rem; /* Réduit le padding des boutons */
     font-size: 0.8rem; /* Réduit la taille de la police pour les petits écrans */
     width: 150px; /* Taille fixe pour tous les boutons */
+    height: 38.5px; /* Maintient la hauteur constante */
   }
 
   /* Centrer les boutons "Enregistrer" et "Annuler" sur les écrans moyens à petits */
@@ -217,9 +221,10 @@
     justify-content: center; /* Centre les boutons */
   }
 
-  .edit-admin-form .btn {
+  .edit-admin-form .admin-action-button {
     width: 100%; /* Prend toute la largeur disponible */
     max-width: 300px; /* Limite la largeur pour uniformité */
+    height: 38.5px; /* Maintient la hauteur constante */
   }
 
   /* Disposition verticale des boutons sur les petits écrans */
@@ -230,5 +235,14 @@
   .form-buttons .btn {
     width: 100%; /* Prend toute la largeur disponible du conteneur */
     max-width: 300px; /* Limite la largeur pour uniformité */
+  }
+}
+
+/* **Nouvelle Media Query pour les écrans entre 375px et 412px** */
+@media (min-width: 375px) and (max-width: 412px) {
+  .action-buttons .admin-action-button {
+    width: 152px !important; /* Largeur souhaitée */
+    height: 38px !important; /* Hauteur souhaitée */
+    font-size: 14px !important; /* Taille de la police */
   }
 }
