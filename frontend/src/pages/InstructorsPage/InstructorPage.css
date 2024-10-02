@@ -1,273 +1,44 @@
-/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
-@media (min-width: 375px) and (min-height: 667px) {
-    body, html {
-        min-width: 375px;
-        min-height: 667px;
-        overflow-x: hidden; /* Évite le débordement horizontal */
-    }
+/* Classe spécifique pour les boutons "Modifier" et "Supprimer" */
+.btn-action {
+    width: 152px !important;     /* Largeur fixe */
+    height: 38px !important;     /* Hauteur fixe */
+    padding: 0 !important;       /* Supprimer le padding par défaut */
+    font-size: 14px !important;  /* Taille de police ajustée */
+    border-radius: 5px !important; /* Arrondi des bords */
+    display: flex !important;    /* Utiliser flex pour centrer le contenu */
+    justify-content: center !important; /* Centrer horizontalement */
+    align-items: center !important;     /* Centrer verticalement */
+    text-align: center !important;      /* Centrer le texte */
 }
 
-/* Styles pour les écrans de moins de 1200px (mode colonne) */
-@media (max-width: 1200px) {
-    .instructors-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px; /* Espacement entre les cartes */
-    }
-
-    .card-body {
-        flex-direction: column;
-    }
-
-    .table thead {
-        display: none;
-    }
-
-    .table, .table tbody, .table tr, .table td {
-        display: block;
-        width: 100%;
-    }
-
-    .table tr {
-        margin-bottom: 10px;
-    }
-
-    .table td {
-        text-align: right;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    .table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: bold;
-    }
-
-    .d-flex {
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .btn-standard {
-        margin-bottom: 10px;
-        width: 100%; /* Prend toute la largeur en mode smartphone */
-    }
-
-    .btn-group {
-        display: flex;
-        flex-direction: row; /* Par défaut, les boutons sont en ligne */
-        justify-content: flex-end;
-    }
-
-    @media (max-width: 768px) {
-        .btn-group {
-            flex-direction: column; /* En mode smartphone, empile les boutons */
-            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
-        }
-
-        .btn {
-            flex: 1; /* Les boutons prennent toute la largeur disponible */
-            margin: 5px 0; /* Marge entre les boutons */
-        }
-        
-        .btn-rounded {
-            border-radius: 10px !important; /* Force l'application de cette propriété */
-        }
-    }
+/* Classe pour centrer les boutons dans leur conteneur */
+.btn-group-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px; /* Espacement entre les boutons */
 }
 
-/* Styles pour les écrans plus grands (au-dessus de 768px) */
-@media (min-width: 769px) {
-    .btn-standard {
-        width: auto; /* Revenir à la taille normale sur les grands écrans */
-    }
-}
-/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
-@media (min-width: 375px) and (min-height: 667px) {
-    body, html {
-        min-width: 375px;
-        min-height: 667px;
-        overflow-x: hidden; /* Évite le débordement horizontal */
-    }
+/* Style pour le bouton "Ajouter Instructeur" */
+.btn-add-instructor {
+    width: 200px !important;     /* Largeur fixe */
+    height: 48px !important;     /* Hauteur fixe */
+    border-radius: 5px !important; /* Arrondi des bords */
+    font-size: 16px !important;  /* Taille de police */
+    display: block !important;   /* Traiter comme un bloc pour le centrage */
+    margin: 20px auto !important; /* Centrer horizontalement avec marge */
 }
 
-/* Styles pour les écrans de moins de 1200px (mode colonne) */
-@media (max-width: 1200px) {
-    .instructors-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px; /* Espacement entre les cartes */
-    }
-
-    .card-body {
-        flex-direction: column;
-    }
-
-    .table thead {
-        display: none;
-    }
-
-    .table, .table tbody, .table tr, .table td {
-        display: block;
-        width: 100%;
-    }
-
-    .table tr {
-        margin-bottom: 10px;
-    }
-
-    .table td {
-        text-align: right;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    .table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: bold;
-    }
-
-    .d-flex {
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .btn-standard {
-        margin-bottom: 10px;
-    }
-
-    .btn-add-instructor {
-        width: 100%; /* Prend toute la largeur en mode smartphone */
-    }
-
-    .btn-group {
-        display: flex;
-        flex-direction: row; /* Par défaut, les boutons sont en ligne */
-        justify-content: flex-end;
-    }
-
-    @media (max-width: 768px) {
-        .btn-group {
-            flex-direction: column; /* En mode smartphone, empile les boutons */
-            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
-        }
-
-        .btn {
-            flex: 1; /* Les boutons prennent toute la largeur disponible */
-            margin: 5px 0; /* Marge entre les boutons */
-        }
-
-        .btn-rounded {
-            border-radius: 10px !important; /* Force l'application de cette propriété */
-        }
-    }
+/* Centrer le titre */
+.text-center-title {
+    text-align: center;
+    margin-bottom: 20px; /* Espacement en dessous du titre */
 }
 
-/* Styles pour les écrans plus grands (au-dessus de 768px) */
-@media (min-width: 769px) {
-    .btn-add-instructor {
-        width: auto; /* Revenir à la taille normale sur les grands écrans */
-    }
-}
-/* Styles pour s'assurer que la taille minimale de l'écran est de 375px * 667px */
-@media (min-width: 375px) and (min-height: 667px) {
-    body, html {
-        min-width: 375px;
-        min-height: 667px;
-        overflow-x: hidden; /* Évite le débordement horizontal */
-    }
-}
-
-/* Styles pour les écrans de moins de 1200px (mode colonne) */
-@media (max-width: 1200px) {
-    .instructors-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px; /* Espacement entre les cartes */
-    }
-
-    .card-body {
-        flex-direction: column;
-    }
-
-    .table thead {
-        display: none;
-    }
-
-    .table, .table tbody, .table tr, .table td {
-        display: block;
-        width: 100%;
-    }
-
-    .table tr {
-        margin-bottom: 10px;
-    }
-
-    .table td {
-        text-align: right;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    .table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: bold;
-    }
-
-    .d-flex {
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .btn-standard {
-        margin-bottom: 10px;
-    }
-
-    .btn-add-instructor {
-        width: 100%; /* Prend toute la largeur en mode smartphone */
-    }
-
-    .btn-group {
-        display: flex;
-        flex-direction: row; /* Par défaut, les boutons sont en ligne */
-        justify-content: flex-end;
-    }
-
-    @media (max-width: 768px) {
-        .btn-group {
-            flex-direction: column; /* En mode smartphone, empile les boutons */
-            align-items: stretch; /* Étirer les boutons pour prendre toute la largeur */
-        }
-
-        .btn {
-            flex: 1; /* Les boutons prennent toute la largeur disponible */
-            margin: 5px 0; /* Marge entre les boutons */
-        }
-
-        .btn-rounded {
-            border-radius: 10px !important; /* Force l'application de cette propriété */
-        }
-    }
-}
-
-/* Styles pour les écrans plus grands (au-dessus de 768px) */
-@media (min-width: 769px) {
-    .btn-add-instructor {
-        width: auto; /* Revenir à la taille normale sur les grands écrans */
-    }
+/* Flex container pour centrer les boutons dans les cartes mobiles */
+.d-flex-center-mobile {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px; /* Espacement entre les boutons */
 }
