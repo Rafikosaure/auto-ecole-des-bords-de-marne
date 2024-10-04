@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { getStudentById } from "../../api/api-client.js";
 import StudentCard from "./StudentCard.jsx";
+import StudentCom from "./StudentCom/StudentCom.jsx";
 
 const OneStudent = () => {
   const { id } = useParams();
@@ -39,6 +40,9 @@ const OneStudent = () => {
             formationDesiredEnd={student.formationDesiredEnd}
             formationMaxDuration={student.formationMaxDuration}
             showMore={false}
+          />
+          <StudentCom
+            data={student}
           />
         </Col>
       </Row>
