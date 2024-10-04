@@ -6,8 +6,10 @@ const { errorHandler,
 
 const addRemark = async (req, res, next) => {
     try {
+        // throw an error if both foreignKeys are null
+        if(!req.body.studentId && !req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.remark);
         // SQL create query
-        if(!req.body.studentId) throw createError(req, errors.ErrorUndefinedKey, contexts.remark);
+        // Raises an error if foreignKeys do not exist in either table
         await Remark.create({
             ...req.body,
           });
@@ -45,8 +47,8 @@ const updateRemark = async (req, res, next) => {
         const remark = await Remark.findByPk(req.params.id);
         // return an error if no remark found
         if (!remark) throw createError(req, errors.ErrorNotExist, contexts.remark);
-        // error if no foreign key provided
-        if(!req.body.studentId) throw createError(req, errors.ErrorUndefinedKey, contexts.remark);
+        // throw an error if both foreignKeys are null
+        if(!req.body.studentId && !req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.remark);
         // SQL Select query to update selected remark with request's body
         await remark.update(req.body);
         res.status(200).json({message: "remark updated", remark});

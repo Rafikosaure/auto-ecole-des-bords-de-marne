@@ -26,16 +26,19 @@ try {
     // models destructuration
     const { Admin, Student, Remark, studentsDocument, Instructor, instructorsDocument } = connection.models;
 
-    // ASSOCIARTIONS
+    // ASSOCIATIONS (foreignKeys)
     //One-to-Many Association between Students and studentsDocuments
     Student.hasMany(studentsDocument, {onDelete: "cascade", foreignKey: "studentId", as: "documents"});
     studentsDocument.belongsTo(Student, {foreignKey: "studentId", as: "student"});
     //One-to-Many Association between Students and Remarks
     Student.hasMany(Remark, {onDelete: "cascade", foreignKey: "studentId", as: "remarks"});
-    Remark.belongsTo(Student, {foreignKey: "studentId", as: "student"})
+    Remark.belongsTo(Student, {foreignKey: "studentId", as: "student"});
+     //One-to-Many Association between Instructors and Remarks
+    Instructor.hasMany(Remark, {onDelete: "cascade", foreignKey: "instructorId", as: "remarks"});
+    Remark.belongsTo(Instructor, {foreignKey: "instructorId", as: "instructor"});
     //One-to-Many Association between Instructors and instructorsDocuments
     Instructor.hasMany(instructorsDocument, {onDelete: "cascade", foreignKey: "instructorId", as: "documents"});
-    instructorsDocument.belongsTo(Instructor, {foreignKey: "instructorId", as: "instructor"})
+    instructorsDocument.belongsTo(Instructor, {foreignKey: "instructorId", as: "instructor"});
 
     // Synchronize the models with the database
     connection.sync()
@@ -47,7 +50,7 @@ try {
                 username: ENV.DEFAULTADMINUSERNAME,
                 email: ENV.DEFAULTADMINEMAIL,
                 password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)});
-            console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`)
+            console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`);
         };
     })
     .then(console.log(`Synchronized with "${ENV.DBNAME}"`));

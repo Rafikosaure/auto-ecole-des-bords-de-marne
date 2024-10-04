@@ -55,7 +55,7 @@ const errorHandler = (req, res, error, context) => {
 
 // creates an error to be thrown given an issue
 const createError = (req, issue, context) => {
-    const error = new Error()
+    const error = new Error();
     switch (issue) {
         case errors.ErrorNotExist:
             error.name = "DoesNotExistInDb";
@@ -74,7 +74,7 @@ const createError = (req, issue, context) => {
             break;
         case errors.ErrorUndefinedKey:
             error.name = "KeyNotProvided";
-            error.message = context == contexts.remark &&  `StudentId must be provided`;
+            error.message = context == contexts.remark &&  `StudentId or instructorId must be provided`;
             break;
         case errors.ErrorNoToken:
             // if no token unauthorized => 401

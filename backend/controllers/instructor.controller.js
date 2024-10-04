@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Instructor, instructorsDocument } = require("../models");
+const { Instructor, instructorsDocument, Remark } = require("../models");
 const { ENV } = require("../config/env.js");
 const { errorHandler,
         createError,
@@ -30,17 +30,19 @@ const getAllInstructors = async (req, res, next) => {
                     model: instructorsDocument,
                     as: "documents"
                 },
+                {
+                    model: Remark,
+                    as: "remarks"
+                }
             ]
         });
-        // converts documents buffer to base64 for easy frontend integration
+        // converts documents buffer to base64 for an easy frontend integration
         instructors.map(instructor => {
             instructor.dataValues.documents.map(instructorsDocument => {
                 data = instructorsDocument.dataValues
                 data.document = Buffer.from(data.document).toString("base64") 
-            })
-            
-        })
-        
+            });
+        });
         res.status(200).json(instructors);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
@@ -56,7 +58,12 @@ const getInstructor = async (req, res, next) => {
                 include: [
                     {
                         model: instructorsDocument,
-                        as: "documents"},
+                        as: "documents"
+                    },
+                    {
+                        model: Remark,
+                        as: "remarks"
+                    }
                 ]
             }
         );
