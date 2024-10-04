@@ -40,11 +40,15 @@ try {
     // Synchronize the models with the database
     connection.sync()
     .then(async () => {
-        // checks if an admins exixts in the db and creates default admin root if no admin is in the db
+        // checks if an admins exists in the db
         if(!(await Admin.findAndCountAll()).count){
-            await Admin.create({username: ENV.DEFAULTADMINUSERNAME, password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)})
-             && console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`)
-        }
+            // creates default admin if no admin is in the db
+            await Admin.create({
+                username: ENV.DEFAULTADMINUSERNAME,
+                email: ENV.DEFAULTADMINEMAIL,
+                password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)});
+            console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`)
+        };
     })
     .then(console.log(`Synchronized with "${ENV.DBNAME}"`));
 
