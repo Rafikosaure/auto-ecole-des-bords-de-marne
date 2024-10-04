@@ -1,33 +1,41 @@
 // imports
-const express = require("express");
-const controller = require("../controllers/instructor.controller.js");
 const { ENV } = require("../config/env.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
+const controller = require("../controllers/instructor.controller.js");
+const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-// creates the assets/instructors folders if they don't exist
+// checks if assets/instructors exists
 if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
+    // creates the directory if it doesn't exists
     fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true})
-     && console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`)
+    console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`)
 }
 const storage = multer.diskStorage({
+    // sets the destination folder for the files
     destination: function (req, file, cb){
         cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);
     },
     filename: function (req, file, cb) {
+        // formats the filename to make it "unique"
         const filename = file.originalname + '-' + Date.now();
+        // creates a files.files array in the request to store the filenames if it doesn't exists
         req.files.files ??= new Array();
         req.files.files.push(filename);
         cb(null, filename);
     },
 })
 const upload = multer({
+        // sets storage
         storage: storage,
+        // sets files upload limit
         limits: {
             files: 4
         },
+        // sets the accepted extensions
+        // any other extension will trigger a multer error
         fileFilter: function(req, file, cb) {
             const extension = path.extname(file.originalname);
             if(extension !== ".png"
