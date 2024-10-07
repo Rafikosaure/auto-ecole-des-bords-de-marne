@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Container,
-  Row, Col, ListGroup
-} from "react-bootstrap";
+import { Form, Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import {
   getAllStudents,
   deleteStudent,
@@ -74,8 +69,8 @@ const UpdateStudent = () => {
 
   return (
     <>
-      <Container className="my-4">
-        <h2 className="text-center">Tous les étudiants</h2>
+      <Container className="my-4" style={{ marginBottom: "200px" }}>
+        <h2 className="text-center">Gestion des étudiants</h2>
         <Row>
           <Col>
             <ListGroup variant="flush">
@@ -91,15 +86,22 @@ const UpdateStudent = () => {
                     formationStart={student.formationStart}
                     formationDesiredEnd={student.formationDesiredEnd}
                     formationMaxDuration={student.formationMaxDuration}
-                      />
-                       <button onClick={() => deleteOneStudent(student.id)}>Supprimer</button>
-        <button onClick={() => modify(student.id)}>Modifier</button>
+                  />
+                  <Button
+                    variant="danger"
+                    onClick={() => deleteOneStudent(student.id)}
+                    style={{ marginRight: "10px" }}
+                  >
+                    Supprimer
+                  </Button>
+                  <Button variant="warning" onClick={() => modify(student.id)}>
+                    Modifier
+                  </Button>
                 </ListGroup.Item>
               ))}
             </ListGroup>
           </Col>
         </Row>
-       
       </Container>
       {currentId && (
         <Container>

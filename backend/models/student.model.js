@@ -32,9 +32,13 @@ const student = (connection, DataTypes) => {
             type: DataTypes.DATE,
         },
         formationMaxDuration: {
-            type: DataTypes.DATE,
-            allowNull: false,
+            type: DataTypes.INTEGER,
+            defaultValue: 350
         },
+        isRemote: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     },
         {
             timestamp: true,

@@ -1,6 +1,7 @@
 // imports
 const express = require("express");
 const controller = require("../controllers/student.controller.js");
+const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // router initialization
 const router = express.Router();
@@ -14,8 +15,8 @@ router.get("/getall", controller.getAllStudents);
         // get one
 router.get("/get/:id", controller.getStudent);
         // update one
-router.put("/update/:id", controller.updateStudent)
+router.put("/update/:id", verifyToken, controller.updateStudent)
         // delete one
-router.delete("/delete/:id", controller.deleteStudent);
+router.delete("/delete/:id", verifyToken, controller.deleteStudent);
 
 exports.router = router;

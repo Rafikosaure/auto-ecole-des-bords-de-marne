@@ -1,6 +1,6 @@
-const document =  (connection, DataTypes) => {
+const studentsDocument =  (connection, DataTypes) => {
     connection.define(
-    "Document",
+    "studentsDocument",
     {
         convocationTime: {
             type: DataTypes.DATE,
@@ -9,7 +9,8 @@ const document =  (connection, DataTypes) => {
             type: DataTypes.STRING,
         },
         document: {
-            type: DataTypes.BLOB,
+            // 16,777,215 bytes of data
+            type: DataTypes.BLOB("medium"),
         }
     },
         {
@@ -18,4 +19,4 @@ const document =  (connection, DataTypes) => {
     );
 };
 
-exports.document = document;
+exports.studentsDocument = studentsDocument;
