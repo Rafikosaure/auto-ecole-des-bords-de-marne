@@ -1,0 +1,248 @@
+/* src/pages/AdminPage.css */
+
+/* Styles généraux */
+.admins-container {
+  max-width: 800px; /* Largeur maximale du conteneur */
+  margin: 0 auto; /* Centre horizontalement */
+  padding: 20px; /* Espacement interne */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre optionnelle */
+  border-radius: 8px; /* Coins arrondis */
+  background-color: #fff; /* Fond blanc */
+}
+
+/* Centrer les blocs "Ajouter un Administrateur" et "Modifier Administrateur" */
+.add-admin-container, .edit-admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre horizontalement */
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #f9f9f9; /* Fond différent pour distinction */
+  text-align: center; /* Centre le texte à l'intérieur */
+  margin-bottom: 20px; /* Espacement en dessous */
+}
+
+.add-admin-container h3, .edit-admin-container h3 {
+  width: 100%;
+  text-align: center; /* Centre le texte de l'en-tête */
+  margin-bottom: 20px; /* Espacement en dessous de l'en-tête */
+}
+
+.add-admin-form, .edit-admin-form {
+  width: 100%;
+  max-width: 400px; /* Limite la largeur pour grands écrans */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre les éléments du formulaire */
+}
+
+.add-admin-form .form-group, .edit-admin-form .mb-3 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre les labels et inputs */
+}
+
+.add-admin-form .form-group label, .edit-admin-form .form-label {
+  width: 100%;
+  text-align: center; /* Centre les labels */
+  margin-bottom: 5px; /* Espacement en dessous des labels */
+}
+
+.add-admin-form .form-control, .edit-admin-form .form-control {
+  width: 100%;
+  max-width: 300px; /* Limite la largeur des champs */
+}
+
+/* Styles spécifiques pour les boutons "Modifier" et "Supprimer" */
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Centre les boutons dans le conteneur */
+  gap: 10px; /* Ajoute un espace entre les boutons */
+}
+
+/* Nouvelle classe commune pour les boutons d'action */
+.action-buttons .admin-action-button {
+  width: 105px; /* Largeur par défaut */
+  height: 38.5px; /* Hauteur par défaut */
+  padding: 0; /* Supprime le padding pour respecter les dimensions exactes */
+  font-size: 14px; /* Taille de la police */
+  text-align: center; /* Centre le texte à l'intérieur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles pour le bouton "Rajouter un Administrateur" */
+.btn-add-admin {
+  width: 100%; /* Prend toute la largeur disponible */
+  max-width: 300px; /* Limite la largeur */
+  margin: 0 auto; /* Centre horizontalement */
+  display: block; /* Permet de centrer avec margin */
+}
+
+/* Centrer les boutons "Enregistrer" et "Annuler" verticalement */
+.form-buttons {
+  display: flex;
+  flex-direction: column; /* Disposition verticale */
+  align-items: center; /* Centre horizontalement */
+  justify-content: center; /* Centre verticalement */
+  width: 100%;
+  max-width: 300px; /* Même largeur que les autres boutons */
+  gap: 10px; /* Espacement entre les boutons */
+  margin-top: 10px; /* Espacement au-dessus */
+}
+
+/* Assurer que les boutons dans form-buttons ont la même taille que les autres boutons */
+.form-buttons .btn {
+  width: 100%; /* Prend toute la largeur disponible du conteneur */
+  max-width: 300px; /* Limite la largeur pour uniformité */
+}
+
+/* Responsivité */
+
+/* Grands écrans (minimum 1201px) */
+@media (min-width: 1201px) {
+  /* Centrer les blocs "Ajouter un Administrateur" et "Modifier Administrateur" */
+  .add-admin-container, .edit-admin-container {
+    max-width: 600px; /* Limite la largeur maximale pour éviter l'étirement excessif */
+    margin: 0 auto; /* Centre le bloc dans le conteneur */
+  }
+
+  /* Assure que les boutons ne deviennent pas trop larges */
+  .admin-button {
+    max-width: 300px; /* Limite la largeur des boutons */
+  }
+
+  /* Centrer les boutons "Enregistrer" et "Annuler" */
+  .form-buttons {
+    flex-direction: column; /* Disposition verticale */
+  }
+}
+
+/* Écrans de taille moyenne à petite (jusqu'à 1200px) */
+@media (max-width: 1200px) {
+  /* Centrage et affichage du tableau */
+  .table thead {
+    display: none;
+  }
+
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 10px;
+  }
+
+  .table td {
+    text-align: center; /* Centre le texte dans les cellules */
+    position: relative;
+    padding-left: 0; /* Supprime le padding gauche pour centrer */
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 100%; /* S'assure que l'étiquette prend toute la largeur */
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+    text-align: center; /* Centre le texte de l'étiquette */
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: row; /* Les boutons sont en ligne */
+    justify-content: center; /* Centre les boutons */
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: row; /* Aligne les boutons horizontalement */
+    justify-content: center; /* Centre les boutons dans le conteneur */
+    width: 100%; /* Prend toute la largeur disponible */
+    gap: 10px; /* Ajoute un espace entre les boutons */
+  }
+
+  .action-buttons .admin-action-button {
+    margin: 0; /* Supprime la marge */
+    padding: 0.25rem 0.4rem; /* Réduit le padding des boutons */
+    font-size: 0.8rem; /* Réduit la taille de la police pour les petits écrans */
+    width: 150px; /* Taille fixe pour tous les boutons */
+    height: 38.5px; /* Maintient la hauteur constante */
+  }
+
+  /* Centrer les boutons "Enregistrer" et "Annuler" sur les écrans moyens à petits */
+  .form-buttons {
+    flex-direction: column; /* Disposition verticale */
+    max-width: 300px; /* Limite la largeur des boutons */
+  }
+
+  .form-buttons .btn {
+    width: 100%; /* Prend toute la largeur disponible du conteneur */
+    max-width: 300px; /* Limite la largeur pour uniformité */
+  }
+}
+
+/* Très petits écrans (375px et moins) */
+@media (max-width: 375px) {
+  .btn-add-admin {
+    width: 100%; /* Prend toute la largeur du conteneur */
+  }
+
+  .table td.admin-name {
+    text-align: center; /* Centre le nom de l'administrateur */
+  }
+
+  .table td.actions {
+    text-align: center; /* Centre les boutons dans la colonne Actions */
+  }
+
+  /* Centrer les éléments du formulaire */
+  .add-admin-form {
+    align-items: center; /* Centre les éléments horizontalement */
+  }
+
+  .add-admin-form .form-group {
+    align-items: center; /* Centre les labels et inputs */
+  }
+
+  .add-admin-form .form-group label {
+    text-align: center; /* Centre les labels */
+  }
+
+  /* Centrer les boutons dans le formulaire "Modifier Administrateur" */
+  .edit-admin-form .form-buttons {
+    justify-content: center; /* Centre les boutons */
+  }
+
+  .edit-admin-form .admin-action-button {
+    width: 100%; /* Prend toute la largeur disponible */
+    max-width: 300px; /* Limite la largeur pour uniformité */
+    height: 38.5px; /* Maintient la hauteur constante */
+  }
+
+  /* Disposition verticale des boutons sur les petits écrans */
+  .form-buttons {
+    flex-direction: column; /* Disposition verticale */
+  }
+
+  .form-buttons .btn {
+    width: 100%; /* Prend toute la largeur disponible du conteneur */
+    max-width: 300px; /* Limite la largeur pour uniformité */
+  }
+}
+
+/* **Nouvelle Media Query pour les écrans entre 375px et 412px** */
+@media (min-width: 375px) and (max-width: 412px) {
+  .action-buttons .admin-action-button {
+    width: 152px !important; /* Largeur souhaitée */
+    height: 38px !important; /* Hauteur souhaitée */
+    font-size: 14px !important; /* Taille de la police */
+  }
+}
