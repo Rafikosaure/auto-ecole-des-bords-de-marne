@@ -8,15 +8,15 @@ const fs = require("fs");
 const path = require("path");
 
 // checks if assets/instructors exists
-if(!fs.existsSync(ENV.BASEPATH)){
+if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
     // creates the directory if it doesn't exists
-    fs.mkdirSync(ENV.BASEPATH, {recursive: true})
-    console.log(`Path ${ENV.BASEPATH} has been created`)
+    fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true});
+    console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`);
 }
 const storage = multer.diskStorage({
     // sets the destination folder for the files
     destination: function (req, file, cb){
-        cb(null, ENV.BASEPATH);
+        cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);
     },
     filename: function (req, file, cb) {
         // formats the filename to make it "unique"
@@ -45,7 +45,7 @@ const upload = multer({
             ) {
                 return(cb(new Error("Format not supported, supported format are .png .jpg .jpeg .pdf")));
             };
-            cb(null, true)
+            cb(null, true);
         }
 })
 const uploadOne = multer({
@@ -62,7 +62,7 @@ const uploadOne = multer({
             ) {
                 return(cb(new Error("Format not supported, supported format are .png .jpg .jpeg .pdf")));
             };
-            cb(null, true)
+            cb(null, true);
         }
 })
 
