@@ -9,11 +9,11 @@ const router = express.Router();
 // routes
     // CRUD
         // add
-router.post("/add", verifyToken, controller.addStudent);
+router.post("/add", controller.addStudent);
         // get all
-router.get("/getall", verifyToken, controller.getAllStudents);
+router.get("/getall", controller.getAllStudents);
         // get one
-router.get("/get/:id", verifyToken, controller.getStudent);
+router.get("/get/:id", controller.getStudent);
         // update one
 router.put("/update/:id", verifyToken, controller.updateStudent)
         // delete one
