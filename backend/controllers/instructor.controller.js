@@ -113,7 +113,7 @@ const addDocument = async (req, res, next) => {
         // the actual files are then found in the assets/instructors directory
         for(const fileName of req.files.files){
             // full path to file
-            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + fileName);
+            file = fs.readFileSync(ENV.BASEPATH + "/" + fileName);
             // SQL create query
             await instructorsDocument.create({
                 ...req.body,
@@ -125,13 +125,13 @@ const addDocument = async (req, res, next) => {
                 document: await processImage(file)
               });
             // deletes the file from instructor folder
-            fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, fileName));
+            fs.rmSync(path.join(ENV.BASEPATH, fileName));
         }
         return res.status(200).json({message: "The files have been saved"});
     } catch (error) {
         // wipes the entire instructor folder in case an error occured
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
-            fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
+        fs.readdirSync(ENV.BASEPATH).map(file => {
+            fs.rmSync(ENV.BASEPATH + "/" + file);
         })
         return errorHandler(req, res, error, contexts.instructor);
     }
@@ -149,7 +149,7 @@ const updateDocument = async (req, res, any) => {
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // full path to file
-        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.files[0]);
+        file = fs.readFileSync(ENV.BASEPATH + "/" + req.files.files[0]);
         await document.update({
             ...req.body,
             // resizes the file
@@ -157,12 +157,12 @@ const updateDocument = async (req, res, any) => {
         });
         
         // deletes the file from instructor folder 
-        fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.files[0]));
+        fs.rmSync(path.join(ENV.BASEPATH, req.files.files[0]));
         return res.status(200).json({message: "The file has been updated"});
     } catch (error) {
         // wipes the entire instructor folder in case an error occured
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
-            fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
+        fs.readdirSync(ENV.BASEPATH).map(file => {
+            fs.rmSync(ENV.BASEPATH + "/" + file);
         })
         return errorHandler(req, res, error, contexts.instructor);
     }

@@ -8,15 +8,15 @@ const fs = require("fs");
 const path = require("path");
 
 // checks if assets/instructors exists
-if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
+if(!fs.existsSync(ENV.BASEPATH)){
     // creates the directory if it doesn't exists
-    fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true})
-    console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`)
+    fs.mkdirSync(ENV.BASEPATH, {recursive: true})
+    console.log(`Path ${ENV.BASEPATH} has been created`)
 }
 const storage = multer.diskStorage({
     // sets the destination folder for the files
     destination: function (req, file, cb){
-        cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);
+        cb(null, ENV.BASEPATH);
     },
     filename: function (req, file, cb) {
         // formats the filename to make it "unique"

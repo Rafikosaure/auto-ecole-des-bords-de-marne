@@ -28,7 +28,7 @@ const verifyToken = (req, res, next) => {
             // dans l'objet req
             req.user = user;
 
-            next();
+            return next();
         });
     } catch (error) {
         if(error.status == 401) return next(errorHandler(req, res, error, contexts.Token));
