@@ -57,3 +57,20 @@ main {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
 }
 
+
+@media (max-width: 768px) {
+  .logo {
+    width: 100px;
+  }
+
+
+  .custom-header .navbar-toggler {
+    margin-left: auto;
+  }
+
+  .navbar-brand {
+    flex-grow: 1;
+  }
+}
+
+
