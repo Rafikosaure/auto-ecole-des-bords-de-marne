@@ -1,38 +1,5 @@
-
-.nav-link {
-  color: #333;
-  transition: color 0.3s ease-in-out; 
-}
-
-.nav-link:hover {
-  color: #007bff;
-}
-
-.nav-link.active {
-  color: #007bff;
-  font-weight: bold;
-}
-
-@media (max-width: 992px) {
-  .navbar-nav {
-    text-align: center;
-  }
-}
-.footer {
-  margin-top: auto;
-  bottom: 0;
-  width: 100%;
-}
-
-.footer-link {
-  color: #333;
-  text-decoration: none; 
-}
-
-.footer-link:hover {
-  color:  #007bff;
-}
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -46,31 +13,3 @@ html, body {
 main {
   flex: 1;
 }
-
-.logo {
-  width: 300px; 
-  height: auto; 
-}
-.custom-header {
-  background-color: white; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
-}
-
-
-@media (max-width: 768px) {
-  .logo {
-    width: 100px;
-  }
-
-
-  .custom-header .navbar-toggler {
-    margin-left: auto;
-  }
-
-  .navbar-brand {
-    flex-grow: 1;
-  }
-}
-
-

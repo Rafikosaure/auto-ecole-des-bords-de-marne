@@ -4,7 +4,7 @@ import Logo from "../../images/logo.webp";
 import { useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
+import "./Header.css"
 
 const Header = () => {
   const location = useLocation();
