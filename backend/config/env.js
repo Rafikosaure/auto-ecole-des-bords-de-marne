@@ -18,7 +18,7 @@ const ENV = {
   DEFAULTADMINUSERNAME: process.env.DEFAULTADMINUSERNAME,
   DEFAULTADMINEMAIL: process.env.DEFAULTADMINEMAIL,
   DEFAULTADMINPASSWORD: process.env.DEFAULTADMINPASSWORD,
-  INSTRUCTORSDOCUMENTSPATH: `${__dirname}/../assets/instructors`
+  INSTRUCTORSDOCUMENTSPATH: `${__dirname}/../assets/instructorsDocuments`
 }
 
 // exports
