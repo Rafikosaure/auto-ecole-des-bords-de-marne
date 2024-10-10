@@ -10,6 +10,8 @@ const router = express.Router();
     // CRUD
         // add
 router.post("/add", verifyToken, controller.addStudent);
+
+router.get("/get", verifyToken, controller.getStudents);
         // get all
 router.get("/getall", verifyToken, controller.getAllStudents);
         // get one
