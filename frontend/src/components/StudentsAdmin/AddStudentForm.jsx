@@ -60,7 +60,6 @@ const AddStudentForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Проверка на заполненность всех полей
     if (
       !student.lastName ||
       !student.firstName ||
@@ -71,7 +70,7 @@ const AddStudentForm = () => {
       !student.formationDesiredEnd ||
       !student.formationMaxDuration
     ) {
-      notifyError(); // Показ уведомления об ошибке
+      notifyError(); 
       return;
     }
 
