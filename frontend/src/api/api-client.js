@@ -9,7 +9,10 @@ const apiClient = axios.create({
 
 export default apiClient;
 
-export const getAllStudents = () => apiClient.get(`${studentsRoute}getall`);
+export const getStudents = () => apiClient.get(`${studentsRoute}get`);
+
+export const getAllStudents = (page, limit) =>
+  apiClient.get(`${studentsRoute}getall?page=${page}&limit=${limit}`);
 
 export const getStudentById = (id) =>
   apiClient.get(`${studentsRoute}get/${id}`);

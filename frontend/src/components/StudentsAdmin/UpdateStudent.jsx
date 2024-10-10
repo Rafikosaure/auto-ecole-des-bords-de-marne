@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import {
-  getAllStudents,
+  getStudents,
   deleteStudent,
   updateStudent,
 } from "../../api/api-client";
@@ -21,7 +21,7 @@ const UpdateStudent = () => {
 
   const fetchStudents = async () => {
     try {
-      const students = await getAllStudents();
+      const students = await getStudents();
       console.log("Fetched students:", students.data);
       setStudentsList(students.data);
     } catch (error) {
