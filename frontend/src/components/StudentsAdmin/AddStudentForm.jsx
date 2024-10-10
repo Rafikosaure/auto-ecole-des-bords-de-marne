@@ -16,7 +16,17 @@ const AddStudentForm = () => {
     formationMaxDuration: "",
   });
 
-  // Уведомление об ошибке
+  const notifyError = () =>
+    toast.error("Veuillez remplir tous les champs.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const notify = () =>
     toast.error("Une erreur s'est produite lors de l'ajout de l'étudiant.", {
       position: "top-right",
@@ -28,7 +38,6 @@ const AddStudentForm = () => {
       progress: undefined,
     });
 
-  // Уведомление об успешном добавлении
   const confirmation = () =>
     toast.success("Étudiant ajouté avec succès !", {
       position: "top-right",
@@ -51,13 +60,28 @@ const AddStudentForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Проверка на заполненность всех полей
+    if (
+      !student.lastName ||
+      !student.firstName ||
+      !student.email ||
+      !student.phoneNumber ||
+      !student.birthdate ||
+      !student.formationStart ||
+      !student.formationDesiredEnd ||
+      !student.formationMaxDuration
+    ) {
+      notifyError(); // Показ уведомления об ошибке
+      return;
+    }
+
     try {
       const response = await addStudent(student);
       console.log(response);
-      confirmation(); // Отображение успешного уведомления
+      confirmation();
     } catch (e) {
       console.log(e);
-      notify(); // Отображение уведомления об ошибке
+      notify();
     }
   };
 
@@ -68,25 +92,25 @@ const AddStudentForm = () => {
         <Row>
           <Col md={6}>
             <Form.Group controlId="lastName" className="mb-3">
-              <Form.Label>Last Name</Form.Label>
+              <Form.Label>Nom de famille</Form.Label>
               <Form.Control
                 type="text"
                 name="lastName"
                 value={student.lastName}
                 onChange={handleChange}
-                placeholder="Enter last name"
+                placeholder="Entrez le nom de famille"
               />
             </Form.Group>
           </Col>
           <Col md={6}>
             <Form.Group controlId="firstName" className="mb-3">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label>Prénom</Form.Label>
               <Form.Control
                 type="text"
                 name="firstName"
                 value={student.firstName}
                 onChange={handleChange}
-                placeholder="Enter first name"
+                placeholder="Entrez le prénom"
               />
             </Form.Group>
           </Col>
@@ -101,19 +125,19 @@ const AddStudentForm = () => {
                 name="email"
                 value={student.email}
                 onChange={handleChange}
-                placeholder="Enter email"
+                placeholder="Entrez l'email"
               />
             </Form.Group>
           </Col>
           <Col md={6}>
             <Form.Group controlId="phoneNumber" className="mb-3">
-              <Form.Label>Phone Number</Form.Label>
+              <Form.Label>Numéro de téléphone</Form.Label>
               <Form.Control
                 type="text"
                 name="phoneNumber"
                 value={student.phoneNumber}
                 onChange={handleChange}
-                placeholder="Enter phone number"
+                placeholder="Entrez le numéro de téléphone"
               />
             </Form.Group>
           </Col>
@@ -122,7 +146,7 @@ const AddStudentForm = () => {
         <Row>
           <Col md={6}>
             <Form.Group controlId="birthdate" className="mb-3">
-              <Form.Label>Birthdate</Form.Label>
+              <Form.Label>Date de naissance</Form.Label>
               <Form.Control
                 type="date"
                 name="birthdate"
@@ -133,7 +157,7 @@ const AddStudentForm = () => {
           </Col>
           <Col md={6}>
             <Form.Group controlId="formationStart" className="mb-3">
-              <Form.Label>Formation Start</Form.Label>
+              <Form.Label>Date de début de la formation</Form.Label>
               <Form.Control
                 type="date"
                 name="formationStart"
@@ -147,7 +171,7 @@ const AddStudentForm = () => {
         <Row>
           <Col md={6}>
             <Form.Group controlId="formationDesiredEnd" className="mb-3">
-              <Form.Label>Formation Desired End</Form.Label>
+              <Form.Label>Date de fin souhaitée de la formation</Form.Label>
               <Form.Control
                 type="date"
                 name="formationDesiredEnd"
@@ -158,13 +182,13 @@ const AddStudentForm = () => {
           </Col>
           <Col md={6}>
             <Form.Group controlId="formationMaxDuration" className="mb-3">
-              <Form.Label>Formation Max Duration</Form.Label>
+              <Form.Label>Durée maximale de la formation</Form.Label>
               <Form.Control
                 type="text"
                 name="formationMaxDuration"
                 value={student.formationMaxDuration}
                 onChange={handleChange}
-                placeholder="Enter max duration"
+                placeholder="Entrez la durée maximale"
               />
             </Form.Group>
           </Col>
@@ -181,8 +205,6 @@ const AddStudentForm = () => {
           </Button>
         </div>
       </Form>
-
-      {/* Добавляем ToastContainer для отображения уведомлений */}
       <ToastContainer />
     </Container>
   );
