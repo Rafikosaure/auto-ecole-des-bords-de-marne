@@ -14,33 +14,17 @@ const app = express();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
 
-// used to avoid having frontend requests rejected
-app.use((error, req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", ENV.FRONTROUTE);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    return next();
-});
-
+// cors config
 app.use(cors({
     origin: ENV.FRONTROUTE,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
-app.use((error, req, res, next) => {
-    const status = error.status || 500;
-    const message = error.message || "Something went wrong";
-    return res.status(status).json({
-        success: false,
-        status,
-        message,
-    });
-});
-app.use(cookieParser());
+// Preflight Requests
+app.options('*', cors());
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
