@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { ENV } = require("../config/env.js");
 const { createError,
-        contexts,
-        errors, 
-        errorHandler} = require('./errorHandler.js');
+    contexts,
+    errors,
+    errorHandler } = require('./errorHandler.js');
 
 const verifyToken = (req, res, next) => {
     try {
@@ -31,7 +31,7 @@ const verifyToken = (req, res, next) => {
             return next();
         });
     } catch (error) {
-        if(error.status == 401) return next(errorHandler(req, res, error, contexts.Token));
+        if (error.status == 401) return next(errorHandler(req, res, error, contexts.Token));
         return next(errorHandler(req, res, error, contexts.invalidToken));
     }
 };

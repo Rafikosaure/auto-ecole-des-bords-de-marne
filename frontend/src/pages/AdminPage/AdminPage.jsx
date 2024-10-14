@@ -3,9 +3,9 @@
 // src/pages/AdminPage.jsx
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './AdminPage.css';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/api-client';
 
 const AdminPage = () => {
   const [admins, setAdmins] = useState([]);
@@ -15,22 +15,13 @@ const AdminPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  // Configuration d'Axios avec withCredentials: true pour inclure les cookies
-  const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3001/api/admin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    withCredentials: true, // Inclure les cookies dans les requêtes
-  });
-
   // Intercepteur pour gérer les erreurs d'authentification
-  axiosInstance.interceptors.response.use(
+  apiClient.interceptors.response.use(
     response => response,
     error => {
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
         // Rediriger vers la page de connexion si le token est manquant ou invalide
-        navigate('/login'); // Utilisez navigate('/login') pour React Router v6
+        navigate('/connexion'); // Utilisez navigate('/login') pour React Router v6
       }
       return Promise.reject(error);
     }
@@ -38,7 +29,7 @@ const AdminPage = () => {
 
   const fetchAdmins = async () => {
     try {
-      const response = await axiosInstance.get('/getall');
+      const response = await apiClient.get('/admin/getall');
       setAdmins(response.data);
       console.log('Administrateurs récupérés:', response.data); // Log pour vérifier
     } catch (error) {
@@ -55,7 +46,7 @@ const AdminPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axiosInstance.delete(`/delete/${id}`);
+      await apiClient.delete(`/admin/delete/${id}`);
       await fetchAdmins();
       setMessage("Administrateur supprimé avec succès");
     } catch (error) {
@@ -71,7 +62,7 @@ const AdminPage = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.put(`/update/${editingAdmin.id}`, editingAdmin);
+      await apiClient.put(`/admin/update/${editingAdmin.id}`, editingAdmin);
       await fetchAdmins();
       setEditingAdmin(null);
       setMessage("Administrateur mis à jour avec succès");
@@ -89,7 +80,7 @@ const AdminPage = () => {
   const handleRegisterAdmin = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post('/signup', newAdmin);
+      await apiClient.post('/admin/signup', newAdmin);
       await fetchAdmins();
       setNewAdmin({ username: '', password: '' });
       setShowAddForm(false);
@@ -133,6 +124,18 @@ const AdminPage = () => {
             </div>
 
             <div className="form-group mb-3">
+              <label>Adresse e-mail</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                value={newAdmin.email}
+                onChange={handleNewAdminChange}
+                required
+              />
+            </div>
+
+            <div className="form-group mb-3">
               <label>Mot de passe</label>
               <input
                 type="password"
@@ -146,7 +149,7 @@ const AdminPage = () => {
 
             {message && <div className="alert alert-info">{message}</div>}
 
-            <button 
+            <button
               type="submit" // Utilise le type "submit" pour gérer la soumission du formulaire
               className="btn btn-primary admin-button btn-full-width"
             >
@@ -173,13 +176,24 @@ const AdminPage = () => {
               />
             </div>
             <div className="mb-3">
+              <label htmlFor="email" className="form-label">Adresse email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={editingAdmin.email}
+                onChange={handleEditChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
               <label htmlFor="password" className="form-label">Mot de passe</label>
               <input
                 type="password"
                 className="form-control"
                 id="password"
                 name="password"
-                value={editingAdmin.password || ""}
                 onChange={handleEditChange}
                 required
               />
@@ -240,7 +254,7 @@ export default AdminPage;
 
 
 
-// // AdminPage.js version bouton "Modifier" et "Supprimer" modifié identique 
+// // AdminPage.js version bouton "Modifier" et "Supprimer" modifié identique
 // src/pages/AdminPage.jsx
 
 // import React, { useState, useEffect } from 'react';
@@ -359,7 +373,7 @@ export default AdminPage;
 
 //             {message && <div className="alert alert-info">{message}</div>}
 
-//             <button 
+//             <button
 //               type="button" // Changez le type en "button" pour éviter le rechargement de la page
 //               className="btn btn-primary admin-button btn-full-width"
 //               onClick={handleRegisterAdmin}
@@ -449,7 +463,7 @@ export default AdminPage;
 
 // export default AdminPage;
 
-// // AdminPage.js version ok 
+// // AdminPage.js version ok
 // import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 // import './AdminPage.css'; // Assurez-vous d'importer le CSS
@@ -566,7 +580,7 @@ export default AdminPage;
 
 //             {message && <div className="alert alert-info">{message}</div>}
 
-//             <button 
+//             <button
 //               type="button" // Changez le type en "button" pour éviter le rechargement de la page
 //               className="btn btn-primary admin-button btn-full-width"
 //               onClick={handleRegisterAdmin}

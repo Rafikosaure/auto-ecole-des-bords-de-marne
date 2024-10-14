@@ -22,34 +22,35 @@ const addStudent = async (req, res, next) => {
   }
 };
 
- const getStudents = async (req, res, next) => {
-    try {
-        // SQL Select query to get all students
-        const students = await Student.findAll(
-            {
-                // includes values from other tables
-                include: [
-                    {
-                        model: studentsDocument,
-                        as: "documents"},
-                    {
-                        model: Remark,
-                        as: "remarks"
-                    }
-            ]
-        });
-        res.status(200).json(students);
-    } catch (error) {
-        return errorHandler(req, res, error, contexts.student);
-    }
-   }
-   
+const getStudents = async (req, res, next) => {
+  try {
+    // SQL Select query to get all students
+    const students = await Student.findAll(
+      {
+        // includes values from other tables
+        include: [
+          {
+            model: studentsDocument,
+            as: "documents"
+          },
+          {
+            model: Remark,
+            as: "remarks"
+          }
+        ]
+      });
+    res.status(200).json(students);
+  } catch (error) {
+    return errorHandler(req, res, error, contexts.student);
+  }
+}
+
 const getAllStudents = async (req, res, next) => {
   try {
- 
-    const page = parseInt(req.query.page) || 1; 
-    const limit = parseInt(req.query.limit) || 10; 
-    const offset = (page - 1) * limit; 
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
 
     const { count, rows: students } = await Student.findAndCountAll({
       limit,
@@ -124,10 +125,11 @@ const deleteStudent = async (req, res, next) => {
 };
 
 // exports
-exports.addStudent = addStudent;
-exports.getStudents = getStudents;
-exports.getAllStudents = getAllStudents;
-exports.getStudent = getStudent;
-exports.updateStudent = updateStudent;
-exports.deleteStudent = deleteStudent;
-
+module.exports = {
+  addStudent,
+  getStudents,
+  getAllStudents,
+  getStudent,
+  updateStudent,
+  deleteStudent,
+}

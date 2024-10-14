@@ -4,7 +4,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddStudentForm = () => {
+const AddStudentForm = ({ reload }) => {
   const [student, setStudent] = useState({
     lastName: "",
     firstName: "",
@@ -70,7 +70,7 @@ const AddStudentForm = () => {
       !student.formationDesiredEnd ||
       !student.formationMaxDuration
     ) {
-      notifyError(); 
+      notifyError();
       return;
     }
 
@@ -78,6 +78,7 @@ const AddStudentForm = () => {
       const response = await addStudent(student);
       console.log(response);
       confirmation();
+      await reload(0);
     } catch (e) {
       console.log(e);
       notify();
