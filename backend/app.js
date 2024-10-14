@@ -3,11 +3,11 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const ENV = require("./config/env.js").ENV;
-const studentRouter = require("./routes/student.router.js").router;
-const instructorRouter = require("./routes/instructor.router.js").router;
-const adminRouter = require("./routes/admin.router.js").router;
-const documentRouter = require("./routes/document.router.js").router;
-const remarkRouter = require("./routes/remark.router.js").router;
+const studentRouter = require("./routes/student.router.js");
+const instructorRouter = require("./routes/instructor.router.js");
+const adminRouter = require("./routes/admin.router.js");
+const documentRouter = require("./routes/document.router.js");
+const remarkRouter = require("./routes/remark.router.js");
 
 // app
 const app = express();
