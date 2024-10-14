@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/api-client';
 
 const ConnexionPage = () => {
   const [admin, setAdmin] = useState({
@@ -28,13 +29,12 @@ const ConnexionPage = () => {
       };
 
       console.log("Objet de la requête :", trimmedAdmin)
-      const response = await axios.post('http://localhost:3001/api/admin/login', {
+      const response = await apiClient.post('/admin/login', {
         username: trimmedAdmin.username,
         password: trimmedAdmin.password,
         headers: {
           'Content-Type': 'application/json' // Ajout de l'en-tête pour le type de contenu
-        },
-        withCredentials: true // Inclure cette ligne pour envoyer les cookies
+        }
       });
       console.log('notre réponse :', response);
       setMessage(`Connexion réussie: ${response.data}`);
@@ -44,7 +44,7 @@ const ConnexionPage = () => {
         password: ''
       });
 
-      navigate('/admin');
+      navigate('/students');
     } catch (error) {
       console.error('Erreur lors de la connexion :', error); // Affiche l'erreur complète dans la console
       setMessage(`Erreur: ${error.response?.data.message || "Une erreur s'est produite."}`);
