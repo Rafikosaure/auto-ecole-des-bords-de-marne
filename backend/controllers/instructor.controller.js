@@ -104,28 +104,28 @@ const deleteInstructor = async (req, res, next) => {
 const addDocument = async (req, res, next) => {
     try {
         // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
         // checks if instructorId is valid
         if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         // checks if any file has been sent with the request
-        if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructor);
-        // maps over the req.files.files array that stores the filenames of the file recieved
+        if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
+        // maps over the req.files.filenames array that stores the filenames of the file recieved
         // the actual files are then found in the assets/instructors directory
-        for(const fileName of req.files.files){
+        for(const filename of req.files.filenames){
             // full path to file
-            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + fileName);
+            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
             // SQL create query
             await instructorsDocument.create({
                 ...req.body,
                 // type will be null if a filesType ARRAY is not provided
                 // ?. are here to avoid errors if the filesType ARRAY is not provided
-                // req.files.files.indexOf(fileName) gets the index of the current file in the req.files.files object
-                type: eval(req.body?.filesType)?.[req.files.files.indexOf(fileName)] ?? null,
+                // req.files.filenames.indexOf(filename) gets the index of the current file in the req.files.filenames object
+                type: eval(req.body?.filesType)?.[req.files.filenames.indexOf(filename)] ?? null,
                 // resizes the file
                 document: await processImage(file)
               });
             // deletes the file from instructor folder
-            fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, fileName));
+            fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, filename));
         }
         return res.status(200).json({message: "The files have been saved"});
     } catch (error) {
@@ -133,45 +133,45 @@ const addDocument = async (req, res, next) => {
         fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
             fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
         })
-        return errorHandler(req, res, error, contexts.instructor);
+        return errorHandler(req, res, error, contexts.instructorDocuments);
     }
 }
 
 const updateDocument = async (req, res, any) => {
     try {
         // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
         // checks if instructorId is valid 
         if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         // checks if any file has been sent with the request
-        if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructor);
+        if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
         // SQL select query
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // full path to file
-        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.files[0]);
+        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
         await document.update({
             ...req.body,
             // resizes the file
             document: await processImage(file)
         });
         
-        // deletes the file from instructor folder 
-        fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.files[0]));
-        return res.status(200).json({message: "The file has been updated"});
+        // deletes the file from instructor folder
+        fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.filenames[0]));
+        return res.status(200).json({message: "The document has been updated"});
     } catch (error) {
         // wipes the entire instructor folder in case an error occured
         fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
             fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
         })
-        return errorHandler(req, res, error, contexts.instructor);
+        return errorHandler(req, res, error, contexts.instructorDocuments);
     }
 }
 
 const deleteDocument = async (req, res, next) => {
     try {
         // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructor);
+        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
         // checks if instructorId is valid 
         if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         
@@ -183,9 +183,9 @@ const deleteDocument = async (req, res, next) => {
             ...req.body,
         });
 
-        return res.status(200).json({message: "The file has been updated"});
+        return res.status(200).json({message: "The document has been deleted"});
     } catch (error) {
-        return errorHandler(req, res, error, contexts.instructor);
+        return errorHandler(req, res, error, contexts.instructorDocuments);
     }
 }
 

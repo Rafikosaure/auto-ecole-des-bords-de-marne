@@ -16,7 +16,7 @@ const contexts = {
     instructor: "Instructor",
     student: "Student",
     Token: "Token",
-    instructorDocuments: "Instructors documents"
+    instructorDocuments: "Instructors document"
 }
 
 // logs and sents an appropriate response given an error
@@ -70,11 +70,12 @@ const createError = (req, issue, context) => {
             // unsupported media type
             error.status = 415;
             error.name = "WrongFileFormat";
-            error.message = `Supported file formats are : .png .jpg .jpeg .pdf`;
+            error.message = `Supported file formats are: .png .jpg .jpeg .pdf`;
             break;
         case errors.ErrorUndefinedKey:
             error.name = "KeyNotProvided";
-            error.message = context == contexts.remark &&  `StudentId or instructorId must be provided`;
+            error.message = context == contexts.remark &&  `studentId or instructorId must be provided`;
+            error.message = context == contexts.instructorDocuments &&  `instructorId must be provided`;
             break;
         case errors.ErrorNoToken:
             // if no token unauthorized => 401

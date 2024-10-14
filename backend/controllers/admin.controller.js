@@ -95,6 +95,17 @@ const loginAdmin = async (req, res, next) => {
 }
 
 
+const logoutAdmin = async (req, res, next) => {
+    try {
+        // removes the connection httponly cookie
+        res.clearCookie("access_token").status(200).json({message: "logged out"});
+        console.log("connection cookie has been removed");
+    } catch (error) {
+        return errorHandler(req, res, error, contexts.admin);
+    }
+}
+
+
 // exports
 exports.getAllAdmins = getAllAdmins;
 exports.getAdmin = getAdmin;
@@ -102,3 +113,4 @@ exports.updateAdmin = updateAdmin;
 exports.deleteAdmin = deleteAdmin;
 exports.registerAdmin = registerAdmin;
 exports.loginAdmin = loginAdmin;
+exports.logoutAdmin = logoutAdmin;

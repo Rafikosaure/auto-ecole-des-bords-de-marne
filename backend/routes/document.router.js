@@ -7,22 +7,22 @@ const { verifyToken } = require("../middlewares/verifyToken.js");
 const router = express.Router();
 
 // routes
-    // CRUD
-        // add all documents for a student
+// CRUD
+// add all documents for a student
 router.post("/add/:studentId", verifyToken, controller.addAllDocuments);
-        // add one document for a student
+// add one document for a student
 router.post("/add/:studentId/:documentId")
-        // get all documents for a student
+// get all documents for a student
 router.get("/getall/:studentId", verifyToken, controller.getAllDocuments);
-        // get one document for a student
+// get one document for a student
 router.get("/get/:studentId/:documentId", verifyToken, controller.getDocument);
-        // update all documents of a student
+// update all documents of a student
 router.put("/update/:studentId", verifyToken, controller.updateAllDocuments)
-        // update one document of a student
+// update one document of a student
 router.put("/update/:studentId/:documentId", verifyToken, controller.updateDocument)
-        // delete all documents of a student
+// delete all documents of a student
 router.delete("/delete/:studentId", verifyToken, controller.deleteAllDocuments);
-        // deletes one document of a student
+// deletes one document of a student
 router.delete("/delete/:studentId/:documentId", verifyToken, controller.deleteDocument);
 
-exports.router = router;
+module.exports = router;

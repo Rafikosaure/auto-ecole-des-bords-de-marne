@@ -1,8 +1,11 @@
+
+
+
 //src/instructorsPage/InstructorPage.jsx VERSION OK 
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../InstructorsPage/InstructorPage.css'; // Assurez-vous que le chemin est correct
+import apiClient from '../../api/api-client';
 
 const InstructorsPage = () => {
     const [instructors, setInstructors] = useState([]);
@@ -25,7 +28,7 @@ const InstructorsPage = () => {
 
     const fetchInstructors = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/instructor/getall');
+            const response = await apiClient.get('/instructor/getall');
             setInstructors(response.data);
         } catch (error) {
             console.error("Erreur lors de la récupération des instructeurs:", error);
@@ -36,10 +39,10 @@ const InstructorsPage = () => {
         e.preventDefault();
         try {
             if (editingInstructor) {
-                await axios.put(`http://localhost:3001/api/instructor/update/${editingInstructor.id}`, formData);
+                await apiClient.put(`/instructor/update/${editingInstructor.id}`, formData);
                 setSuccessMessage('Un instructeur a bien été modifié');
             } else {
-                await axios.post('http://localhost:3001/api/instructor/add', formData);
+                await apiClient.post('/instructor/add', formData);
                 setSuccessMessage('Un instructeur a bien été ajouté');
             }
 
@@ -71,7 +74,7 @@ const InstructorsPage = () => {
         if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet instructeur ?")) return;
 
         try {
-            await axios.delete(`http://localhost:3001/api/instructor/delete/${id}`);
+            await apiClient.delete(`/instructor/delete/${id}`);
             setSuccessMessage('Un instructeur a bien été supprimé');
             setTimeout(() => {
                 setSuccessMessage('');
@@ -354,7 +357,7 @@ export default InstructorsPage;
 
 //     const fetchInstructors = async () => {
 //         try {
-//             const response = await axios.get('http://localhost:3001/api/instructor/getall');
+//             const response = await axios.get('/instructor/getall');
 //             setInstructors(response.data);
 //         } catch (error) {
 //             console.error("Erreur lors de la récupération des instructeurs:", error);
@@ -365,10 +368,10 @@ export default InstructorsPage;
 //         e.preventDefault();
 //         try {
 //             if (editingInstructor) {
-//                 await axios.put(`http://localhost:3001/api/instructor/update/${editingInstructor.id}`, formData);
+//                 await axios.put(`/instructor/update/${editingInstructor.id}`, formData);
 //                 setSuccessMessage('Un instructeur a bien été modifié');
 //             } else {
-//                 await axios.post('http://localhost:3001/api/instructor/add', formData);
+//                 await axios.post('/instructor/add', formData);
 //                 setSuccessMessage('Un instructeur a bien été ajouté');
 //             }
 
@@ -396,7 +399,7 @@ export default InstructorsPage;
 
 //     const handleDelete = async (id) => {
 //         try {
-//             await axios.delete(`http://localhost:3001/api/instructor/delete/${id}`);
+//             await axios.delete(`/instructor/delete/${id}`);
 //             setSuccessMessage('Un instructeur a bien été supprimé');
 //             setTimeout(() => {
 //                 setSuccessMessage('');
@@ -677,7 +680,7 @@ export default InstructorsPage;
 
 //     const fetchInstructors = async () => {
 //         try {
-//             const response = await axios.get('http://localhost:3001/api/instructor/getall');
+//             const response = await axios.get('/instructor/getall');
 //             setInstructors(response.data);
 //         } catch (error) {
 //             console.error("Erreur lors de la récupération des instructeurs:", error);
@@ -688,10 +691,10 @@ export default InstructorsPage;
 //         e.preventDefault();
 //         try {
 //             if (editingInstructor) {
-//                 await axios.put(`http://localhost:3001/api/instructor/update/${editingInstructor.id}`, formData);
+//                 await axios.put(`/instructor/update/${editingInstructor.id}`, formData);
 //                 setSuccessMessage('Un instructeur a bien été modifié');
 //             } else {
-//                 await axios.post('http://localhost:3001/api/instructor/add', formData);
+//                 await axios.post('/instructor/add', formData);
 //                 setSuccessMessage('Un instructeur a bien été ajouté');
 //             }
 
@@ -719,7 +722,7 @@ export default InstructorsPage;
 
 //     const handleDelete = async (id) => {
 //         try {
-//             await axios.delete(`http://localhost:3001/api/instructor/delete/${id}`);
+//             await axios.delete(`/instructor/delete/${id}`);
 //             setSuccessMessage('Un instructeur a bien été supprimé');
 //             setTimeout(() => {
 //                 setSuccessMessage('');

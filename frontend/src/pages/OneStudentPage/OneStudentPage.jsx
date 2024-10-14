@@ -1,9 +1,11 @@
-import OneStudent from "../../components/Students/OneStudent"
+import OneStudent from "../../components/Students/OneStudent";
 
 const OneStudentPage = () => {
   return (
-    <OneStudent/>
-  )
-}
+    <>
+      <OneStudent />
+    </>
+  );
+};
 
-export default OneStudentPage
+export default OneStudentPage;
