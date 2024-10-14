@@ -21,6 +21,8 @@ const storage = multer.diskStorage({
         cb(null, ENV.INSTRUCTORSDOCUMENTSPATH);
     },
     filename: function (req, file, cb) {
+        // slices filename if it's too long
+        if(file.originalname.length > 50) file.originalname = file.originalname.slice(0, 50);
         // formats the filename to make it "unique"
         const filename = file.originalname + '-' + Date.now();
         // creates a files.filenames array in the request to store the filenames if it doesn't exists
