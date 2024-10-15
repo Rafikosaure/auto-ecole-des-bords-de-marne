@@ -1,44 +1,71 @@
-/* Classe spécifique pour les boutons "Modifier" et "Supprimer" */
-.btn-action {
-    width: 152px !important;     /* Largeur fixe */
-    height: 38px !important;     /* Hauteur fixe */
-    padding: 0 !important;       /* Supprimer le padding par défaut */
-    font-size: 14px !important;  /* Taille de police ajustée */
-    border-radius: 5px !important; /* Arrondi des bords */
-    display: flex !important;    /* Utiliser flex pour centrer le contenu */
-    justify-content: center !important; /* Centrer horizontalement */
-    align-items: center !important;     /* Centrer verticalement */
-    text-align: center !important;      /* Centrer le texte */
+/* InstructorPage.css */
+
+/* Style pour le conteneur principal */
+.container {
+    margin-top: 50px; /* Marge supérieure pour le conteneur */
 }
 
-/* Classe pour centrer les boutons dans leur conteneur */
-.btn-group-center {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px; /* Espacement entre les boutons */
-}
-
-/* Style pour le bouton "Ajouter Instructeur" */
-.btn-add-instructor {
-    width: 200px !important;     /* Largeur fixe */
-    height: 48px !important;     /* Hauteur fixe */
-    border-radius: 5px !important; /* Arrondi des bords */
-    font-size: 16px !important;  /* Taille de police */
-    display: block !important;   /* Traiter comme un bloc pour le centrage */
-    margin: 20px auto !important; /* Centrer horizontalement avec marge */
-}
-
-/* Centrer le titre */
+/* Style pour le titre centré */
 .text-center-title {
-    text-align: center;
-    margin-bottom: 20px; /* Espacement en dessous du titre */
+    text-align: center; /* Alignement du texte au centre */
 }
 
-/* Flex container pour centrer les boutons dans les cartes mobiles */
-.d-flex-center-mobile {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px; /* Espacement entre les boutons */
+/* Style pour le bouton d'ajout d'instructeur */
+.btn-add-instructor {
+    display: block; /* Affichage en bloc pour le centrer */
+    margin: 0 auto; /* Centrage horizontal */
 }
+
+/* Styles pour les alertes de succès et d'erreur */
+.alert {
+    margin-top: 20px; /* Marge supérieure pour les alertes */
+}
+
+/* Styles pour le tableau */
+.table {
+    margin-top: 20px; /* Marge supérieure pour le tableau */
+}
+
+/* Boutons personnalisés */
+
+/* Bouton Modifier - Couleur Jaune */
+.btn-modifier {
+    background-color: #ffc107 !important; /* Couleur jaune */
+    border-color: #ffc107 !important; /* Couleur de la bordure jaune */
+    color: #000 !important; /* Couleur du texte noir */
+}
+
+.btn-modifier:hover {
+    background-color: #e0a800 !important; /* Couleur plus foncée au survol */
+    border-color: #d39e00 !important; /* Couleur de bordure plus foncée au survol */
+}
+
+/* Bouton Ajouter - Couleur Verte */
+.btn-success {
+    background-color: #28a745 !important; /* Couleur verte */
+    border-color: #28a745 !important; /* Couleur de la bordure verte */
+}
+
+.btn-success:hover {
+    background-color: #218838 !important; /* Couleur plus foncée au survol */
+    border-color: #1e7e34 !important; /* Couleur de bordure plus foncée au survol */
+}
+
+/* Bouton Supprimer - Couleur Rouge */
+.btn-danger {
+    background-color: #dc3545 !important; /* Couleur rouge */
+    border-color: #dc3545 !important; /* Couleur de la bordure rouge */
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important; /* Couleur plus foncée au survol */
+    border-color: #bd2130 !important; /* Couleur de bordure plus foncée au survol */
+}
+
+/* Optionnel : Centrer les boutons dans le groupe */
+.btn-group-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
