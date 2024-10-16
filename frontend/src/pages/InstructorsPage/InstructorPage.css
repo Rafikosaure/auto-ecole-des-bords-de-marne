@@ -1,33 +1,3 @@
-/* InstructorPage.css */
-
-/* Style pour le conteneur principal */
-.container {
-    margin-top: 50px; /* Marge supérieure pour le conteneur */
-}
-
-/* Style pour le titre centré */
-.text-center-title {
-    text-align: center; /* Alignement du texte au centre */
-}
-
-/* Style pour le bouton d'ajout d'instructeur */
-.btn-add-instructor {
-    display: block; /* Affichage en bloc pour le centrer */
-    margin: 0 auto; /* Centrage horizontal */
-}
-
-/* Styles pour les alertes de succès et d'erreur */
-.alert {
-    margin-top: 20px; /* Marge supérieure pour les alertes */
-}
-
-/* Styles pour le tableau */
-.table {
-    margin-top: 20px; /* Marge supérieure pour le tableau */
-}
-
-/* Boutons personnalisés */
-
 /* Bouton Modifier - Couleur Jaune */
 .btn-modifier {
     background-color: #ffc107 !important; /* Couleur jaune */
@@ -68,4 +38,3 @@
     justify-content: center;
     align-items: center;
 }
-
