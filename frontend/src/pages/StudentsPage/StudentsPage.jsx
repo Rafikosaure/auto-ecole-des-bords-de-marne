@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 import StudentCard from "../../components/Students/StudentCard";
 import { getAllStudents } from "../../api/api-client";
-import SearchForm from "../../components/SerchForm/SerchForm";
+import SearchForm from "../../components/SearchForm/SearchForm";
 import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
 
 const StudentsPage = () => {
