@@ -215,18 +215,17 @@ const AdminPage = () => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th className="text-center">Nom</th> {/* Centré */}
-            <th className="actions-header text-center">Actions</th> {/* Aligné au centre */}
+            <th className="text-center">Nom</th>{/* Centré */}
+            <th className="actions-header text-center">Actions</th>{/* Aligné au centre */}
           </tr>
         </thead>
         <tbody>
           {admins.map((admin) => (
             <tr key={admin.id}>
-              <td className="admin-name text-center">{admin.username}</td> {/* Centré */}
-              <td className="text-center actions"> {/* Centré */}
+              <td className="admin-name text-center">{admin.username}</td>{/* Centré */}
+              <td className="text-center actions">{/* Centré */}
                 <div className="action-buttons">
-                  <button
-                    type="button" // Ajout type "button" pour éviter les soumissions du formulaire
+                  <button type="button" // Ajout type "button" pour éviter les soumissions du formulaire
                     className="btn btn-warning admin-action-button me-2"
                     onClick={() => handleEditClick(admin)}
                   >
