@@ -1,40 +1,68 @@
-/* Bouton Modifier - Couleur Jaune */
+.container {
+    max-width: 1200px; /* Limite la largeur maximale du conteneur */
+    margin: 0 auto; /* Centre le conteneur */
+    padding: 20px; /* Ajoute un peu de rembourrage */
+}
+
+.text-center-title {
+    text-align: center; /* Centre le titre */
+    margin-bottom: 20px; /* Ajoute un espace en bas du titre */
+}
+
+.add-instructor-container {
+    text-align: center; /* Centre le bouton d'ajout d'instructeur */
+}
+
+.btn-add-instructor {
+    width: 200px; /* Largeur du bouton */
+    padding: 10px; /* Rembourrage interne du bouton */
+}
+
+.table {
+    width: 100%; /* S'assure que le tableau prend toute la largeur */
+    margin-top: 20px; /* Espace au-dessus du tableau */
+}
+
+.table th, .table td {
+    text-align: center; /* Centre le texte dans les cellules du tableau */
+    vertical-align: middle; /* Centre verticalement le contenu */
+}
+
+.table th {
+    background-color: #f8f9fa; /* Couleur de fond pour l'en-tête du tableau */
+}
+
+.alert {
+    margin-top: 20px; /* Espace au-dessus des messages d'alerte */
+}
+
+.card {
+    margin-top: 20px; /* Espace au-dessus de la carte */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espace en bas des groupes de formulaires */
+}
+
+.form-check-label {
+    margin-left: 5px; /* Espace à gauche des étiquettes de cases à cocher */
+}
+
 .btn-modifier {
-    background-color: #ffc107 !important; /* Couleur jaune */
-    border-color: #ffc107 !important; /* Couleur de la bordure jaune */
-    color: #000 !important; /* Couleur du texte noir */
+    background-color: #007bff; /* Couleur personnalisée pour le bouton Modifier */
+    color: white; /* Couleur du texte du bouton Modifier */
 }
 
-.btn-modifier:hover {
-    background-color: #e0a800 !important; /* Couleur plus foncée au survol */
-    border-color: #d39e00 !important; /* Couleur de bordure plus foncée au survol */
-}
-
-/* Bouton Ajouter - Couleur Verte */
 .btn-success {
-    background-color: #28a745 !important; /* Couleur verte */
-    border-color: #28a745 !important; /* Couleur de la bordure verte */
+    background-color: #28a745; /* Couleur personnalisée pour le bouton Ajouter */
+    color: white; /* Couleur du texte du bouton Ajouter */
 }
 
-.btn-success:hover {
-    background-color: #218838 !important; /* Couleur plus foncée au survol */
-    border-color: #1e7e34 !important; /* Couleur de bordure plus foncée au survol */
-}
-
-/* Bouton Supprimer - Couleur Rouge */
 .btn-danger {
-    background-color: #dc3545 !important; /* Couleur rouge */
-    border-color: #dc3545 !important; /* Couleur de la bordure rouge */
+    background-color: #dc3545; /* Couleur personnalisée pour le bouton Supprimer */
+    color: white; /* Couleur du texte du bouton Supprimer */
 }
 
-.btn-danger:hover {
-    background-color: #c82333 !important; /* Couleur plus foncée au survol */
-    border-color: #bd2130 !important; /* Couleur de bordure plus foncée au survol */
-}
-
-/* Optionnel : Centrer les boutons dans le groupe */
-.btn-group-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.text-center {
+    text-align: center; /* Centre le texte */
 }
