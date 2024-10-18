@@ -1,4 +1,6 @@
-// src/pages/AdminPage.jsx VERSION OK KI MARCHE !!!
+// // AdminPage.js version ajout de verification JWT
+
+// src/pages/AdminPage.jsx
 
 import React, { useState, useEffect } from 'react';
 import './AdminPage.css';
@@ -9,7 +11,7 @@ const AdminPage = () => {
   const [admins, setAdmins] = useState([]);
   const [editingAdmin, setEditingAdmin] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newAdmin, setNewAdmin] = useState({ username: '', password: '', email: '' });
+  const [newAdmin, setNewAdmin] = useState({ username: '', password: '' });
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -18,7 +20,8 @@ const AdminPage = () => {
     response => response,
     error => {
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-        navigate('/connexion');
+        // Rediriger vers la page de connexion si le token est manquant ou invalide
+        navigate('/connexion'); // Utilisez navigate('/login') pour React Router v6
       }
       return Promise.reject(error);
     }
@@ -28,6 +31,7 @@ const AdminPage = () => {
     try {
       const response = await apiClient.get('/admin/getall');
       setAdmins(response.data);
+      console.log('Administrateurs récupérés:', response.data); // Log pour vérifier
     } catch (error) {
       console.error('Erreur lors de la récupération des administrateurs:', error);
       setMessage('Erreur lors de la récupération des administrateurs.');
@@ -35,7 +39,9 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
+    // Vérifier l'authentification en essayant de récupérer les admins
     fetchAdmins();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDelete = async (id) => {
@@ -50,7 +56,7 @@ const AdminPage = () => {
   };
 
   const handleEditClick = (admin) => {
-    setEditingAdmin({ ...admin, password: '' }); // Reset password to empty
+    setEditingAdmin({ ...admin });
   };
 
   const handleEditSubmit = async (e) => {
@@ -76,7 +82,7 @@ const AdminPage = () => {
     try {
       await apiClient.post('/admin/signup', newAdmin);
       await fetchAdmins();
-      setNewAdmin({ username: '', password: '', email: '' });
+      setNewAdmin({ username: '', password: '' });
       setShowAddForm(false);
       setMessage("Administrateur ajouté avec succès");
     } catch (error) {
@@ -144,7 +150,7 @@ const AdminPage = () => {
             {message && <div className="alert alert-info">{message}</div>}
 
             <button
-              type="submit"
+              type="submit" // Utilise le type "submit" pour gérer la soumission du formulaire
               className="btn btn-primary admin-button btn-full-width"
             >
               Ajouter un Administrateur
@@ -153,97 +159,88 @@ const AdminPage = () => {
         </div>
       )}
 
+      {editingAdmin && (
+        <div className="edit-admin-container mb-4">
+          <h3>Modifier Administrateur</h3>
+          <form onSubmit={handleEditSubmit} className="edit-admin-form">
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                name="username"
+                value={editingAdmin.username}
+                onChange={handleEditChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Adresse email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={editingAdmin.email}
+                onChange={handleEditChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">Mot de passe</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                onChange={handleEditChange}
+                required
+              />
+            </div>
+            <div className="form-buttons">
+              <button type="submit" className="btn btn-primary admin-action-button">Enregistrer les modifications</button>
+              <button
+                type="button"
+                className="btn btn-secondary admin-action-button btn-cancel"
+                onClick={() => setEditingAdmin(null)}
+              >
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
       <table className="table table-striped">
         <thead>
           <tr>
-            <th className="text-center">Nom</th>
-            <th className="text-center">Email</th> {/* New column for Email */}
-            <th className="actions-header text-center">Actions</th>
+            <th className="text-center">Nom</th>{/* Centré */}
+            <th className="actions-header text-center">Actions</th>{/* Aligné au centre */}
           </tr>
         </thead>
         <tbody>
           {admins.map((admin) => (
-            <React.Fragment key={admin.id}>
-              {editingAdmin && editingAdmin.id === admin.id && (
-                <tr>
-                  <td colSpan="3">
-                    <div className="edit-admin-container mb-4">
-                      <h3>Modifier Administrateur</h3>
-                      <form onSubmit={handleEditSubmit} className="edit-admin-form">
-                        <div className="mb-3">
-                          <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="username"
-                            name="username"
-                            value={editingAdmin.username}
-                            onChange={handleEditChange}
-                            required
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="email" className="form-label">Adresse email</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            name="email"
-                            value={editingAdmin.email}
-                            onChange={handleEditChange}
-                            required
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <label htmlFor="password" className="form-label">Mot de passe</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="password"
-                            name="password"
-                            value={editingAdmin.password} // Ensure this is set to an empty string when editing
-                            onChange={handleEditChange}
-                            required
-                          />
-                        </div>
-                        <div className="form-buttons">
-                          <button type="submit" className="btn btn-primary admin-action-button">Enregistrer les modifications</button>
-                          <button
-                            type="button"
-                            className="btn btn-secondary admin-action-button btn-cancel"
-                            onClick={() => setEditingAdmin(null)}
-                          >
-                            Annuler
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-              )}
-              <tr>
-                <td className="admin-name text-center">{admin.username}</td>
-                <td className="text-center">{admin.email}</td> {/* Display Email */}
-                <td className="text-center actions">
-                  <div className="action-buttons">
-                    <button
-                      type="button"
-                      className="btn btn-warning admin-action-button me-2"
-                      onClick={() => handleEditClick(admin)}
-                    >
-                      Modifier
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-danger admin-action-button"
-                      onClick={() => handleDelete(admin.id)}
-                    >
-                      Supprimer
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </React.Fragment>
+            <tr key={admin.id}>
+              <td className="admin-name text-center">{admin.username}</td>{/* Centré */}
+              <td className="text-center actions">{/* Centré */}
+                <div className="action-buttons">
+                  <button type="button" // Ajout type "button" pour éviter les soumissions du formulaire
+                    className="btn btn-warning admin-action-button me-2"
+                    onClick={() => handleEditClick(admin)}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    type="button" // Ajout type "button" pour éviter les soumissions du formulaire
+                    className="btn btn-danger admin-action-button"
+                    onClick={() => handleDelete(admin.id)}
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
@@ -252,6 +249,8 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+
 
 
 // // src/pages/AdminPage.jsx
