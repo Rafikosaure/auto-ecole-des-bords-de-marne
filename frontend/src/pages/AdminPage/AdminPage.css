@@ -101,6 +101,36 @@
   max-width: 300px; /* Limite la largeur pour uniformité */
 }
 
+/* Styles pour la ligne de modification inline */
+.edit-admin-row {
+  background-color: #f1f1f1; /* Couleur de fond légère pour distinguer la ligne */
+}
+
+.edit-admin-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  text-align: left; /* Alignement du texte à gauche pour les formulaires */
+}
+
+/* Styles pour le formulaire de modification */
+.edit-admin-form .form-label {
+  font-weight: bold;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Optionnel : Styles pour améliorer l'apparence des boutons */
+.admin-action-button {
+  min-width: 150px;
+}
+
 /* Responsivité */
 
 /* Grands écrans (minimum 1201px) */
@@ -118,7 +148,7 @@
 
   /* Centrer les boutons "Enregistrer" et "Annuler" */
   .form-buttons {
-    flex-direction: column; /* Disposition verticale */
+    flex-direction: row; /* Disposition horizontale */
   }
 }
 

@@ -1,44 +1,68 @@
-/* Classe spécifique pour les boutons "Modifier" et "Supprimer" */
-.btn-action {
-    width: 152px !important;     /* Largeur fixe */
-    height: 38px !important;     /* Hauteur fixe */
-    padding: 0 !important;       /* Supprimer le padding par défaut */
-    font-size: 14px !important;  /* Taille de police ajustée */
-    border-radius: 5px !important; /* Arrondi des bords */
-    display: flex !important;    /* Utiliser flex pour centrer le contenu */
-    justify-content: center !important; /* Centrer horizontalement */
-    align-items: center !important;     /* Centrer verticalement */
-    text-align: center !important;      /* Centrer le texte */
+.container {
+    max-width: 1200px; /* Limite la largeur maximale du conteneur */
+    margin: 0 auto; /* Centre le conteneur */
+    padding: 20px; /* Ajoute un peu de rembourrage */
 }
 
-/* Classe pour centrer les boutons dans leur conteneur */
-.btn-group-center {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px; /* Espacement entre les boutons */
-}
-
-/* Style pour le bouton "Ajouter Instructeur" */
-.btn-add-instructor {
-    width: 200px !important;     /* Largeur fixe */
-    height: 48px !important;     /* Hauteur fixe */
-    border-radius: 5px !important; /* Arrondi des bords */
-    font-size: 16px !important;  /* Taille de police */
-    display: block !important;   /* Traiter comme un bloc pour le centrage */
-    margin: 20px auto !important; /* Centrer horizontalement avec marge */
-}
-
-/* Centrer le titre */
 .text-center-title {
-    text-align: center;
-    margin-bottom: 20px; /* Espacement en dessous du titre */
+    text-align: center; /* Centre le titre */
+    margin-bottom: 20px; /* Ajoute un espace en bas du titre */
 }
 
-/* Flex container pour centrer les boutons dans les cartes mobiles */
-.d-flex-center-mobile {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px; /* Espacement entre les boutons */
+.add-instructor-container {
+    text-align: center; /* Centre le bouton d'ajout d'instructeur */
+}
+
+.btn-add-instructor {
+    width: 200px; /* Largeur du bouton */
+    padding: 10px; /* Rembourrage interne du bouton */
+}
+
+.table {
+    width: 100%; /* S'assure que le tableau prend toute la largeur */
+    margin-top: 20px; /* Espace au-dessus du tableau */
+}
+
+.table th, .table td {
+    text-align: center; /* Centre le texte dans les cellules du tableau */
+    vertical-align: middle; /* Centre verticalement le contenu */
+}
+
+.table th {
+    background-color: #f8f9fa; /* Couleur de fond pour l'en-tête du tableau */
+}
+
+.alert {
+    margin-top: 20px; /* Espace au-dessus des messages d'alerte */
+}
+
+.card {
+    margin-top: 20px; /* Espace au-dessus de la carte */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espace en bas des groupes de formulaires */
+}
+
+.form-check-label {
+    margin-left: 5px; /* Espace à gauche des étiquettes de cases à cocher */
+}
+
+.btn-modifier {
+    background-color: #007bff; /* Couleur personnalisée pour le bouton Modifier */
+    color: white; /* Couleur du texte du bouton Modifier */
+}
+
+.btn-success {
+    background-color: #28a745; /* Couleur personnalisée pour le bouton Ajouter */
+    color: white; /* Couleur du texte du bouton Ajouter */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Couleur personnalisée pour le bouton Supprimer */
+    color: white; /* Couleur du texte du bouton Supprimer */
+}
+
+.text-center {
+    text-align: center; /* Centre le texte */
 }
