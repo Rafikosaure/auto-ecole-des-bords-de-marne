@@ -1,3 +1,6 @@
+
+
+
 import { Route, Routes, Navigate } from "react-router-dom";
 import Template from "./components/Template/Template";
 import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
