@@ -6,24 +6,22 @@ import SearchForm from "../../components/SearchForm/SearchForm";
 import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
 
 const StudentsPage = () => {
-  const [students, setStudents] = useState([]); // полный список студентов
-  const [filteredStudents, setFilteredStudents] = useState([]); // отфильтрованный список
-  const [currentPage, setCurrentPage] = useState(1); // текущая страница для пагинации
-  const [totalPages, setTotalPages] = useState(0); // общее количество страниц для пагинации
-  const studentsPerPage = 10; // количество студентов на страницу
+  const [students, setStudents] = useState([]); 
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [totalPages, setTotalPages] = useState(0); 
+  const studentsPerPage = 10;
 
-  // Загрузка студентов при монтировании и при изменении страницы
   useEffect(() => {
     fetchStudents(currentPage);
   }, [currentPage]);
 
-  // Функция для загрузки студентов с сервера
   const fetchStudents = async (page) => {
     try {
       const { data } = await getAllStudents(page, studentsPerPage);
       if (Array.isArray(data.students)) {
         setStudents(data.students);
-        setFilteredStudents(data.students); // изначально показываем полный список
+        setFilteredStudents(data.students); 
         setTotalPages(data.totalPages);
       }
     } catch (error) {
@@ -31,7 +29,6 @@ const StudentsPage = () => {
     }
   };
 
-  // Функция для обработки поиска
   const handleSearch = (query, type) => {
     if (query) {
       const filtered = students.filter((student) =>
@@ -39,16 +36,15 @@ const StudentsPage = () => {
       );
       setFilteredStudents(filtered);
     } else {
-      setFilteredStudents(students); // если запрос пустой, показываем полный список
+      setFilteredStudents(students); 
     }
   };
 
-  // Функция для сброса фильтрации и показа полного списка
   const reloadPage = () => {
-    setFilteredStudents(students); // возвращаем полный список студентов
+    setFilteredStudents(students); 
   };
 
-  // Функция для обработки изменения страницы
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -89,7 +85,6 @@ const StudentsPage = () => {
         </Col>
       </Row>
 
-      {/* Пагинация */}
       <div className="d-flex justify-content-center align-items-center my-3">
         <Button
           variant="link"
@@ -112,7 +107,6 @@ const StudentsPage = () => {
         </Button>
       </div>
 
-      {/* Форма для добавления студента */}
       <AddStudentForm reload={fetchStudents} />
     </Container>
   );

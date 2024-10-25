@@ -10,7 +10,7 @@ const Template = () => {
       {/* Si on est sur la page de connexion, afficher le texte, sinon afficher le Header */}
       {location.pathname === '/connexion' ? (
         <div className="text-center my-4">
-          <h1>AUTO ECOLE DES BORS DE MARNE</h1>
+          <h1>AUTO ECOLE DES BORDS DE MARNE</h1>
         </div>
       ) : (
         <Header />

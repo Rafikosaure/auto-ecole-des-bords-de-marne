@@ -16,16 +16,16 @@ const router = express.Router();
 // routes
 // CRUD
 // add
-router.post("/add",  addStudent);
+router.post("/add", verifyToken, addStudent);
 
-router.get("/get",  getStudents);
+router.get("/get", verifyToken, getStudents);
 // get all
-router.get("/getall",  getAllStudents);
+router.get("/getall", verifyToken, getAllStudents);
 // get one
-router.get("/get/:id",  getStudent);
+router.get("/get/:id", verifyToken, getStudent);
 // update one
-router.put("/update/:id",  updateStudent);
+router.put("/update/:id", verifyToken, updateStudent);
 // delete one
-router.delete("/delete/:id",  deleteStudent);
+router.delete("/delete/:id", verifyToken, deleteStudent);
 
 module.exports = router;
