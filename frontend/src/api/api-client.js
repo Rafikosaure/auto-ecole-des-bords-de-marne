@@ -1,4 +1,4 @@
-//src/api/api-client.js 
+//src/api/api-client.js
 
 import axios from "axios";
 import config from "../config.js";
@@ -12,11 +12,14 @@ const apiClient = axios.create({
 
 // Intercepteur pour gérer les erreurs d'authentification
 apiClient.interceptors.response.use(
-  response => response,  // Passer les réponses réussies sans modification
-  error => {
-    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+  (response) => response, // Passer les réponses réussies sans modification
+  (error) => {
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
       // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
-      window.location.href = '/connexion'; // Utilisation de window.location pour rediriger vers la page de connexion
+      window.location.href = "/connexion"; // Utilisation de window.location pour rediriger vers la page de connexion
     }
     return Promise.reject(error); // Propager l'erreur pour pouvoir la gérer dans les appels individuels
   }
@@ -48,7 +51,6 @@ export const updateStudent = async (student) => {
   );
   return response.data;
 };
-
 
 // import axios from "axios";
 // import config from "../config.js";
