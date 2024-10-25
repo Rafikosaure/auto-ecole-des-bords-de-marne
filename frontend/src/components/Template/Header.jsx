@@ -36,7 +36,7 @@ const Header = () => {
                   <Nav.Link className="fs-3">Étudiants</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/connexion" onClick={handleLogout}>
                   <Nav.Link className="fs-3">Déconnexion</Nav.Link>
@@ -57,7 +57,7 @@ const Header = () => {
             ) : location.pathname === "/students" ? (
               <>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/admin">
                   <Nav.Link className="fs-3">Administrateurs</Nav.Link>
@@ -72,7 +72,7 @@ const Header = () => {
                   <Nav.Link className="fs-3">Étudiants</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/admin">
                   <Nav.Link className="fs-3">Administrateurs</Nav.Link>
