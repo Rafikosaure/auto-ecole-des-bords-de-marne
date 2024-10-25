@@ -6,105 +6,115 @@ import SearchForm from "../../components/SearchForm/SearchForm";
 import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
 
 const StudentsPage = () => {
-  const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const studentsPerPage = 10;
+  const [students, setStudents] = useState([]); // полный список студентов
+  const [filteredStudents, setFilteredStudents] = useState([]); // отфильтрованный список
+  const [currentPage, setCurrentPage] = useState(1); // текущая страница для пагинации
+  const [totalPages, setTotalPages] = useState(0); // общее количество страниц для пагинации
+  const studentsPerPage = 10; // количество студентов на страницу
 
+  // Загрузка студентов при монтировании и при изменении страницы
   useEffect(() => {
     fetchStudents(currentPage);
   }, [currentPage]);
 
+  // Функция для загрузки студентов с сервера
   const fetchStudents = async (page) => {
-    console.log(`Fetching students for page: ${page}`);
     try {
       const { data } = await getAllStudents(page, studentsPerPage);
-      console.log("Data received from API:", data);
       if (Array.isArray(data.students)) {
         setStudents(data.students);
-        setFilteredStudents(data.students);
+        setFilteredStudents(data.students); // изначально показываем полный список
         setTotalPages(data.totalPages);
-      } else {
-        console.log("Data received is not an array:", data.students);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Ошибка при загрузке студентов:", error);
     }
   };
 
-  const handleSearch = (query) => {
+  // Функция для обработки поиска
+  const handleSearch = (query, type) => {
     if (query) {
       const filtered = students.filter((student) =>
         student.lastName.toLowerCase().startsWith(query.toLowerCase())
       );
       setFilteredStudents(filtered);
     } else {
-      setFilteredStudents(students);
+      setFilteredStudents(students); // если запрос пустой, показываем полный список
     }
   };
 
+  // Функция для сброса фильтрации и показа полного списка
+  const reloadPage = () => {
+    setFilteredStudents(students); // возвращаем полный список студентов
+  };
+
+  // Функция для обработки изменения страницы
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   return (
-    <>
-      <Container className="my-4">
-        <SearchForm onSearch={handleSearch} students={students} />
-        <h2 className="text-center">Tous les étudiants</h2>
-        <Row>
-          <Col>
-            <ListGroup variant="flush">
-              {filteredStudents.length > 0 ? (
-                filteredStudents.map((card) => (
-                  <ListGroup.Item key={card.id}>
-                    <StudentCard
-                      id={card.id}
-                      lastName={card.lastName}
-                      firstName={card.firstName}
-                      email={card.email}
-                      phoneNumber={card.phoneNumber}
-                      birthdate={card.birthdate}
-                      formationStart={card.formationStart}
-                      formationDesiredEnd={card.formationDesiredEnd}
-                      formationMaxDuration={card.formationMaxDuration}
-                      showMore={true}
-                    />
-                  </ListGroup.Item>
-                ))
-              ) : (
-                <p className="text-center">Aucun étudiant trouvé</p>
-              )}
-            </ListGroup>
-          </Col>
-        </Row>
+    <Container className="my-4">
+      <SearchForm
+        onSearch={handleSearch}
+        students={students}
+        isSearchActive={filteredStudents.length !== students.length}
+        reloadPage={reloadPage}
+      />
+      <h2 className="text-center">Tous les étudiants</h2>
+      <Row>
+        <Col>
+          <ListGroup variant="flush">
+            {filteredStudents.length > 0 ? (
+              filteredStudents.map((student) => (
+                <ListGroup.Item key={student.id}>
+                  <StudentCard
+                    id={student.id}
+                    lastName={student.lastName}
+                    firstName={student.firstName}
+                    email={student.email}
+                    phoneNumber={student.phoneNumber}
+                    birthdate={student.birthdate}
+                    formationStart={student.formationStart}
+                    formationDesiredEnd={student.formationDesiredEnd}
+                    formationMaxDuration={student.formationMaxDuration}
+                    showMore={true}
+                  />
+                </ListGroup.Item>
+              ))
+            ) : (
+              <p className="text-center">Aucun étudiant trouvé</p>
+            )}
+          </ListGroup>
+        </Col>
+      </Row>
 
-        <div className="d-flex justify-content-center align-items-center my-3">
-          <Button
-            variant="link"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="text-decoration-none"
-          >
-            ←
-          </Button>
-          <span className="mx-3">
-            Page {currentPage} sur {totalPages}
-          </span>
-          <Button
-            variant="link"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="text-decoration-none"
-          >
-            →
-          </Button>
-        </div>
-      </Container>
+      {/* Пагинация */}
+      <div className="d-flex justify-content-center align-items-center my-3">
+        <Button
+          variant="link"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="text-decoration-none"
+        >
+          ←
+        </Button>
+        <span className="mx-3">
+          Page {currentPage} sur {totalPages}
+        </span>
+        <Button
+          variant="link"
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="text-decoration-none"
+        >
+          →
+        </Button>
+      </div>
 
+      {/* Форма для добавления студента */}
       <AddStudentForm reload={fetchStudents} />
-    </>
+    </Container>
   );
 };
 
