@@ -117,8 +117,8 @@ const addDocument = async (req, res, next) => {
             // SQL create query
             await instructorsDocument.create({
                 ...req.body,
-                // type will be null if a filesType ARRAY is not provided
-                // ?. are here to avoid errors if the filesType ARRAY is not provided
+                // type will be null if a filesType stringified ARRAY is not provided
+                // ?. are here to avoid errors if the filesType stringified ARRAY is not provided
                 // req.files.filenames.indexOf(filename) gets the index of the current file in the req.files.filenames object
                 type: eval(req.body?.filesType)?.[req.files.filenames.indexOf(filename)] ?? null,
                 // resizes the file

@@ -19,8 +19,15 @@ const contexts = {
     instructorDocuments: "Instructors document"
 }
 
-// logs and sents an appropriate response given an error
-const errorHandler = (req, res, error, context) => {
+/**
+ * Logs and sents an appropriate response to its sender given an error.
+ * @param {object} req - Http(s) request.
+ * @param {object} res - Http(s) response.
+ * @param {Error} error - An error, most likely thrown beforehand in a `tryCatch` block.
+ * @param {string} context - Where the error occured, found in the `contexts` object.
+ * @returns {object} Http(s) response to its sender.
+ */
+const errorHandler = (req, res, error, context) => {    
     // log
     console.log({Error:
         {
@@ -34,11 +41,12 @@ const errorHandler = (req, res, error, context) => {
     // responses
     switch (error.name) {
         case "SequelizeUniqueConstraintError":
-            return res.status(404).json({error: error.message, message: `${context} ${target} already exists`});
+            return res.status(400).json({error: error.message, message: `${context} ${target} already exists`});
         case "SequelizeValidationError":
-        case "noFileProvided":
         case "SequelizeForeignKeyConstraintError":
-            return res.status(404).json({error: error.message, message: `Invalid body provided`});
+            error.status ??= 409;
+        case "noFileProvided":
+            return res.status(error.status).json({error: error.message, message: `Invalid body provided`});
         case "DoesNotExistInDb":
         case "WrongCredentials":
         case "WrongFileFormat":
@@ -53,7 +61,13 @@ const errorHandler = (req, res, error, context) => {
      }
 }
 
-// creates an error to be thrown given an issue
+/**
+ * Creates an appropriate error ready to be thrown given an issue.
+ * @param {object} req - Http(s) request.
+ * @param {string} issue - what the error is, found in the `errors` object.
+ * @param {string} context - Where the error occured, found in the `contexts` object.
+ * @returns {Error} Error ready to be passed as the `error` parameter in responseHandler.
+ */
 const createError = (req, issue, context) => {
     const error = new Error();
     switch (issue) {
@@ -90,6 +104,7 @@ const createError = (req, issue, context) => {
             error.message = "Connexion token is not valid";
             break;
         case errors.ErrorNoFileProvided:
+            error.status = 400;
             error.name = "noFileProvided";
             error.message = "No documents were sent with the request";
             break;

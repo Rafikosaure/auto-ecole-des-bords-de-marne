@@ -4,7 +4,13 @@ const { createError,
     contexts,
     errors,
     errorHandler } = require('./errorHandler.js');
-
+/**
+ * Checks if a cookie is sent with the request and its validity.
+ * @param {object} req - Http(s) request.
+ * @param {object} res - Http(s) response.
+ * @param {Function} next - built-in express function.
+ * @returns {Function} `next()`, granting access to the next middleware if both checks are successful.
+ */
 const verifyToken = (req, res, next) => {
     try {
         // Récupère le jeton (token) JWT à partir des cookies de la requête

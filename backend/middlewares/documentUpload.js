@@ -32,6 +32,11 @@ const storage = multer.diskStorage({
     },
 });
 
+/**
+ * Creates an upload object to handle multer files uploading.
+ * @param {boolean} multiple - Used to dertermine the max number of documents accepted,`true` by default.
+ * @returns {object} Multer upload object.
+ */
 const createUpload = (multiple=true) => {
     const upload = multer({
         // sets storage
@@ -55,12 +60,22 @@ const createUpload = (multiple=true) => {
         }
 });
     return upload;
-}
+};
 
-const documentUploadMany = (key, next) => {
+/**
+ * Handles the uploading of multiple files.
+ * @param {object} key - Sent `FormData` key associated with the files.
+ * @returns {Function} `CreateUpload()` to filter and store the files.
+ */
+const documentUploadMany = (key) => {
     return createUpload().array(key);
 };
 
+/**
+ * Handles the uploading of a single file.
+ * @param {object} key - Sent `FormData` key associated with the files.
+ * @returns {Function} `CreateUpload()` to filter and store the files.
+ */
 const documentUploadOne = (key) => {
     return createUpload(multiple=false).array(key);
 };

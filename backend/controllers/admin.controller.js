@@ -12,7 +12,7 @@ const { errorHandler,
 const getAllAdmins = async (req, res, next) => {
     try {
         // SQL Select query to get all admins
-        const admins = await Admin.findAll();
+        const admins = await Admin.findAll({attributes: {exclude: ["password"]}});
         res.status(200).json(admins);
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
@@ -22,7 +22,7 @@ const getAllAdmins = async (req, res, next) => {
 const getAdmin = async (req, res, next) => {
     try {
         // SQL Select query to get one admin by ID
-        const admin = await Admin.findByPk(req.params.id);
+        const admin = await Admin.findByPk(req.params.id, {attributes: {exclude: ["password"]}});
         // error if no admin found given the id
         if(!admin) throw createError(req, errors.ErrorNotExist, contexts.admin);
         res.status(200).json(admin);
@@ -43,6 +43,7 @@ const updateAdmin = async (req, res, next) => {
             // password hashing for security
             password: await passwordHashing(req.body.password),
         });
+        delete admin.dataValues.password;
         res.status(200).json({message: "admin updated", admin});
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
