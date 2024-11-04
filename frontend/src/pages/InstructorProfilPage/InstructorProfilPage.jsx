@@ -153,9 +153,7 @@ const InstructorProfilPage = () => {
                             <div className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{doc.type}</h5>
-                                    <a href={doc.document} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                                        Voir Document
-                                    </a>
+                                    <img src={`data:image/png;base64, ${doc.document}`} />
                                 </div>
                             </div>
                         </div>
