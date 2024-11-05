@@ -69,6 +69,11 @@ const getInstructor = async (req, res, next) => {
         );
         // error if no instructor found given the id
         if(!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
+        // converts documents buffer to base64 for an easy frontend integration
+        instructor.dataValues.documents.map(instructorsDocument => {
+            data = instructorsDocument.dataValues
+            data.document = Buffer.from(data.document).toString("base64") 
+        });
         res.status(200).json(instructor);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
