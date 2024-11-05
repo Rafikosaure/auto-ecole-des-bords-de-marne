@@ -139,10 +139,6 @@ const addDocument = async (req, res, next) => {
 
 const updateDocument = async (req, res, any) => {
     try {
-        // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
-        // checks if instructorId is valid 
-        if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         // checks if any file has been sent with the request
         if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
         // SQL select query
@@ -170,19 +166,13 @@ const updateDocument = async (req, res, any) => {
 
 const deleteDocument = async (req, res, next) => {
     try {
-        // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
-        // checks if instructorId is valid 
-        if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
-        
+        // checks if the document exists and throws an error if not
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
-        // full path to file
-
+        // SQL Delete request
         await document.destroy({
             ...req.body,
         });
-
         return res.status(200).json({message: "The document has been deleted"});
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructorDocuments);

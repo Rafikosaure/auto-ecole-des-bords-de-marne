@@ -8,7 +8,7 @@ const sharp = require("sharp");
  * @returns {Buffer} The processed image.
  */
 const processImage = async (image) => {
-    return await sharp(image).resize(500, 500, { fit: 'inside', gravity: "center"}).toBuffer()
+    return await sharp(image).resize(1920, 1080, { fit: 'inside', gravity: "center"}).toBuffer()
 }
 
 exports.processImage = processImage;
