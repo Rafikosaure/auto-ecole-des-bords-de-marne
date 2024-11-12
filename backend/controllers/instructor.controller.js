@@ -39,8 +39,8 @@ const getAllInstructors = async (req, res, next) => {
         // converts documents buffer to base64 for an easy frontend integration
         instructors.map(instructor => {
             instructor.dataValues.documents.map(instructorsDocument => {
-                data = instructorsDocument.dataValues
-                data.document = Buffer.from(data.document).toString("base64") 
+                data = instructorsDocument.dataValues;
+                data.document = Buffer.from(data.document).toString("base64");
             });
         });
         res.status(200).json(instructors);
@@ -67,11 +67,11 @@ const getInstructor = async (req, res, next) => {
                 ]
             }
         );
-        // error if no instructor found given the id
+        // error if no instructor is found given the id
         if(!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         // converts documents buffer to base64 for an easy frontend integration
         instructor.dataValues.documents.map(instructorsDocument => {
-            data = instructorsDocument.dataValues
+            data = instructorsDocument.dataValues;
             Buffer.from(data.document).toString("base64");
         });
         res.status(200).json(instructor);
@@ -118,16 +118,19 @@ const addDocument = async (req, res, next) => {
         // the actual files are then found in the assets/instructors directory
         for(const filename of req.files.filenames){
             // full path to file
-            file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
+            const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
+            const index = req.files.filenames.indexOf(filename);
+            // console.log(index);
             // SQL create query
             await instructorsDocument.create({
                 ...req.body,
                 // type will be null if a filesType stringified ARRAY is not provided
                 // ?. are here to avoid errors if the filesType stringified ARRAY is not provided
                 // req.files.filenames.indexOf(filename) gets the index of the current file in the req.files.filenames object
-                type: eval(req.body?.filesType)?.[req.files.filenames.indexOf(filename)] ?? null,
+                type: eval(req.body?.filesType)?.[index] ?? null,
                 // resizes the file
-                document: await processImage(file)
+                document: await processImage(file, req.files.extensions[index]),
+                baseExtension: req.files.extensions[index]
               });
             // deletes the file from instructor folder
             fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, filename));
@@ -144,21 +147,18 @@ const addDocument = async (req, res, next) => {
 
 const updateDocument = async (req, res, any) => {
     try {
-        // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
-        // checks if instructorId is valid 
-        if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
         // checks if any file has been sent with the request
         if(req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
         // SQL select query
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // full path to file
-        file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
+        const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
         await document.update({
             ...req.body,
             // resizes the file
-            document: await processImage(file)
+            document: await processImage(file, req.files.extensions[0]),
+            baseExtension: req.files.extensions[0]
         });
         
         // deletes the file from instructor folder
@@ -175,19 +175,13 @@ const updateDocument = async (req, res, any) => {
 
 const deleteDocument = async (req, res, next) => {
     try {
-        // checks if an instructorId is provided with the request
-        if(!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
-        // checks if instructorId is valid 
-        if(!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
-        
+        // checks if the document exists and throws an error if not
         const document = await instructorsDocument.findByPk(req.params.id);
         if(!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
-        // full path to file
-
+        // SQL Delete request
         await document.destroy({
             ...req.body,
         });
-
         return res.status(200).json({message: "The document has been deleted"});
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructorDocuments);
