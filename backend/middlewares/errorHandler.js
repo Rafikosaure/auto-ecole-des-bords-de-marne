@@ -6,7 +6,8 @@ const errors = {
     ErrorUndefinedKey: "undefinedKey",
     ErrorNoToken: "noToken",
     ErrorInvalidToken: "invalidToken",
-    ErrorNoFileProvided: "noFileProvided"
+    ErrorNoFileProvided: "noFileProvided",
+    ErrorFileTooLarge: "FileTooLarge"
 }
 
 // errors contexts for error handler messages (where error happens)
@@ -31,6 +32,7 @@ const errorHandler = (req, res, error, context) => {
     // log
     console.log({Error:
         {
+            "context" : context,
             "name" : error.name,
             "message" : error.message
         }}
@@ -53,6 +55,7 @@ const errorHandler = (req, res, error, context) => {
         case "KeyNotProvided":
         case "NoToken":
         case "InvalidToken":
+        case "FileTooLarge":
             // if error has no status (undefined) it will be 404 by default
             error.status ??= 404;
             return res.status(error.status).json({error: error.name, message: error.message});
@@ -107,6 +110,11 @@ const createError = (req, issue, context) => {
             error.status = 400;
             error.name = "noFileProvided";
             error.message = "No documents were sent with the request";
+            break;
+        case errors.ErrorFileTooLarge:
+            error.status = 400;
+            error.name = "FileTooLarge";
+            error.message = "One or multiple sent files are larger than 1Mb";
             break;
         default:
             break;

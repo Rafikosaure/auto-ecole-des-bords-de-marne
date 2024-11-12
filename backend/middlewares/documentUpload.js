@@ -28,6 +28,9 @@ const storage = multer.diskStorage({
         // creates a files.filenames array in the request to store the filenames if it doesn't exists
         req.files.filenames ??= new Array();
         req.files.filenames.push(filename);
+        // creates a files.extensions array in the request to store the original extensions if it doesn't exists
+        req.files.extensions ??= new Array();
+        req.files.extensions.push(path.extname(file.originalname).substring(1));
         cb(null, filename);
     },
 });
