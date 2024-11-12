@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+
+//src/ConnexionPage.jsx  pour Ajoutez un nouvel état isAuthenticated pour gérer la redirection.
+
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/api-client';
 
@@ -7,8 +10,8 @@ const ConnexionPage = () => {
     username: '',
     password: ''
   });
-
   const [message, setMessage] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Nouvel état pour gérer l'authentification
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -21,18 +24,17 @@ const ConnexionPage = () => {
 
   const handleLoginAdmin = async () => {
     try {
-      // Conserve les espaces, mais utilise trim pour retirer les espaces en début et fin
       const trimmedAdmin = {
-        username: admin.username.trim(), // Supprime uniquement les espaces en début et fin
-        password: admin.password.trim()   // Supprime uniquement les espaces en début et fin
+        username: admin.username.trim(),
+        password: admin.password.trim()
       };
 
-      console.log("Objet de la requête :", trimmedAdmin)
+      console.log("Objet de la requête :", trimmedAdmin);
       const response = await apiClient.post('/admin/login', {
         username: trimmedAdmin.username,
         password: trimmedAdmin.password,
         headers: {
-          'Content-Type': 'application/json' // Ajout de l'en-tête pour le type de contenu
+          'Content-Type': 'application/json'
         }
       });
       console.log('notre réponse :', response);
@@ -43,12 +45,18 @@ const ConnexionPage = () => {
         password: ''
       });
 
-      navigate('/students');
+      setIsAuthenticated(true); // Marque l'utilisateur comme authentifié
     } catch (error) {
-      console.error('Erreur lors de la connexion :', error); // Affiche l'erreur complète dans la console
+      console.error('Erreur lors de la connexion :', error);
       setMessage(`Erreur: ${error.response?.data.message || "Une erreur s'est produite."}`);
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/students');
+    }
+  }, [isAuthenticated, navigate]); // Naviguer après authentification réussie
 
   return (
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
@@ -91,6 +99,102 @@ const ConnexionPage = () => {
 };
 
 export default ConnexionPage;
+
+
+
+// import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import apiClient from '../../api/api-client';
+
+// const ConnexionPage = () => {
+//   const [admin, setAdmin] = useState({
+//     username: '',
+//     password: ''
+//   });
+
+//   const [message, setMessage] = useState('');
+//   const navigate = useNavigate();
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setAdmin({
+//       ...admin,
+//       [name]: value
+//     });
+//   };
+
+//   const handleLoginAdmin = async () => {
+//     try {
+//       // Conserve les espaces, mais utilise trim pour retirer les espaces en début et fin
+//       const trimmedAdmin = {
+//         username: admin.username.trim(), // Supprime uniquement les espaces en début et fin
+//         password: admin.password.trim()   // Supprime uniquement les espaces en début et fin
+//       };
+
+//       console.log("Objet de la requête :", trimmedAdmin)
+//       const response = await apiClient.post('/admin/login', {
+//         username: trimmedAdmin.username,
+//         password: trimmedAdmin.password,
+//         headers: {
+//           'Content-Type': 'application/json' // Ajout de l'en-tête pour le type de contenu
+//         }
+//       });
+//       console.log('notre réponse :', response);
+//       setMessage(`Connexion réussie: ${response.data}`);
+      
+//       setAdmin({
+//         username: '',
+//         password: ''
+//       });
+
+//       navigate('/students');
+//     } catch (error) {
+//       console.error('Erreur lors de la connexion :', error); // Affiche l'erreur complète dans la console
+//       setMessage(`Erreur: ${error.response?.data.message || "Une erreur s'est produite."}`);
+//     }
+//   };
+
+//   return (
+//     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+//       <div className="card p-5" style={{ width: '400px' }}>
+//         <h2 className="text-center mb-4">Connexion Administrateur</h2>
+
+//         <div className="form-group mb-3">
+//           <label>Nom d'utilisateur</label>
+//           <input
+//             type="text"
+//             className="form-control"
+//             name="username"
+//             value={admin.username}
+//             onChange={handleInputChange}
+//           />
+//         </div>
+
+//         <div className="form-group mb-3">
+//           <label>Mot de passe</label>
+//           <input
+//             type="password"
+//             className="form-control"
+//             name="password"
+//             value={admin.password}
+//             onChange={handleInputChange}
+//           />
+//         </div>
+
+//         {message && <div className="alert alert-info">{message}</div>}
+
+//         <button 
+//           className="btn btn-primary w-100"
+//           onClick={handleLoginAdmin}
+//         >
+//           Se connecter
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ConnexionPage;
 
 
 

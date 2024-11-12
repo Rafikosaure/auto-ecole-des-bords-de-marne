@@ -1,4 +1,6 @@
-// //src/pages/InstructorsPage/InstructorPage.jsx  OK LE BON il faut régler la selection d"un moniteur de maniere plus precise
+
+
+// //src/pages/InstructorsPage/InstructorPage.jsx  OK LE BON BUG CORRIGE
 // avec daqns le filtre le nom et le prenom 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  // Pour gérer la navigation
@@ -25,9 +27,7 @@ const InstructorsPage = () => {
     const [isSearchActive, setIsSearchActive] = useState(false);  // État pour la recherche active
     const navigate = useNavigate();  // Pour la redirection
 
-    useEffect(() => {
-        fetchInstructors();
-    }, []);  // Gérer la navigation en cas d'erreur d'authentification
+
 
     // Fonction pour récupérer les instructeurs avec gestion d'erreur d'authentification
     const fetchInstructors = async () => {
@@ -47,6 +47,10 @@ const InstructorsPage = () => {
             setLoading(false);
         }
     };
+    useEffect(() => {
+        fetchInstructors();
+    }, []);  // Gérer la navigation en cas d'erreur d'authentification
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
