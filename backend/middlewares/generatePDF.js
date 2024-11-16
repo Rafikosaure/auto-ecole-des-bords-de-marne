@@ -7,8 +7,6 @@ const ENV = require('../config/env').ENV
 
 exports.generatePDFfromHTML = async (req, res, next) => {
     try {
-        // console.log('Données arrivant au serveur :', req.body)
-
         if (req.body.fileData) {
             // Compile EJS template
             const templateContent = fs.readFileSync(path.resolve(__dirname, `../models/files/${req.body.fileData.documentType}.ejs`), "utf-8");

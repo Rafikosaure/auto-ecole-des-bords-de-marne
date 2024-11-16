@@ -11,6 +11,8 @@ import StudentCard from "./StudentCard.jsx";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "../StudentsAdmin/UpdateStudent.jsx";
+import StudentCom from "../StudentCom/StudentCom.jsx";
+import PrintContractView from "../StudentContract/PrintContractView.jsx";
 const OneStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -95,6 +97,16 @@ const OneStudent = () => {
           <UpdateStudent student={student} onUpdate={modifyStudent} />
         </Container>
       )}
+
+        <Container>
+          <StudentCom />
+        </Container>
+
+
+        <Container>
+          <PrintContractView />
+        </Container>
+
 
       <ToastContainer />
     </>
