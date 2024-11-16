@@ -45,30 +45,30 @@ exports.sendMailWithTracking = (req, res) => {
         let attachments = []
         if (req.body.emailType === "convocation_formation") {
             attachments.push(
-                // {
-                //     filename: `1 - Plan de Formation Détaillé.pdf`,
-                //     path: `./emailAttachments/permanent/1 - Plan de Formation Détaillé.pdf`
-                // },
-                // {
-                //     filename: `2 - Déroulement des formations B,Conduite Accompagnée Supervisée.pdf`,
-                //     path: `./emailAttachments/permanent/2 - Déroulement des formations B,Conduite Accompagnée Supervisée.pdf`
-                // },
-                // {
-                //     filename: `3- Déroulement d'une seance de formation  pratique.pdf`,
-                //     path: `./emailAttachments/permanent/3- Déroulement d'une seance de formation  pratique.pdf`
-                // },
-                // {
-                //     filename: `4 - Réglement Intérieur.pdf`,
-                //     path: `./emailAttachments/permanent/4 - Réglement Intérieur.pdf`
-                // },
-                // {
-                //     filename: `5 - Programme de Formation B - REMC.pdf`,
-                //     path: `./emailAttachments/permanent/5 - Programme de Formation B - REMC.pdf`
-                // },
-                // {
-                //     filename: `6 - CGU CPF.pdf`,
-                //     path: `./emailAttachments/permanent/6 - CGU CPF.pdf`
-                // }
+                {
+                    filename: `1 - Plan de Formation Détaillé.pdf`,
+                    path: `./emailAttachments/permanent/1 - Plan de Formation Détaillé.pdf`
+                },
+                {
+                    filename: `2 - Déroulement des formations B,Conduite Accompagnée Supervisée.pdf`,
+                    path: `./emailAttachments/permanent/2 - Déroulement des formations B,Conduite Accompagnée Supervisée.pdf`
+                },
+                {
+                    filename: `3- Déroulement d'une seance de formation  pratique.pdf`,
+                    path: `./emailAttachments/permanent/3- Déroulement d'une seance de formation  pratique.pdf`
+                },
+                {
+                    filename: `4 - Réglement Intérieur.pdf`,
+                    path: `./emailAttachments/permanent/4 - Réglement Intérieur.pdf`
+                },
+                {
+                    filename: `5 - Programme de Formation B - REMC.pdf`,
+                    path: `./emailAttachments/permanent/5 - Programme de Formation B - REMC.pdf`
+                },
+                {
+                    filename: `6 - CGU CPF.pdf`,
+                    path: `./emailAttachments/permanent/6 - CGU CPF.pdf`
+                }
             )
         }
         if (req.body.fileData && req.body.emailType === "convocation_formation") {
