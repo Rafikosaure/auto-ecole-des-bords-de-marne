@@ -2,6 +2,7 @@
 const express = require("express");
 const controller = require("../controllers/document.controller.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
+const { generatePDFfromHTML } = require('../middlewares/generatePDF.js')
 
 // router initialization
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 // add all documents for a student
 router.post("/add/:studentId", verifyToken, controller.addAllDocuments);
 // add one document for a student
-router.post("/add/:studentId/:documentId")
+router.post("/add/:studentId/:documentId", verifyToken, controller.addDocument);
 // get all documents for a student
 router.get("/getall/:studentId", verifyToken, controller.getAllDocuments);
 // get one document for a student
@@ -24,5 +25,9 @@ router.put("/update/:studentId/:documentId", verifyToken, controller.updateDocum
 router.delete("/delete/:studentId", verifyToken, controller.deleteAllDocuments);
 // deletes one document of a student
 router.delete("/delete/:studentId/:documentId", verifyToken, controller.deleteDocument);
+// Download one document
+router.post("/downloadOneDocument/:fileName", generatePDFfromHTML, controller.downloadOneDocument);
+// Deletion of temporary documents after contract generation
+router.delete('/deleteDocumentsAfterContractGeneration', controller.deleteDocumentsAfterContractGeneration);
 
 module.exports = router;

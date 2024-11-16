@@ -1,0 +1,29 @@
+.document-viewver {
+    height: 1250px;
+}
+@media screen and (max-width: 1023px) {
+	.document-viewver {
+        height: 1100px;
+    }
+}
+@media screen and (max-width: 991px) {
+	.document-viewver {
+        height: 850px;
+    }
+}
+@media screen and (max-width: 767px) {
+	.document-viewver {
+        /* max-height: calc(100vh - 20px); */
+        height: 800px;
+    }
+}
+@media screen and (max-width: 660px) {
+    .document-viewver {
+        height: 570px;
+    }
+}
+@media screen and (max-width: 420px) {
+	.document-viewver {
+        height: 440px;
+    }
+}

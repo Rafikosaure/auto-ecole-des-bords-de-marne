@@ -32,6 +32,7 @@ app.options('*', cors());
 
 // STATIC FILES FOR STUDENT CONTRACT
 app.use('/contract-signatures', express.static(path.join(__dirname, './assets/contractImages')));
+app.use('/instructors-documents', express.static(path.join(__dirname, './assets/instructorsDocuments')));
 
 // EMAIL TRACKING
 app.use(`/api/${ENV.EMAIL_TRACKING_ENDPOINT}`, expressApp(mailTrackingOptions));
