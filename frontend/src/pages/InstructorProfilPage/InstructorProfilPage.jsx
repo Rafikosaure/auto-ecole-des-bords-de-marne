@@ -51,8 +51,8 @@ const InstructorProfilPage = () => {
         }
 
         const formData = new FormData();
-        formData.append('document', selectedFile);
-        formData.append('documentType', documentType);  // Spécifie le type de document
+        formData.append('documents', selectedFile);
+        formData.append('filesType', JSON.stringify([documentType]));  // Spécifie le type de document
         formData.append('instructorId', id);
 
         try {
@@ -76,7 +76,7 @@ const InstructorProfilPage = () => {
     // Récupération des documents après chaque upload
     const fetchDocuments = async () => {
         try {
-            const response = await apiClient.get(`/instructor/get/${id}`);
+            const response = await apiClient.get(`/instructor/get/${id}`);            
             setDocuments(response.data.documents || []);
         } catch (error) {
             setError("Erreur lors de la récupération des documents : " + error.message);
