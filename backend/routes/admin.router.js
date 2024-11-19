@@ -7,21 +7,24 @@ const { verifyToken } = require("../middlewares/verifyToken.js");
 const router = express.Router();
 
 // routes
-// CRUD
-// get all
+    // CRUD
+        // get all
 router.get("/getall", verifyToken, controller.getAllAdmins);
-// get one
+        // get one
 router.get("/get/:id", verifyToken, controller.getAdmin);
-// update one
+        // update one
 router.put("/update/:id", verifyToken, controller.updateAdmin)
-// delete one
+        // delete one
 router.delete("/delete/:id", verifyToken, controller.deleteAdmin);
-// AUTHENTICATION
-// sign-up
+    // AUTHENTICATION
+        // sign-up
 router.post("/signup", verifyToken, controller.registerAdmin);
-// login
+        // login
 router.post("/login", controller.loginAdmin);
-// logout
-router.post("/logout", verifyToken, controller.logoutAdmin)
+        // logout
+router.post("/logout", verifyToken, controller.logoutAdmin);
+    // PASSWORD RESET
+router.post("/password/forgot", controller.forgotPassword);
+router.put("/password/reset", controller.resetPassword);
 
 module.exports = router;

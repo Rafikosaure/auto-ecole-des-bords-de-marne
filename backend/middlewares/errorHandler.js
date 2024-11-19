@@ -7,7 +7,8 @@ const errors = {
     ErrorNoToken: "noToken",
     ErrorInvalidToken: "invalidToken",
     ErrorNoFileProvided: "noFileProvided",
-    ErrorFileTooLarge: "FileTooLarge"
+    ErrorFileTooLarge: "FileTooLarge",
+    ErrorExpiredToken: "expiredToken",
 }
 
 // errors contexts for error handler messages (where error happens)
@@ -56,6 +57,7 @@ const errorHandler = (req, res, error, context) => {
         case "NoToken":
         case "InvalidToken":
         case "FileTooLarge":
+        case "ExpiredToken":
             // if error has no status (undefined) it will be 404 by default
             error.status ??= 404;
             return res.status(error.status).json({error: error.name, message: error.message});
@@ -91,20 +93,48 @@ const createError = (req, issue, context) => {
             break;
         case errors.ErrorUndefinedKey:
             error.name = "KeyNotProvided";
-            error.message = context == contexts.remark &&  `studentId or instructorId must be provided`;
-            error.message = context == contexts.instructorDocuments &&  `instructorId must be provided`;
+            switch (context) {
+                case contexts.remark:
+                    error.message = `studentId or instructorId must be provided`;
+                    break;
+                case contexts.instructorDocuments:
+                    error.message = `instructorId must be provided`;
+                    break;
+                case contexts.admin:
+                    error.message = `An email must be provided`;
+                    break;
+            }
             break;
         case errors.ErrorNoToken:
             // if no token unauthorized => 401
             error.status = 401;
             error.name = "NoToken";
-            error.message = "Admin must be logged in";
+            switch (context) {
+                case contexts.Token:
+                    error.message = "Admin must be logged in";
+                    break;
+                case contexts.admin:
+                    error.message = "Token must be provided as a query parameter";
+                    break;
+            }
             break;
         case errors.ErrorInvalidToken:
             // if token but wrong token forbidden => 403
             error.status = 403;
             error.name = "InvalidToken";
-            error.message = "Connexion token is not valid";
+            switch (context) {
+                case contexts.Token:
+                    error.message = "Connexion token is not valid";
+                    break;
+                case contexts.admin:
+                    error.message = "reset token is not valid";
+                    break;
+            }
+            break;
+        case errors.ErrorExpiredToken:
+            error.status = 403;
+            error.name = "ExpiredToken";
+            error.message = "Reset token has expired";
             break;
         case errors.ErrorNoFileProvided:
             error.status = 400;

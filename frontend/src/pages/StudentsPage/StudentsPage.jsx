@@ -4,6 +4,7 @@ import StudentCard from "../../components/Students/StudentCard";
 import { getAllStudents } from "../../api/api-client";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
+import SignaturePad from "../../components/Signature/Signature";
 
 const StudentsPage = () => {
   const [students, setStudents] = useState([]); 
@@ -108,6 +109,7 @@ const StudentsPage = () => {
       </div>
 
       <AddStudentForm reload={fetchStudents} />
+      <SignaturePad></SignaturePad>
     </Container>
   );
 };
