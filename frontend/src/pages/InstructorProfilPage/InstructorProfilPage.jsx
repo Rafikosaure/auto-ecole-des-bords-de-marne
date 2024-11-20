@@ -10,10 +10,7 @@ const InstructorProfilPage = () => {
     const [instructor, setInstructor] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [uploading, setUploading] = useState(false);
     const [documents, setDocuments] = useState([]);
-    const [selectedDocumentType, setSelectedDocumentType] = useState(null);
 
     // Chargement des détails de l'instructeur
     useEffect(() => {
@@ -38,42 +35,34 @@ const InstructorProfilPage = () => {
         fetchInstructor();
     }, [id]);
 
-    // Sélection d'un fichier
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
-    };
-
-    // Téléchargement d'un fichier
-    const handleFileUpload = async (documentType) => {
-        if (!selectedFile) {
-            setError("Veuillez sélectionner un fichier à télécharger.");
-            return;
-        }
-
+    // Soumission du formulaire pour télécharger des fichiers
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page
         const formData = new FormData();
-        formData.append('document', selectedFile);
-        formData.append('documentType', documentType);  // Spécifie le type de document
-        formData.append('instructorId', id);
+        for (const file of e.target[0].files) {
+            formData.append("documents", file);
+        }
+        formData.append("instructorId", id);
+        formData.append(
+            "filesType",
+            JSON.stringify(["carte d'identité", "Permis de conduire", "Carte d'enseignement", "Contrat de travail"])
+        );
 
         try {
-            setUploading(true);
-            const response = await apiClient.post(`/instructor/document/add`, formData);
-
-            if (response.status === 200) {
-                alert("Fichier téléchargé avec succès");
-                setSelectedFile(null);
-                fetchDocuments();
+            const res = await apiClient.post("/instructor/document/add", formData); // Envoie la requête
+            console.log(res.status, res.data.message);
+            if (res.status === 200) {
+                alert("Fichiers téléchargés avec succès !");
+                fetchDocuments(); // Actualise la liste des documents
             } else {
-                setError("Erreur lors du téléchargement du fichier. Statut: " + response.status);
+                setError("Erreur lors du téléchargement des fichiers.");
             }
         } catch (error) {
-            setError("Erreur lors du téléchargement du fichier. Détails: " + error.message);
-        } finally {
-            setUploading(false);
+            setError("Erreur lors du téléchargement des fichiers : " + error.message);
         }
     };
 
-    // Récupération des documents après chaque upload
+    // Récupération des documents après chaque mise à jour
     const fetchDocuments = async () => {
         try {
             const response = await apiClient.get(`/instructor/get/${id}`);
@@ -95,16 +84,11 @@ const InstructorProfilPage = () => {
                 alert("Document supprimé avec succès");
                 fetchDocuments();
             } else {
-                setError("Erreur lors de la suppression du document. Statut: " + response.status);
+                setError("Erreur lors de la suppression du document.");
             }
         } catch (error) {
             setError("Erreur lors de la suppression du document : " + error.message);
         }
-    };
-
-    // Ouvrir une carte pour le téléchargement d'un document
-    const openCardForUpload = (documentType) => {
-        setSelectedDocumentType(documentType);  // Spécifie le type de document à télécharger
     };
 
     if (loading) {
@@ -139,37 +123,39 @@ const InstructorProfilPage = () => {
                 <div className="row">
                     {documents.map((doc) => (
                         <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={doc.id}>
-                            <div 
-                                className="card" 
+                            <div
+                                className="card"
                                 style={{ border: '1px solid black', borderRadius: '5px' }}
                             >
                                 <div className="card-body" style={{ padding: '0px' }}>
                                     <h5 className="card-title">{doc.type}</h5>
-                                    <div style={{ 
-                                        height: '200px', 
-                                        display: 'flex', 
-                                        justifyContent: 'center', 
-                                        alignItems: 'center', 
-                                        border: '1px solid black', 
-                                        borderRadius: '5px', 
-                                        overflow: 'hidden' 
-                                    }}>
+                                    <div
+                                        style={{
+                                            height: '200px',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            border: '1px solid black',
+                                            borderRadius: '5px',
+                                            overflow: 'hidden'
+                                        }}
+                                    >
                                         {doc.baseExtension !== "pdf" ? (
-                                            <img 
+                                            <img
                                                 style={{ height: "100%", width: "auto", objectFit: "contain" }}
-                                                src={`data:image/${doc.baseExtension};base64, ${doc.document}`} 
-                                                alt={doc.type} 
+                                                src={`data:image/${doc.baseExtension};base64, ${doc.document}`}
+                                                alt={doc.type}
                                             />
                                         ) : (
-                                            <iframe 
-                                                src={`data:application/${doc.baseExtension};base64,${doc.document}`} 
-                                                title={doc.type} 
+                                            <iframe
+                                                src={`data:application/${doc.baseExtension};base64,${doc.document}`}
+                                                title={doc.type}
                                                 style={{ width: "100%", height: "100%" }}
                                             />
                                         )}
                                     </div>
-                                    <button 
-                                        className="btn btn-danger mt-2" 
+                                    <button
+                                        className="btn btn-danger mt-2"
                                         onClick={(e) => { e.stopPropagation(); handleDelete(doc.id); }}
                                     >
                                         Supprimer
@@ -183,44 +169,15 @@ const InstructorProfilPage = () => {
                 <p>Aucun document trouvé pour cet instructeur.</p>
             )}
 
-            <h3 className="mt-4">Télécharger un document</h3>
+            <h3 className="mt-4">Télécharger des documents</h3>
 
-            {/* Affichage des cartes à cliquer pour télécharger */}
-            <div className="row">
-                {["carte d'identité", "Permis de conduire", "Carte d'enseignement", "Contrat de travail"].map((type, index) => (
-                    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={index}>
-                        <div 
-                            className="card" 
-                            style={{
-                                width: '287px', 
-                                height: '200px', 
-                                border: '1px solid black', 
-                                borderRadius: '5px',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => openCardForUpload(type)}
-                        >
-                            <span>{type}</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {selectedDocumentType && (
-                <div className="mt-3">
-                    <input type="file" onChange={handleFileChange} />
-                    <button 
-                        className="btn btn-primary mt-2"
-                        onClick={() => handleFileUpload(selectedDocumentType)}
-                        disabled={uploading}
-                    >
-                        {uploading ? "Téléchargement en cours..." : "Télécharger le fichier"}
-                    </button>
-                </div>
-            )}
+            {/* Formulaire pour télécharger plusieurs fichiers */}
+            <form onSubmit={handleSubmit}>
+                <input type="file" multiple />
+                <button type="submit" className="btn btn-primary mt-2">
+                    Télécharger les fichiers
+                </button>
+            </form>
 
             <div className="d-flex justify-content-between mt-4">
                 <button className="btn btn-primary" onClick={() => navigate('/instructors')}>
