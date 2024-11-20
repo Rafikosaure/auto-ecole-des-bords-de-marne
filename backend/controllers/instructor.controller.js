@@ -72,7 +72,7 @@ const getInstructor = async (req, res, next) => {
         // converts documents buffer to base64 for an easy frontend integration
         instructor.dataValues.documents.map(instructorsDocument => {
             data = instructorsDocument.dataValues;
-            Buffer.from(data.document).toString("base64");
+            data.document = Buffer.from(data.document).toString("base64");
         });
         res.status(200).json(instructor);
     } catch (error) {
