@@ -1,6 +1,7 @@
 // imports
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
 const cors = require("cors");
 const ENV = require("./config/env.js").ENV
 const { expressApp } = require("nodemailer-mail-tracking")
@@ -19,6 +20,7 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 
 // cors config
 app.use(cors({
@@ -32,6 +34,7 @@ app.options('*', cors());
 
 // STATIC FILES FOR STUDENT CONTRACT
 app.use('/contract-signatures', express.static(path.join(__dirname, './assets/contractImages')));
+app.use('/instructors-documents', express.static(path.join(__dirname, './assets/instructorsDocuments')));
 
 // EMAIL TRACKING
 app.use(`/api/${ENV.EMAIL_TRACKING_ENDPOINT}`, expressApp(mailTrackingOptions));

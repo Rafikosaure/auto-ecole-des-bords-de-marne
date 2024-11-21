@@ -177,8 +177,11 @@
             left: 35%;
         }
         .enterprise-signature-section {
+            width: 288px;
+            height: auto;
+            margin: 0;
             position: absolute;
-            left: 80%;
+            left: 59%;
         }
     </style>
 </head>
@@ -276,7 +279,7 @@
 
     <div class="initials initials-page-1"><strong>Initiales:</strong>
         <% if (fileData.studentContractData.initialsOptions.ifInitialed_page1) { %>
-            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>" alt="paraphe de l'étudiant">
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
         <% } %>
     </div>
     <div class="footer footer-page-1">Page 1 sur 5</div>
@@ -476,7 +479,7 @@
     </div>
     <div class="initials initials-page-2"><strong>Initiales:</strong>
         <% if (fileData.studentContractData.initialsOptions.ifInitialed_page2) { %>
-            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>" alt="paraphe de l'étudiant">
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
         <% } %>
     </div>
     <div class="footer footer-page-2">Page 2 sur 5</div>
@@ -585,7 +588,7 @@
 
     <div class="initials initials-page-3"><strong>Initiales:</strong>
         <% if (fileData.studentContractData.initialsOptions.ifInitialed_page3) { %>
-            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>" alt="paraphe de l'étudiant">
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
         <% } %>
     </div>
     <div class="footer footer-page-3">Page 3 sur 5</div>
@@ -636,7 +639,7 @@
 
     <div class="initials initials-page-4"><strong>Initiales:</strong>
         <% if (fileData.studentContractData.initialsOptions.ifInitialed_page4) { %>
-            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>" alt="paraphe de l'étudiant">
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
         <% } %>
     </div>
     <div class="footer footer-page-4">Page 4 sur 5</div>
@@ -684,20 +687,20 @@
     </div>
 
     <div class="signature-section" style="margin: 0;">
-        <p style="margin-top: 0px;">Fait en 2 exemplaires, à BRY-SUR-MARNE, le <%= fileData.dateTime %><%= fileData.studentContractData.signature.legalRepresentativeSignature %> </p>
+        <p style="margin-top: 0px;">Fait en 2 exemplaires, à BRY-SUR-MARNE, le <%= fileData.dateTime %></p>
         <p style="margin-top: 0px; margin-bottom: 0;">Signatures (avec mention lu et approuvé et avoir pris un exemplaire)</p>
         <div style="margin: 0; display: flex; flex: 1;"><p style="text-align: center; width: 120px; margin-bottom: 0;">Élève:</p><p style="text-align: center; margin-bottom: 0;">Représentant légal (élève mineur):</p><p style="text-align: center; margin-bottom: 0;">Cachet et signature de l'établissement:</p></div>
         <div>
             <% if (fileData.studentContractData.isReadAndApproved) { %>
-                <span class="student-signature-section">LU ET APPROUVÉ <img class="image-signature" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.studentSignature %>" alt="signature de l'élève"></span>
+                <span class="student-signature-section">LU ET APPROUVÉ <img class="image-signature" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.studentSignature %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="signature de l'élève"></span>
             <% } else { %>
                 <span style="display: flex; flex-direction: column; margin-top: 15px; padding-left: 15px;"></span>
-            <% } %><img class="image-signature legal-representative-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.legalRepresentativeSignature %>" alt="signature du représentant légal"><img class="image-signature enterprise-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.enterpriseSignature %>" alt="cachet & signature de l'établissement"></div>
+            <% } %><img class="image-signature legal-representative-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.legalRepresentativeSignature %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="signature du représentant légal"><img class="enterprise-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.enterpriseSignature %>.png" alt="cachet & signature de l'établissement"></div>
     </div>
 
     <div class="initials initials-page-5"><strong>Initiales:</strong>
         <% if (fileData.studentContractData.initialsOptions.ifInitialed_page5) { %>
-            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>" alt="paraphe de l'étudiant">
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
         <% } %>
         </div>
     <div class="footer footer-page-5">Page 5 sur 5</div>
