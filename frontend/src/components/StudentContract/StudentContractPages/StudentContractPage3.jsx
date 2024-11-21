@@ -1,37 +1,17 @@
 import './StudentContractPages.css'
-import data from './temporaryData'
+import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
 
 
 
 
-export default function StudentContractPage1({ StudentInitials, currentPageNumber }) {
+export default function StudentContractPage3({ currentPageNumber, student, initialsPage3, setInitialsPage3, setTheoricalFormationLocationOnSite, setTheoricalFormationLocationRemote, setTheoricalFormationLocationOnSiteAndRemote, setTheoricalFormationLocationIndividualCourses, setTheoricalFormationLocationGroupCourses }) {
+
+    // Import des données par défaut
+    const data = dataStorage(student)
 
     // Gestion de la pagination
     const [pageDisplay, setPageDisplay] = useState('block')
-
-    // email & documents timestamp
-    const dateObject = new Date()
-    const datetime = dateObject.toLocaleDateString("fr-FR")
-    
-    // Configure the code exam date and time
-    const codeExamDateObject = new Date("January 03, 2025 08:45:00")
-    const examOptionsDate = {
-        weekday: "long",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    }
-    const examOptionsTime = {
-        hour: '2-digit', 
-        minute:'2-digit'
-    }
-    // Lieu, jour et heure de l'examen
-    const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
-    const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
-
-    // Elements de signature du contrat
-    const [initialsPage1, setInitialsPage1] = useState(data.fileData.studentContractData.initialsOptions.ifInitialed_page1)
 
 
     useEffect(() => {
@@ -73,11 +53,11 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
           <h4>1.2 Déroulement de la formation</h4>
           <div className="checkboxes">
             <p className="checkbox-section-element"><strong>L'enseignement théorique se déroule: </strong></p>
-            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.onSite} /><label style={{ marginLeft: '1px' }}>Sur place</label></div>
-            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.remote} /><label style={{ marginLeft: '1px' }}>À distance</label></div>
-            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.onSiteAndRemote} /><label style={{ marginLeft: '1px' }}>Les deux</label></div>
-            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.individualCourses} /><label style={{ marginLeft: '1px' }}>En cours individuel</label></div>
-            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.groupCourses} /><label style={{ marginLeft: '1px' }}>En cours collectif</label></div>
+            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.onSite} onChange={(e) => setTheoricalFormationLocationOnSite(e.target.checked)} /><label style={{ marginLeft: '1px' }}>Sur place</label></div>
+            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.remote} onChange={(e) => setTheoricalFormationLocationRemote(e.target.checked)} /><label style={{ marginLeft: '1px' }}>À distance</label></div>
+            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.onSiteAndRemote} onChange={(e) => setTheoricalFormationLocationOnSiteAndRemote(e.target.checked)} /><label style={{ marginLeft: '1px' }}>Les deux</label></div>
+            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.individualCourses} onChange={(e) => setTheoricalFormationLocationIndividualCourses(e.target.checked)} /><label style={{ marginLeft: '1px' }}>En cours individuel</label></div>
+            <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.theoricalFormation.location.groupCourses} onChange={(e) => setTheoricalFormationLocationGroupCourses(e.target.checked)} /><label style={{ marginLeft: '1px' }}>En cours collectif</label></div>
           </div>
         </div>
         <div className="section">
@@ -136,9 +116,9 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
 
 
 
-        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
-            {initialsPage1 ? (
-                <img className="image-initials" src={StudentInitials} alt="paraphe de l'étudiant" />
+        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page3} onChange={(e) => setInitialsPage3(e.target.checked)} /> <strong>Initiales:</strong>
+            {initialsPage3 ? (
+                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

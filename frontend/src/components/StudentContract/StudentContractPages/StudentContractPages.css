@@ -176,8 +176,11 @@ ul {
     left: 35%;
 }
 .enterprise-signature-section {
+    width: 288px;
+    height: auto;
+    margin: 0;
     position: absolute;
-    left: 80%;
+    left: 59%;
 }
 @media screen and (max-width: 1380px) {
 	.wrapper {

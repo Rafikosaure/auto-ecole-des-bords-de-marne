@@ -1,105 +1,17 @@
 import './StudentContractPages.css'
-import data from './temporaryData'
+import dataStorage from './temporaryData'
 import TableGrid from './images/table_grid.png'
 import React, { useState, useEffect } from 'react'
 
 
 
-export default function StudentContractPage1({ StudentInitials, currentPageNumber, addCurrencySymbol }) {
+export default function StudentContractPage2({ currentPageNumber, student, initialsPage2, setInitialsPage2, setTheoricalFormationDuration, setPracticalFormationDuration, setTypeFormation, setTotalFormationPrices, setGestionEleveObligatoire, setFormationPricesAdminPriceUnitTTC, setFormationPricesAdminNbHeuresOuUnits, setFormationPricesAdminMontantTTC, setFormationPricesTheoryRDVPedagoObligatoire, setFormationPricesTheoryRDVPedagoPriceUnitTTC, setFormationPricesTheoryRDVPedagoNbHeuresOuUnits, setFormationPricesTheoryRDVPedagoMontantTTC, setFormationPricesTheoryCtrlConnaisancesObligatoire, setFormationPricesTheoryCtrlConnaisancesPriceUnitTTC, setFormationPricesTheoryCtrlConnaisancesNbHeuresOuUnits, setFormationPricesTheoryCtrlConnaisancesMontantTTC, setFormationPricesTheoryForfaitTheoObligatoire, setFormationPricesTheoryForfaitTheoPriceUnitTTC, setFormationPricesTheoryForfaitTheoNbHeuresOuUnits, setFormationPricesTheoryForfaitTheoMontantTTC, setFormationPricesTheoryVerifBookObligatoire, setFormationPricesTheoryVerifBookPriceUnitTTC, setFormationPricesTheoryVerifBookNbHeuresOuUnits, setFormationPricesTheoryVerifBookMontantTTC, setFormationPricesTheoryELearningAccessObligatoire, setFormationPricesTheoryELearningAccessPriceUnitTTC, setFormationPricesTheoryELearningAccessNbHeuresOuUnits, setFormationPricesTheoryELearningAccessMontantTTC, setFormationPricesPracticeRDVPrevObligatoire, setFormationPricesPracticeRDVPrevPriceUnitTTC, setFormationPricesPracticeRDVPrevNbHeuresOuUnits, setFormationPricesPracticeRDVPrevMontantTTC, setFormationPricesPracticeRDVPedagoObligatoire, setFormationPricesPracticeRDVPedagoPriceUnitTTC, setFormationPricesPracticeRDVPedagoNbHeuresOuUnits, setFormationPricesPracticeRDVPedagoMontantTTC, setFormationPricesPracticeConduiteBMObligatoire, setFormationPricesPracticeConduiteBMPriceUnitTTC, setFormationPricesPracticeConduiteBMNbHeuresOuUnits, setFormationPricesPracticeConduiteBMMontantTTC, setFormationPricesPracticeConduiteBVAObligatoire, setFormationPricesPracticeConduiteBVAPriceUnitTTC, setFormationPricesPracticeConduiteBVANbHeuresOuUnits, setFormationPricesPracticeConduiteBVAMontantTTC, setFormationPricesPracticeAccompExamObligatoire, setFormationPricesPracticeAccompExamPriceUnitTTC, setFormationPricesPracticeAccompExamNbHeuresOuUnits, setFormationPricesPracticeAccompExamMontantTTC, setFormationPricesPracticeForfaitPratObligatoire, setFormationPricesPracticeForfaitPratPriceUnitTTC, setFormationPricesPracticeForfaitPratNbHeuresOuUnits, setFormationPricesPracticeForfaitPratMontantTTC, setEvalPrealable, setEvalObligatory, setEvalPrixUnitTTC, setEvalNbHeuresOuUnits, setEvalMontantTTC, setFormationPriceOfCodeExam, setTheoricalFormationIsChecked }) {
+
+    // Import des données par défaut
+    const data = dataStorage(student)
 
     // Gestion de la pagination
     const [pageDisplay, setPageDisplay] = useState('block')
-
-    // email & documents timestamp
-    const dateObject = new Date()
-    const datetime = dateObject.toLocaleDateString("fr-FR")
-    
-    // Configure the code exam date and time
-    const codeExamDateObject = new Date("January 03, 2025 08:45:00")
-    const examOptionsDate = {
-        weekday: "long",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    }
-    const examOptionsTime = {
-        hour: '2-digit', 
-        minute:'2-digit'
-    }
-    
-
-    // Lieu, jour et heure de l'examen
-    const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
-    const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
-
-    // Elements de signature du contrat
-    const [initialsPage1, setInitialsPage1] = useState(data.fileData.studentContractData.initialsOptions.ifInitialed_page1)
-
-    // Formation suivie
-    const [theoricalFormationDuration, setTheoricalFormationDuration] = useState(data.formationData.formationType.theoricalFormation.duration)
-    const [practicalFormationDuration, setPracticalFormationDuration] = useState(data.formationData.formationType.practicalFormation.duration)
-    const [typeFormation, setTypeFormation] = useState(data.formationData.formationPrices.total.TypeFormation)
-    const [totalFormationPrices, setTotalFormationPrices] = useState(`${data.formationData.formationPrices.total.MontantTTC}`)
-    const [gestionEleveObligatoire, setGestionEleveObligatoire] = useState(data.formationData.formationPrices.Frais_Administratifs.raw001.Obligatoire)
-    const [formationPricesAdminPriceUnitTTC, setFormationPricesAdminPriceUnitTTC] = useState(`${data.formationData.formationPrices.Frais_Administratifs.raw001.PrixUnitaireTTC}`)
-    const [formationPricesAdminNbHeuresOuUnits, setFormationPricesAdminNbHeuresOuUnits] = useState(data.formationData.formationPrices.Frais_Administratifs.raw001.NbHeures_ou_Units)
-    const [formationPricesAdminMontantTTC, setFormationPricesAdminMontantTTC] = useState(`${data.formationData.formationPrices.Frais_Administratifs.raw001.MontantTTC}`)
-    const [formationPricesTheoryRDVPedagoObligatoire, setFormationPricesTheoryRDVPedagoObligatoire] = useState(data.formationData.formationPrices.Theorie.raw001.Obligatoire)
-    const [formationPricesTheoryRDVPedagoPriceUnitTTC, setFormationPricesTheoryRDVPedagoPriceUnitTTC] = useState(data.formationData.formationPrices.Theorie.raw001.PrixUnitaireTTC)
-    const [formationPricesTheoryRDVPedagoNbHeuresOuUnits, setFormationPricesTheoryRDVPedagoNbHeuresOuUnits] = useState(data.formationData.formationPrices.Theorie.raw001.NbHeures_ou_Units)
-    const [formationPricesTheoryRDVPedagoMontantTTC, setFormationPricesTheoryRDVPedagoMontantTTC] = useState(data.formationData.formationPrices.Theorie.raw001.MontantTTC)
-    const [formationPricesTheoryCtrlConnaisancesObligatoire, setFormationPricesTheoryCtrlConnaisancesObligatoire] = useState(data.formationData.formationPrices.Theorie.raw002.Obligatoire)
-    const [formationPricesTheoryCtrlConnaisancesPriceUnitTTC, setFormationPricesTheoryCtrlConnaisancesPriceUnitTTC] = useState(data.formationData.formationPrices.Theorie.raw002.PrixUnitaireTTC)
-    const [formationPricesTheoryCtrlConnaisancesNbHeuresOuUnits, setFormationPricesTheoryCtrlConnaisancesNbHeuresOuUnits] = useState(data.formationData.formationPrices.Theorie.raw002.NbHeures_ou_Units)
-    const [formationPricesTheoryCtrlConnaisancesMontantTTC, setFormationPricesTheoryCtrlConnaisancesMontantTTC] = useState(data.formationData.formationPrices.Theorie.raw002.MontantTTC)
-    const [formationPricesTheoryForfaitTheoObligatoire, setFormationPricesTheoryForfaitTheoObligatoire] = useState(data.formationData.formationPrices.Theorie.raw003.Obligatoire)
-    const [formationPricesTheoryForfaitTheoPriceUnitTTC, setFormationPricesTheoryForfaitTheoPriceUnitTTC] = useState(data.formationData.formationPrices.Theorie.raw002.PrixUnitaireTTC)
-    const [formationPricesTheoryForfaitTheoNbHeuresOuUnits, setFormationPricesTheoryForfaitTheoNbHeuresOuUnits] = useState(data.formationData.formationPrices.Theorie.raw002.NbHeures_ou_Units)
-    const [formationPricesTheoryForfaitTheoMontantTTC, setFormationPricesTheoryForfaitTheoMontantTTC] = useState(data.formationData.formationPrices.Theorie.raw002.MontantTTC)
-    const [formationPricesTheoryVerifBookObligatoire, setFormationPricesTheoryVerifBookObligatoire] = useState(data.formationData.formationPrices.Theorie.raw004.Obligatoire)
-    const [formationPricesTheoryVerifBookPriceUnitTTC, setFormationPricesTheoryVerifBookPriceUnitTTC] = useState(data.formationData.formationPrices.Theorie.raw004.PrixUnitaireTTC)
-    const [formationPricesTheoryVerifBookNbHeuresOuUnits, setFormationPricesTheoryVerifBookNbHeuresOuUnits] = useState(data.formationData.formationPrices.Theorie.raw004.NbHeures_ou_Units)
-    const [formationPricesTheoryVerifBookMontantTTC, setFormationPricesTheoryVerifBookMontantTTC] = useState(data.formationData.formationPrices.Theorie.raw004.MontantTTC)
-    const [formationPricesTheoryELearningAccessObligatoire, setFormationPricesTheoryELearningAccessObligatoire] = useState(data.formationData.formationPrices.Theorie.raw005.Obligatoire)
-    const [formationPricesTheoryELearningAccessPriceUnitTTC, setFormationPricesTheoryELearningAccessPriceUnitTTC] = useState(data.formationData.formationPrices.Theorie.raw005.PrixUnitaireTTC)
-    const [formationPricesTheoryELearningAccessNbHeuresOuUnits, setFormationPricesTheoryELearningAccessNbHeuresOuUnits] = useState(data.formationData.formationPrices.Theorie.raw005.NbHeures_ou_Units)
-    const [formationPricesTheoryELearningAccessMontantTTC, setFormationPricesTheoryELearningAccessMontantTTC] = useState(data.formationData.formationPrices.Theorie.raw005.MontantTTC)
-    const [formationPricesPracticeRDVPrevObligatoire, setFormationPricesPracticeRDVPrevObligatoire] = useState(data.formationData.formationPrices.Pratique.raw001.Obligatoire)
-    const [formationPricesPracticeRDVPrevPriceUnitTTC, setFormationPricesPracticeRDVPrevPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw001.PrixUnitaireTTC)
-    const [formationPricesPracticeRDVPrevNbHeuresOuUnits, setFormationPricesPracticeRDVPrevNbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw001.NbHeures_ou_Units)
-    const [formationPricesPracticeRDVPrevMontantTTC, setFormationPricesPracticeRDVPrevMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw001.MontantTTC)
-    const [formationPricesPracticeRDVPedagoObligatoire, setFormationPricesPracticeRDVPedagoObligatoire] = useState(data.formationData.formationPrices.Pratique.raw002.Obligatoire)
-    const [formationPricesPracticeRDVPedagoPriceUnitTTC, setFormationPricesPracticeRDVPedagoPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw002.PrixUnitaireTTC)
-    const [formationPricesPracticeRDVPedagoNbHeuresOuUnits, setFormationPricesPracticeRDVPedagoNbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw002.NbHeures_ou_Units)
-    const [formationPricesPracticeRDVPedagoMontantTTC, setFormationPricesPracticeRDVPedagoMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw002.MontantTTC)
-    const [formationPricesPracticeConduiteBMObligatoire, setFormationPricesPracticeConduiteBMObligatoire] = useState(data.formationData.formationPrices.Pratique.raw003.Obligatoire)
-    const [formationPricesPracticeConduiteBMPriceUnitTTC, setFormationPricesPracticeConduiteBMPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw003.PrixUnitaireTTC)
-    const [formationPricesPracticeConduiteBMNbHeuresOuUnits, setFormationPricesPracticeConduiteBMNbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw003.NbHeures_ou_Units)
-    const [formationPricesPracticeConduiteBMMontantTTC, setFormationPricesPracticeConduiteBMMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw003.MontantTTC)
-    const [formationPricesPracticeConduiteBVAObligatoire, setFormationPricesPracticeConduiteBVAObligatoire] = useState(data.formationData.formationPrices.Pratique.raw004.Obligatoire)
-    const [formationPricesPracticeConduiteBVAPriceUnitTTC, setFormationPricesPracticeConduiteBVAPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw004.PrixUnitaireTTC)
-    const [formationPricesPracticeConduiteBVANbHeuresOuUnits, setFormationPricesPracticeConduiteBVANbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw004.NbHeures_ou_Units)
-    const [formationPricesPracticeConduiteBVAMontantTTC, setFormationPricesPracticeConduiteBVAMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw004.MontantTTC)
-    const [formationPricesPracticeAccompExamObligatoire, setFormationPricesPracticeAccompExamObligatoire] = useState(data.formationData.formationPrices.Pratique.raw005.Obligatoire)
-    const [formationPricesPracticeAccompExamPriceUnitTTC, setFormationPricesPracticeAccompExamPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw005.PrixUnitaireTTC)
-    const [formationPricesPracticeAccompExamNbHeuresOuUnits, setFormationPricesPracticeAccompExamNbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw005.NbHeures_ou_Units)
-    const [formationPricesPracticeAccompExamMontantTTC, setFormationPricesPracticeAccompExamMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw005.MontantTTC)
-
-    const [formationPricesPracticeForfaitPratObligatoire, setFormationPricesPracticeForfaitPratObligatoire] = useState(data.formationData.formationPrices.Pratique.raw006.Obligatoire)
-    const [formationPricesPracticeForfaitPratPriceUnitTTC, setFormationPricesPracticeForfaitPratPriceUnitTTC] = useState(data.formationData.formationPrices.Pratique.raw006.PrixUnitaireTTC)
-    const [formationPricesPracticeForfaitPratNbHeuresOuUnits, setFormationPricesPracticeForfaitPratNbHeuresOuUnits] = useState(data.formationData.formationPrices.Pratique.raw006.NbHeures_ou_Units)
-    const [formationPricesPracticeForfaitPratMontantTTC, setFormationPricesPracticeForfaitPratMontantTTC] = useState(data.formationData.formationPrices.Pratique.raw006.MontantTTC)
-
-    // Evaluation
-    const [evalPrealable, setEvalPrealable] = useState(data.formationData.formationPrices.EvaluationPrealable.PRESTATION)
-    const [evalObligatory, setEvalObligatory] = useState(data.formationData.formationPrices.EvaluationPrealable.Obligatoire)
-    const [evalPrixUnitTTC, setEvalPrixUnitTTC] = useState(`${data.formationData.formationPrices.EvaluationPrealable.PrixUnitaireTTC}`)
-    const [evalNbHeuresOuUnits, setEvalNbHeuresOuUnits] = useState(data.formationData.formationPrices.EvaluationPrealable.NbHeures_ou_Units)
-    const [evalMontantTTC, setEvalMontantTTC] = useState(`${data.formationData.formationPrices.EvaluationPrealable.MontantTTC}`)
-
-    // Examen du code
-    const [formationPriceOfCodeExam, setFormationPriceOfCodeExam] = useState(data.formationData.formationPrices.priceOfCodeExam)
-
 
     useEffect(() => {
         if (currentPageNumber === 2) {
@@ -124,6 +36,7 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
                     defaultChecked={data.formationData.formationType.theoricalFormation.isChecked}
                     className='input-checkbox'
                     style={{ marginRight: '10px', width: '10px', height: '10px' }}
+                    onChange={(e) => setTheoricalFormationIsChecked(e.target.checked)}
                 />
                 Formation théorique : nombre de leçon(s) de formation théorique ou durée de la formation théorique : <input type="text" className='input-type-text' style={{ width: '70px' }} defaultValue={data.formationData.formationType.theoricalFormation.duration} onChange={(e) => setTheoricalFormationDuration(e.target.value)} />
             </p>
@@ -302,9 +215,9 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
             </p>
         </div>
 
-        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
-            {initialsPage1 ? (
-                <img className="image-initials" src={StudentInitials} alt="paraphe de l'étudiant" />
+        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page2} onChange={(e) => setInitialsPage2(e.target.checked)} /> <strong>Initiales:</strong>
+            {initialsPage2 ? (
+                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

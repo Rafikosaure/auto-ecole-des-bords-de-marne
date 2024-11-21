@@ -1,6 +1,7 @@
 // imports
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
 const cors = require("cors");
 const ENV = require("./config/env.js").ENV
 const { expressApp } = require("nodemailer-mail-tracking")
@@ -19,6 +20,7 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 
 // cors config
 app.use(cors({

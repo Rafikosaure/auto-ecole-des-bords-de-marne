@@ -10,6 +10,9 @@ const { transporter } = require('../sharedFunctions/transporter')
 
 exports.sendMailWithTracking = (req, res) => {
     try {
+        // Define the student ID
+        const studentId = req.params.studentId
+        
         // Configure the datetime
         const dateObject = new Date()
         const options = {
@@ -21,6 +24,8 @@ exports.sendMailWithTracking = (req, res) => {
             minute: '2-digit'
         }
         const datetime = dateObject.toLocaleDateString("fr-FR", options).replace(':', 'h')
+
+        console.log('Données récupérées :', req.body)
 
         // Manage type of email
         let emailTypeToSend;
@@ -72,9 +77,10 @@ exports.sendMailWithTracking = (req, res) => {
             )
         }
         if (req.body.fileData && req.body.emailType === "convocation_formation") {
+            const fileName = `${req.body.fileData.documentType}-${studentId}.pdf`
             attachments.push({
-                filename: `${req.body.fileData.documentType}.pdf`,
-                path: `./emailAttachments/${req.body.fileData.documentType}.pdf`
+                filename: fileName,
+                path: `./emailAttachments/${fileName}`
             })
         }
 
@@ -87,16 +93,19 @@ exports.sendMailWithTracking = (req, res) => {
             subject: emailTypeToSend.subject,
             html: emailTypeToSend.html
         }
-        sendingProcess(req.body, sendMailOptions)
+        sendingProcess(req.body, studentId, sendMailOptions)
 
         res.status(200).json({
             message: 'Email sending is success!'
         })
 
     } catch {
-        
+        // Define the student ID
+        const studentId = req.params.studentId
+
+        // Delete the generated file
         if (req.body.fileData) {
-            deleteFile(req.body.fileData.documentType, './emailAttachments/', '.pdf')
+            deleteFile(`${req.body.fileData.documentType}-${studentId}`, './emailAttachments/', '.pdf')
         }
         
         res.status(500).json({
@@ -105,11 +114,11 @@ exports.sendMailWithTracking = (req, res) => {
     }
 }
 
-const sendingProcess = (dataRequest, sendMailOptions) => {
+const sendingProcess = (dataRequest, studentId, sendMailOptions) => {
     sendMail(mailTrackingOptions, transporter, sendMailOptions)
     .then(data => {
         if (dataRequest.fileData) {
-            deleteFile(dataRequest.fileData.documentType, './emailAttachments/', '.pdf')
+            deleteFile(`${dataRequest.fileData.documentType}-${studentId}`, './emailAttachments/', '.pdf')
         }
     })
 }

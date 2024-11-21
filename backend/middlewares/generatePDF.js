@@ -8,6 +8,13 @@ const ENV = require('../config/env').ENV
 exports.generatePDFfromHTML = async (req, res, next) => {
     try {
         if (req.body.fileData) {
+
+            // Get the student ID
+            const studentId = req.params.studentId
+
+            // Create the file name
+            const fileName = `${req.body.fileData.documentType}-${studentId}`
+
             // Compile EJS template
             const templateContent = fs.readFileSync(path.resolve(__dirname, `../models/files/${req.body.fileData.documentType}.ejs`), "utf-8");
             const compiledTemplate = ejs.compile(templateContent);
@@ -29,7 +36,7 @@ exports.generatePDFfromHTML = async (req, res, next) => {
 
             // Generate PDF from HTML
             await page.pdf({
-                path: `./emailAttachments/${req.body.fileData.documentType}.pdf`, // Specify the path to save the PDF file
+                path: `./emailAttachments/${fileName}.pdf`, // Specify the path to save the PDF file
                 format: "A4", // Specify the page format
                 // Other options such as scale, margin, printBackground, etc., can be provided here
             });

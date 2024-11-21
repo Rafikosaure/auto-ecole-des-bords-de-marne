@@ -1,73 +1,16 @@
 import './StudentContractPages.css'
-import data from './temporaryData'
+import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
 
 
 
-export default function StudentContractPage1({ StudentInitials, currentPageNumber }) {
+export default function StudentContractPage1({ currentPageNumber, student, setDocumentTitle, setFormationTradB, setApprentAnticipConduite, setConduiteSupervis, setStudentLastName, setStudentFirstName, setStudentBirthDate, setStudentAddressNumber, setStudentAddressStreet, setStudentAddressTown, setStudentPhoneNumber, setStudentEmail, setEvaluationDate, setEvaluationInstructorFirstName, setEvaluationVehicleType, setFormationDurationDrivingPractice, setFormationDurationTotalDrivingLearning, setFormationMaxEndingDate, initialsPage1, setInitialsPage1 }) {
+
+    // Import des données par défaut
+    const data = dataStorage(student)
 
     // Gestion de la pagination
     const [pageDisplay, setPageDisplay] = useState('block')
-    
-    // Configure the code exam date and time
-    const codeExamDateObject = new Date("January 03, 2025 08:45:00")
-    const examOptionsDate = {
-        weekday: "long",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    }
-    const examOptionsTime = {
-        hour: '2-digit', 
-        minute:'2-digit'
-    }
-    // Lieu, jour et heure de l'examen
-    const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
-    const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
-    
-    // Titre du document
-    const [documentTitle, setDocumentTitle] = useState(data.fileData.documentContractTitle)
-    
-    // Type de la formation
-    const [formationTradB, setFormationTradB] = useState(data.formationData.formationType.formationTradB)
-    const [apprentAnticipConduite, setApprentAnticipConduite] = useState(data.formationData.formationType.apprentAnticipConduite)
-    const [conduiteSupervis, setConduiteSupervis] = useState(data.formationData.formationType.conduiteSupervis)    
-
-    // Coordonnées de l'étudiant
-    const [studentLastName, setStudentLastName] = useState(data.studentData.studentLastName)
-    const [studentFirstName, setStudentFirstName] = useState(data.studentData.studentFirstName)
-    const [studentBirthDay, setStudentBirthDay] = useState(data.studentData.studentBirthDate.birthDay)
-    const [studentBirthMonth, setStudentBirthMonth] = useState(data.studentData.studentBirthDate.birthMonth)
-    const [studentBirthYear, setStudentBirthYear] = useState(data.studentData.studentBirthDate.birthYear)
-    const [studentBirthDate, setStudentBirthDate] = useState()
-    const [studentAddressNumber, setStudentAddressNumber] = useState(data.studentData.studentAddress.number)
-    const [studentAddressStreet, setStudentAddressStreet] = useState(data.studentData.studentAddress.street)
-    const [studentAddressTown, setStudentAddressTown] = useState(data.studentData.studentAddress.town)
-    const [studentPhoneNumber, setStudentPhoneNumber] = useState(data.studentData.studentPhoneNumber)
-    const [studentEmail, setStudentEmail] = useState(data.studentData.studentEmail)
-
-    // Evaluation
-    const [evaluationDate, setEvaluationDate] = useState()
-    const [evaluationInstructorFirstName, setEvaluationInstructorFirstName] = useState()
-    const [evaluationVehicleType, setEvaluationVehicleType] = useState()
-
-    // Formation suivie
-    const [formationDurationDrivingPractice, setFormationDurationDrivingPractice] = useState()
-    const [formationDurationTotalDrivingLearning, setFormationDurationTotalDrivingLearning] = useState(data.formationData.formationDuration.totalDrivingLearningDuration)
-    const [formationMaxEndingDay, setFormationMaxEndingDay] = useState(data.formationData.formationMaxEndingDate.day)
-    const [formationMaxEndingMonth, setFormationMaxEndingMonth] = useState(data.formationData.formationMaxEndingDate.month)
-    const [formationMaxEndingYear, setFormationMaxEndingYear] = useState(data.formationData.formationMaxEndingDate.year)
-    const [formationMaxEndingDate, setFormationMaxEndingDate] = useState()
-
-    // Localisation de l'auto-école
-    const [schoolLocationNumber, setSchoolLocationNumber] = useState(data.schoolData.location.number)
-    const [schoolLocationStreet, setSchoolLocationStreet] = useState(data.schoolData.location.street)
-    const [schoolLocationTown, setSchoolLocationTown] = useState(data.schoolData.location.town)
-
-    // Elements de signature du contrat
-    const [initialsPage1, setInitialsPage1] = useState(data.fileData.studentContractData.initialsOptions.ifInitialed_page1)
-
-
 
     useEffect(() => {
         if (currentPageNumber === 1) {
@@ -82,7 +25,7 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
   return (
     <div className='wrapper' style={{ display: `${pageDisplay}` }}>
         <h1>
-            <input type='text' name="documentTitle" defaultValue={data.fileData.documentContractTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '100%', textAlign: "center" }} />
+            <input type='text' name="documentTitle" defaultValue={data.fileData.documentTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '100%', textAlign: "center" }} />
         </h1>
 
         <h2 style={{ textAlign: "center", fontSize: '12px' }}>Ce contrat porte sur la formation suivante : ARRETE DU 6 JUIN 2020</h2>
@@ -110,9 +53,9 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
             Ci-après désigné « l'élève »</p>
         <p className="student-info">
             Nom : <input type='text' className='input-type-text' defaultValue={data.studentData.studentLastName} onChange={(e) => setStudentLastName(e.target.value)} /><span className="info">Prénom: <input type='text' className='input-type-text' defaultValue={data.studentData.studentFirstName} onChange={(e) => setStudentFirstName(e.target.value)} /></span><br />
-            Date et lieu de naissance : <input type='text' className='input-type-text' style={{ width: '70px' }} defaultValue={`${data.studentData.studentBirthDate.birthDay}/${data.studentData.studentBirthDate.birthMonth}/${data.studentData.studentBirthDate.birthYear}`} onChange={(e) => setStudentBirthDate(e.target.value)} /><br />
-            Adresse : <input type='text' className='input-type-text' style={{ width: "30px" }} defaultValue={`${data.studentData.studentAddress.number}`} onChange={(e) => setStudentAddressNumber(e.target.value)} />, <input type="text" className='input-type-text' style={{ width: "380px" }} defaultValue={data.studentData.studentAddress.street} onChange={(e) => setStudentAddressStreet(e.target.value)} />, <input type="text" className='input-type-text' defaultValue={`${data.studentData.studentAddress.town}`} onChange={(e) => setStudentAddressTown(e.target.value)} /><br />
-            Tél : <input type="text" className='input-type-text' style={{ width: '100px' }} defaultValue={data.studentData.studentPhoneNumber} onChange={(e) => setStudentPhoneNumber(e.target.value)} /><span className="info info2">Courriel : <input type="text" className='input-type-text' defaultValue={data.studentData.studentEmail} onChange={(e) => setStudentEmail(e.target.value)} /></span>
+            Date et lieu de naissance : <input type='text' className='input-type-text' style={{ width: '70px' }} defaultValue={`${data.studentData.studentBirthDate.split('/')[0]}/${data.studentData.studentBirthDate.split('/')[1]}/${data.studentData.studentBirthDate.split('/')[2]}`} onChange={(e) => setStudentBirthDate(e.target.value)} /><br />
+            Adresse : <input type='text' className='input-type-text' style={{ width: "30px" }} defaultValue={``} onChange={(e) => setStudentAddressNumber(e.target.value)} />, <input type="text" className='input-type-text' style={{ width: "380px" }} defaultValue={''} onChange={(e) => setStudentAddressStreet(e.target.value)} />, <input type="text" className='input-type-text' defaultValue={`${''}`} onChange={(e) => setStudentAddressTown(e.target.value)} /><br />
+            Tél : <input type="text" className='input-type-text' style={{ width: '100px' }} defaultValue={data.studentData.studentPhoneNumber} onChange={(e) => setStudentPhoneNumber(e.target.value)} /><span className="info info2">Courriel : <input type="text" className='input-type-text' style={{ width: '200px' }} defaultValue={data.studentData.studentEmail} onChange={(e) => setStudentEmail(e.target.value)} /></span>
         </p>
         </div>
 
@@ -122,8 +65,8 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
                 dans les locaux de l'école de conduite, afin de déterminer le nombre prévisionnel d'heures de formation pratique et / ou théorique à
                 la conduite nécessaire.</p>
             <p>
-                L'évaluation de l'élève a été réalisée le : <input type="text" className='input-type-text' style={{ width: '70px' }} defaultValue={`${data.evaluation.date.evaluationDay}/${data.evaluation.date.evaluationMonth}/${data.evaluation.date.evaluationYear}`} onChange={(e) => setEvaluationDate(e.target.value)} /> par <input type="text" className='input-type-text' defaultValue={data.evaluation.instructorFirstName} onChange={(e) => setEvaluationInstructorFirstName(e.target.value)} /> avec pour moyen d'évaluation utilisé :
-                <input type="text" className='input-type-text' style={{ width: '300px' }} defaultValue={data.evaluation.vehicleType} onChange={(e) => setEvaluationVehicleType(e.target.value)} />
+                L'évaluation de l'élève a été réalisée le : <input type="text" className='input-type-text' style={{ width: '70px' }} defaultValue={``} onChange={(e) => setEvaluationDate(e.target.value)} placeholder='date' /> par <input type="text" className='input-type-text' defaultValue={data.evaluation.instructorFirstName} onChange={(e) => setEvaluationInstructorFirstName(e.target.value)} placeholder='nom du moniteur' /> avec pour moyen d'évaluation utilisé :
+                <input type="text" className='input-type-text' style={{ width: '300px' }} defaultValue={data.evaluation.vehicleType} onChange={(e) => setEvaluationVehicleType(e.target.value)} placeholder='véhicule' />
             </p>
             <p>Elle a donné lieu à l'élaboration d'une fiche d'évaluation annexée au contrat. À l'issue de cette évaluation, le nombre
                 d'heures prévisionnel de formation pratique est de <input type='text' className='input-type-text' style={{ width: '60px' }} defaultValue={data.formationData.formationDuration.drivingPractice} onChange={(e) => setFormationDurationDrivingPractice(e.target.value)} /> heures.</p>
@@ -162,7 +105,7 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
 
         <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
             {initialsPage1 ? (
-                <img className="image-initials" src={StudentInitials} alt="paraphe de l'étudiant" />
+                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}
