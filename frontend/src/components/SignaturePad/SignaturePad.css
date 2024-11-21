@@ -1,0 +1,32 @@
+.pad-responsive-design {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pad-container {
+    padding: 0;
+}
+.pad-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.pad-buttons {
+    margin-top: 20px;
+}
+@media screen and (max-width: 660px) {
+    .pad-responsive-design {
+        transform: scale(70%);
+    }
+    .pad-title {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    .pad-buttons {
+        margin-top: 0px;
+    }
+}
+@media screen and (max-width: 420px) {
+	.pad-responsive-design {
+        transform: scale(60%);
+    }
+}

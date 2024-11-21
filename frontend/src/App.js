@@ -1,6 +1,3 @@
-
-
-
 import { Route, Routes, Navigate } from "react-router-dom";
 import Template from "./components/Template/Template";
 import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
@@ -39,37 +36,3 @@ function App() {
 }
 
 export default App;
-
-
-
-// import { Route, Routes } from "react-router-dom";
-// import Template from "./components/Template/Template";
-// import HomePage from "./pages/HomePage/HomePage";
-// import InstructorsPage from "./pages/InstructorsPage/InstructorPage";
-// import AdminPage from "./pages/AdminPage/AdminPage";
-// import AdminRegister from "./pages/AdminRegister/AdminRegister";
-// import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
-// import StudentPage from "./pages/StudentsPage/StudentsPage";
-// // import "./pages/InstructorsPage/InstructorPage.css";
-// import "./App.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min';
-
-
-// function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Template />}>
-//        <Route path="/students" element={<StudentPage />} />
-//         <Route path="/connexion" element={<ConnexionPage />} />
-//         <Route index element={<HomePage />} />
-//         <Route path="/instructors" element={<InstructorsPage />} />
-//         <Route path="/admin" element={<AdminPage />} />
-//         <Route path="/adminregister" element={<AdminRegister />} />
-
-//       </Route>
-//     </Routes>
-//   );
-// }
-
-// export default App;
