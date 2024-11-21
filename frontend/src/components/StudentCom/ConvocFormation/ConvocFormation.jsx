@@ -2,99 +2,85 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import './ConvocFormation.css';
 import data from './temporaryData'
-// import { useDispatch } from 'react-redux';
-// import { saveData } from '../../../redux/slices/documentData';
 
 
+export default function ConvocationFormation({ student, setFormFetchData }) {
 
-export default function ConvocationFormation() {
+  // Date de début de formation
+  const studentFormationStartDate = new Date(student.formationStart).toLocaleDateString("fr-FR")
+  
+  // Date désirée de fin de formation
+  const studentFormationEndingDesiredDate = new Date(student.formationDesiredEnd).toLocaleDateString("fr-FR")
 
-  const [documentTitle, setDocumentTitle] = useState(data.fileData.documentConvocationTitle)
-  const [studentName, setStudentName] = useState(data.studentName)
+  const [documentTitle, setDocumentTitle] = useState(data.fileData.documentTitle)
+  const [studentFirstName, setStudentFirstName] = useState(student.firstName)
+  const [studentLastName, setStudentLastName] = useState(student.lastName)
   const [formationTitle, setFormationTitle] = useState(data.formationTitle)
-  const [formationStartDate, setFormationStartDate] = useState(`${data.formationStartDate.day}/${data.formationStartDate.month}/${data.formationStartDate.year}`)
-  const [formationStartDay, setFormationStartDay] = useState(data.formationStartDate.day)
-  const [formationStartMonth, setFormationStartMonth] = useState(data.formationStartDate.month)
-  const [formationStartYear, setFormationStartYear] = useState(data.formationStartDate.year)
-  const [formationEndingDesiredDate, setFormationEndingDesiredDate] = useState(`${data.formationEndingDesiredDate.day}/${data.formationEndingDesiredDate.month}/${data.formationEndingDesiredDate.year}`)
-  const [formationEndingDesiredDay, setFormationEndingDesiredDay] = useState(data.formationEndingDesiredDate.day)
-  const [formationEndingDesiredMonth, setFormationEndingDesiredMonth] = useState(data.formationEndingDesiredDate.month)
-  const [formationEndingDesiredYear, setFormationEndingDesiredYear] = useState(data.formationEndingDesiredDate.year)
+
+  const [formationStartDate, setFormationStartDate] = useState(studentFormationStartDate)
+  const [formationStartDay, setFormationStartDay] = useState(studentFormationStartDate.split('/')[0])
+  const [formationStartMonth, setFormationStartMonth] = useState(studentFormationStartDate.split('/')[1])
+  const [formationStartYear, setFormationStartYear] = useState(studentFormationStartDate.split('/')[2])
+
+  const [formationEndingDesiredDate, setFormationEndingDesiredDate] = useState(studentFormationEndingDesiredDate)
+  const [formationEndingDesiredDay, setFormationEndingDesiredDay] = useState(studentFormationEndingDesiredDate.split('/')[0])
+  const [formationEndingDesiredMonth, setFormationEndingDesiredMonth] = useState(studentFormationEndingDesiredDate.split('/')[1])
+  const [formationEndingDesiredYear, setFormationEndingDesiredYear] = useState(studentFormationEndingDesiredDate.split('/')[2])
   const [formationMaxEndingDate, setFormationMaxEndingDate] = useState(`${data.formationMaxEndingDate.day}/${data.formationMaxEndingDate.month}/${data.formationMaxEndingDate.year}`)
   const [formationMaxEndingDay, setFormationMaxEndingDay] = useState(data.formationMaxEndingDate.day)
   const [formationMaxEndingMonth, setFormationMaxEndingMonth] = useState(data.formationMaxEndingDate.month)
   const [formationMaxEndingYear, setFormationMaxEndingYear] = useState(data.formationMaxEndingDate.year)
   const [drivingPracticeDuration, setDrivingPracticeDuration] = useState(data.formationDuration.drivingPractice)
-  // const dispatch = useDispatch()
 
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   const fetchData = {
-  //     fileData: {
-  //       documentType: 'convocation',
-  //       documentTitle: documentTitle
-  //     },
-  //     emailType: "convocation",
-  //     studentName: studentName,
-  //     studentEmail: data.studentEmail,
-  //     formationTitle: formationTitle,
-  //     formationStartDate: {
-  //       day: formationStartDay,
-  //       month: formationStartMonth,
-  //       year: formationStartYear
-  //     },
-  //     formationEndingDesiredDate: {
-  //       day: formationEndingDesiredDay,
-  //       month: formationEndingDesiredMonth,
-  //       year: formationEndingDesiredYear
-  //     },
-  //     formationMaxEndingDate: {
-  //       day: formationMaxEndingDay,
-  //       month: formationMaxEndingMonth,
-  //       year: formationMaxEndingYear
-  //     },
-  //     formationDuration: {
-  //       drivingPractice: drivingPracticeDuration
-  //     }
-  //   }
+    const fetchData = {
+      fileData: {
+        documentType: 'convocation_formation',
+        documentTitle: documentTitle
+      },
+      emailType: "convocation_formation",
+      studentFirstName: studentFirstName,
+      studentLastName: studentLastName,
+      studentEmail: student.email,
+      formationTitle: formationTitle,
+      formationStartDate: {
+        day: formationStartDay,
+        month: formationStartMonth,
+        year: formationStartYear
+      },
+      formationEndingDesiredDate: {
+        day: formationEndingDesiredDay,
+        month: formationEndingDesiredMonth,
+        year: formationEndingDesiredYear
+      },
+      formationMaxEndingDate: {
+        day: formationMaxEndingDay,
+        month: formationMaxEndingMonth,
+        year: formationMaxEndingYear
+      },
+      formationDuration: {
+        drivingPractice: drivingPracticeDuration
+      }
+    }
 
-  //   if (validateDate(formationStartDate) && validateDate(formationEndingDesiredDate) && validateDate(formationMaxEndingDate)) {
-  //     console.log("Valid dates!")
-
-  //     // Construction de la date de début de formation
-  //     const formationStartDateArray = formationStartDate.split('/')
-  //     setFormationStartDay(formationStartDateArray[0])
-  //     setFormationStartMonth(formationStartDateArray[1])
-  //     setFormationStartYear(formationStartDateArray[2])
-      
-  //     // Construction de la date désirée de fin de formation
-  //     const formationEndingDesiredDateArray = formationEndingDesiredDate.split('/')
-  //     setFormationEndingDesiredDay(formationEndingDesiredDateArray[0])
-  //     setFormationEndingDesiredMonth(formationEndingDesiredDateArray[1])
-  //     setFormationEndingDesiredYear(formationEndingDesiredDateArray[2])
-
-  //     // Construction de la date maximale de fin de formation
-  //     const formationMaxEndingDateArray = formationMaxEndingDate.split('/')
-  //     setFormationMaxEndingDay(formationMaxEndingDateArray[0])
-  //     setFormationMaxEndingMonth(formationMaxEndingDateArray[1])
-  //     setFormationMaxEndingYear(formationMaxEndingDateArray[2])
-  //     dispatch(saveData(fetchData))
-
-  //   } else {
-  //     dispatch(saveData())
-  //     console.log("Invalid dates!")
-  //   }
+    if (validateDate(formationStartDate) && validateDate(formationEndingDesiredDate) && validateDate(formationMaxEndingDate)) {
+    } else {
+      // console.log("Invalid dates!")
+    }
+    setFormFetchData(fetchData)
+    // console.log('Données côté formulaire :', fetchData)
     
-  // }, [formationStartDate, dispatch, documentTitle, drivingPracticeDuration, formationEndingDesiredDay, formationEndingDesiredMonth, formationEndingDesiredYear, formationMaxEndingDay, formationMaxEndingMonth, formationMaxEndingYear, formationStartDay, formationStartMonth, formationStartYear, formationTitle, studentName, formationEndingDesiredDate, formationMaxEndingDate])
+  }, [formationStartDate, student, documentTitle, drivingPracticeDuration, formationEndingDesiredDay, formationEndingDesiredMonth, formationEndingDesiredYear, formationMaxEndingDay, formationMaxEndingMonth, formationMaxEndingYear, formationStartDay, formationStartMonth, formationStartYear, formationTitle, studentFirstName, studentLastName, formationEndingDesiredDate, formationMaxEndingDate, setFormFetchData])
 
 
-  // function validateDate(dateStr) {
-  //   const dateArr = dateStr.split('/');
-  //   const newDate = new Date(dateArr[2], parseInt(dateArr[1],10)-1, parseInt(dateArr[0],10));
-  //   return newDate.getMonth() === parseInt(dateArr[1],10)-1;
-  // }
+  function validateDate(dateStr) {
+    const dateArr = dateStr.split('/');
+    const newDate = new Date(dateArr[2], parseInt(dateArr[1],10)-1, parseInt(dateArr[0],10));
+    return newDate.getMonth() === parseInt(dateArr[1],10)-1;
+  }
 
 
   return (
@@ -111,13 +97,13 @@ export default function ConvocationFormation() {
 
         <div className="text-container">
           <form>
-          <span id="t1_1" className="t s0"><input type='text' name="documentTitle" defaultValue={data.fileData.documentTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '500px', textAlign: "center" }}/></span>
-          <span id="t2_1" className="t s1">Bonjour Mr/Mme : <input type="text" name="studentName" defaultValue={data.studentName} onChange={(e) => setStudentName(e.target.value)} style={{ width: '400px' }} /></span>
+          <span id="t1_1" className="t s0"><input type='text' name="documentTitle" defaultValue={data.fileData.documentTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '500px', textAlign: "center", textTransform: 'uppercase' }}/></span>
+          <span id="t2_1" className="t s1">Bonjour Mr/Mme : <input type="text" name="studentFirstName" placeholder='Prénom' defaultValue={student.firstName} onChange={(e) => setStudentFirstName(e.target.value)} style={{ width: '150px' }} /><input type="text" name="studentLastName" placeholder='nom' defaultValue={student.lastName} onChange={(e) => setStudentLastName(e.target.value)} style={{ width: '250px' }} /></span>
           <span id="t3_1" className="t s1">Vous êtes convoqués pour la formation :</span>
           <span id="t4_1" className="t s2"><input type="text" name='formationTitle' defaultValue={data.formationTitle} onChange={(e) => setFormationTitle(e.target.value)} style={{ width: '450px' }} /></span>
-          <span id="t5_1" className="t s2">Dates de la formation</span><span id="t6_1" className="t s1">: Début <input type="text" name='formationStartDate' defaultValue={`${data.formationStartDate.day}/${data.formationStartDate.month}/${data.formationStartDate.year}`} onChange={(e) => setFormationStartDate(e.target.value)} style={{ width: '80px' }}
+          <span id="t5_1" className="t s2">Dates de la formation</span><span id="t6_1" className="t s1">: Début <input type="text" name='formationStartDate' defaultValue={studentFormationStartDate} onChange={(e) => setFormationStartDate(e.target.value)} style={{ width: '80px' }}
           // ${setFormationStartDay(e.target.value)}/${setFormationStartMonth(e.target.value)}/${setFormationStartYear(e.target.value)}
-          />   -- Fin souhaitée : <input type="text" name='formationEndingDesiredDate' defaultValue={`${data.formationEndingDesiredDate.day}/${data.formationEndingDesiredDate.month}/${data.formationEndingDesiredDate.year}`} onChange={(e) => setFormationEndingDesiredDate(e.target.value)}
+          />   -- Fin souhaitée : <input type="text" name='formationEndingDesiredDate' defaultValue={studentFormationEndingDesiredDate} onChange={(e) => setFormationEndingDesiredDate(e.target.value)}
           // `${setFormationEndingDesiredDay(e.target.value)}/${setFormationEndingDesiredMonth(e.target.value)}/${setFormationEndingDesiredYear}`
           style={{ width: '80px' }} /> - Maximum: <input type="text" name='formationMaxEndingDate' defaultValue={`${data.formationMaxEndingDate.day}/${data.formationMaxEndingDate.month}/${data.formationMaxEndingDate.year}`} onChange={(e) => setFormationMaxEndingDate(e.target.value)} 
           // `${setFormationMaxEndingDay(e.target.value)}/${setFormationMaxEndingMonth(e.target.value)}/${setFormationMaxEndingYear(e.target.value)}`

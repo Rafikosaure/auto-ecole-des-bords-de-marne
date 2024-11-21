@@ -1,37 +1,17 @@
 import './StudentContractPages.css'
-import data from './temporaryData'
+import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
 
 
 
 
-export default function StudentContractPage1({ StudentInitials, currentPageNumber }) {
+export default function StudentContractPage4({ currentPageNumber, student, initialsPage4, setInitialsPage4 }) {
+
+    // Import des données par défaut
+    const data = dataStorage(student)
 
     // Gestion de la pagination
     const [pageDisplay, setPageDisplay] = useState('block')
-
-    // email & documents timestamp
-    const dateObject = new Date()
-    const datetime = dateObject.toLocaleDateString("fr-FR")
-    
-    // Configure the code exam date and time
-    const codeExamDateObject = new Date("January 03, 2025 08:45:00")
-    const examOptionsDate = {
-        weekday: "long",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-    }
-    const examOptionsTime = {
-        hour: '2-digit', 
-        minute:'2-digit'
-    }
-    // Lieu, jour et heure de l'examen
-    const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
-    const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
-
-    // Elements de signature du contrat
-    const [initialsPage1, setInitialsPage1] = useState(data.fileData.studentContractData.initialsOptions.ifInitialed_page1)
 
 
     useEffect(() => {
@@ -80,9 +60,9 @@ export default function StudentContractPage1({ StudentInitials, currentPageNumbe
             </ul>
         </div>
 
-        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
-            {initialsPage1 ? (
-                <img className="image-initials" src={StudentInitials} alt="paraphe de l'étudiant" />
+        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page4} onChange={(e) => setInitialsPage4(e.target.checked)} /> <strong>Initiales:</strong>
+            {initialsPage4 ? (
+                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

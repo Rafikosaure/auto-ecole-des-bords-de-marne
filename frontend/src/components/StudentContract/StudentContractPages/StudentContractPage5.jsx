@@ -1,22 +1,17 @@
 import './StudentContractPages.css'
-import data from './temporaryData'
+import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
 
 
 
 
-export default function StudentContractPage1({ StudentInitials, StudentSignature, RepLegalSignature, EntrepriseSignature, currentPageNumber, datetime }) {
+export default function StudentContractPage5({ currentPageNumber, datetime, student, initialsPage5, setInitialsPage5, studentSignature, setStudentSignature, legalRepresent, setLegalRepresent, entrepriseSignatureAndStamp, setEntrepriseSignatureAndStamp }) {
+
+    // Import des données par défaut
+    const data = dataStorage(student)
 
     // Gestion de la pagination
     const [pageDisplay, setPageDisplay] = useState('block')
-
-    // Elements de signature du contrat
-    const [initialsPage1, setInitialsPage1] = useState(data.fileData.studentContractData.initialsOptions.ifInitialed_page1)
-    const [failToTheDrivingSchoolIsYes, setFailToTheDrivingSchoolIsYes] = useState(data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.isChecked)
-    const [studentSignature, setStudentSignature] = useState(data.fileData.studentContractData.isReadAndApproved)
-    const [legalRepresent, setLegalRepresent] = useState(false)
-    const [entrepriseSignatureAndStamp, setEntrepriseSignatureAndStamp] = useState(false)
-
 
     useEffect(() => {
         if (currentPageNumber === 5) {
@@ -25,7 +20,6 @@ export default function StudentContractPage1({ StudentInitials, StudentSignature
             setPageDisplay('none')
         }
     }, [pageDisplay, currentPageNumber])
-
 
 
 
@@ -56,14 +50,12 @@ export default function StudentContractPage1({ StudentInitials, StudentSignature
         <p style={{ marginTop: '5px' }}>Si l'option 4 ou 5 est retenue, les versements s'effectueront aux échéances et selon les montants suivants : -1er Versement à l’inscription – 2 -ème versement le mois suivant – 3 -ème versement le mois d’après et ainsi de suite.</p>
         <p>L'école de conduite délivre une note à l'élève avant le paiement de la prestation. Pour les prestations forfaitaires, la note indique la liste détaillée des prestations comprises dans le forfait. Conformément à l'article 1 de l'arrêté du 3 octobre 1983, toute prestation dont le prix est égal ou supérieur à 25 € TTC fera l'objet de la délivrance d'une note. Elle peut être remise sur simple demande de l'élève pour des prestations dont le prix est inférieur à 25 €.</p>
         <p style={{marginBottom: 0}}>En cas de défaillance de l'école de conduite, celle-ci a souscrit à un dispositif de garantie financière :</p>
-        <div className="checkbox-section-element"><input type="radio" className='input-radio' style={{ marginRight: '2px' }} id="drivingSchoolFailOption" name="failOption" value="Yes option" defaultChecked={false} onChange={(e) => setFailToTheDrivingSchoolIsYes(e.target.checked)} />Oui
-        <input type="radio" className='input-radio' style={{ marginLeft: '20px', marginRight: '2px' }} id="drivingSchoolFailOption" name="failOption" value="No option" defaultChecked={true} onChange={(e) => setFailToTheDrivingSchoolIsYes(false)} />
-        Non, car l’auto-école des bords de marne dispose de fond propre supérieurs à 300 000 euros.</div>
-        {failToTheDrivingSchoolIsYes && (
-            <p style={{marginTop: 0, marginBottom: '15px'}}>Nom et adresse de l'organisme garant : <input type='text' className='input-type-text' style={{ width: '320px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.name} placeholder="Nom de l'organisme" /><br /><input type="text" className="input-type-text" style={{ width: '40px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.number} placeholder="Numéro" /> <input type="text" className="input-type-text" style={{ width: '450px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.street} placeholder="Rue" /> <input type="text" className="input-type-text" style={{ width: '150px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.town} placeholder="Ville" />
+        
+        <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' style={{ marginRight: '2px' }} defaultChecked={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.isChecked} />Oui<input type="checkbox" className='input-checkbox' style={{ marginLeft: '20px', marginRight: '2px' }} defaultChecked={data.formationData.formationPrices.failOfTheDrivingSchool.noOptionIsChecked} />Non, car l’auto-école des bords de marne dispose de fond propre supérieurs à 300 000 euros.</div>
+            <p style={{marginTop: 0, marginBottom: '15px'}}>Nom et adresse de l'organisme garant : <input type='text' className='input-type-text' style={{ width: '320px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.name} placeholder="Nom de l'organisme" /><br /><input type="text" className="input-type-text" style={{ width: '40px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.number} placeholder="N°" /> <input type="text" className="input-type-text" style={{ width: '450px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.street} placeholder="Rue" /> <input type="text" className="input-type-text" style={{ width: '150px' }} defaultValue={data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.town} placeholder="Ville" />
             </p>
-        )}
         </div>
+        
         <div className="section">
         <h3>VII - Conditions de rétractation ou de résiliation</h3>
         <h4>1- Rétractation</h4>
@@ -80,20 +72,20 @@ export default function StudentContractPage1({ StudentInitials, StudentSignature
         
         <div>
             {studentSignature && (
-                <span className="student-signature-section">LU ET APPROUVÉ <img className="image-signature" src={StudentSignature} alt="signature de l'élève" /></span>
+                <span className="student-signature-section">LU ET APPROUVÉ <img className="image-signature" src={`http://localhost:3001/contract-signatures/studentSignature-${student.id}.png`} alt="signature de l'élève" /></span>
             )}
             {legalRepresent && (
-                <img className="image-signature legal-representative-signature-section" src={RepLegalSignature} alt="signature du représentant légal" />
+                <img className="image-signature legal-representative-signature-section" src={`http://localhost:3001/contract-signatures/legalRepresentSignature-${student.id}.png`} alt="signature du représentant légal" />
             )}
             {entrepriseSignatureAndStamp && (
-                <img className="image-signature enterprise-signature-section" src={EntrepriseSignature} alt="cachet & signature de l'établissement" />
+                <img className="enterprise-signature-section" src={`http://localhost:3001/contract-signatures/enterpriseSignature.png`} alt="cachet & signature de l'établissement" />
             )}
             </div>
         </div>
 
-        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
-            {initialsPage1 ? (
-                <img className="image-initials" src={StudentInitials} alt="paraphe de l'étudiant" />
+        <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page5} onChange={(e) => setInitialsPage5(e.target.checked)} /> <strong>Initiales:</strong>
+            {initialsPage5 ? (
+                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

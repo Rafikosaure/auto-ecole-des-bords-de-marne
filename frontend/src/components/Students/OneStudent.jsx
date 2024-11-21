@@ -12,12 +12,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "../StudentsAdmin/UpdateStudent.jsx";
 import StudentCom from "../StudentCom/StudentCom.jsx";
+import SignaturePad from "../SignaturePad/SignaturePad.jsx"
 import PrintContractView from "../StudentContract/PrintContractView.jsx";
+import deleteFilesAfterProcessing from "../StudentContract/deleteFilesAfterProcessing.js";
+
 const OneStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [student, setStudent] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [numberOfComponent, setNumberOfComponent] = useState(1)
 
   const fetchStudent = async () => {
     try {
@@ -27,6 +31,13 @@ const OneStudent = () => {
       console.error("Erreur lors de la récupération de l'étudiant :", error);
     }
   };
+
+  useEffect(() => {
+    if (student && numberOfComponent === 1) {
+      deleteFilesAfterProcessing(student.id)
+    }
+  })
+
 
   useEffect(() => {
     fetchStudent();
@@ -99,12 +110,28 @@ const OneStudent = () => {
       )}
 
         <Container>
-          <StudentCom />
+          <StudentCom student={student} />
         </Container>
 
 
-        <Container>
-          <PrintContractView />
+
+        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '30px', marginBottom: '70px' }}>
+          <h2 className="fs-4" style={{ width: '100%', textAlign: 'center', marginTop: '15px' }}>Contrat de formation</h2>
+          {numberOfComponent !== 1 && (
+            <Button variant="warning" style={{ maxWidth: '200px' }} onClick={() => setNumberOfComponent(1)}>Annuler la procédure</Button>
+          )} 
+          {numberOfComponent === 1 && (
+            <SignaturePad imageName={'studentInitials'} title={"Initiales de l'étudiant"} student={student} numberOfComponent={numberOfComponent} setNumberOfComponent={setNumberOfComponent} />
+          )}
+          {numberOfComponent === 2 && (
+            <SignaturePad imageName={'studentSignature'} title={"Signature de l'étudiant"} student={student} numberOfComponent={numberOfComponent} setNumberOfComponent={setNumberOfComponent} />
+          )}
+          {numberOfComponent === 3 && (
+            <SignaturePad imageName={'legalRepresentSignature'} title={"Signature du représentant légal"} student={student} numberOfComponent={numberOfComponent} setNumberOfComponent={setNumberOfComponent} />
+          )}
+          {numberOfComponent === 4 && (
+            <PrintContractView setNumberOfComponent={setNumberOfComponent} student={student} />
+          )}          
         </Container>
 
 

@@ -6,6 +6,6 @@ const { generatePDFfromHTML } = require('../middlewares/generatePDF')
 
 
 // Route pour envoyer des emails
-router.post('/send-tracked-email', generatePDFfromHTML, mailCtrl.sendMailWithTracking)
+router.post('/send-tracked-email/:studentId', generatePDFfromHTML, mailCtrl.sendMailWithTracking)
 
 module.exports = router

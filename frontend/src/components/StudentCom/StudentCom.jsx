@@ -1,31 +1,22 @@
 import React from "react"
+import axios from 'axios'
 import { useState } from "react";
 import ConvocFormation from './ConvocFormation/ConvocFormation'
 import './StudentCom.css'
-// import { right } from "@popperjs/core";
 import { useForm } from 'react-hook-form'
+// import { useSelector } from 'react-redux'
+// import { selectDocumentData } from '../../redux/slices/documentData'
+import localData from './ConvocFormation/temporaryData'
 
 
 
+const StudentCom = ({ student }) => {
 
-const StudentCom = ({
-  id,
-  lastName,
-  firstName,
-  email,
-  phoneNumber,
-  birthdate,
-  formationStart,
-  formationDesiredEnd,
-  formationMaxDuration,
-  showMore
-}) => {
-
-
+  // const documentData = useSelector(selectDocumentData)
   const [showRadioButtons, setShowRadioButtons] = useState("none")
   const [inputValue, setInputValue] = useState("none")
   const [showDocumentOption, setShowDocumentOption] = useState("none")
-  const [showEmailSendButton, setShowEmailSendButton] = useState("none")
+  const [formFetchData, setFormFetchData] = useState()
   const { register, handleSubmit, reset } = useForm()
 
 
@@ -33,12 +24,13 @@ const StudentCom = ({
     e.preventDefault()
     if (showRadioButtons === "none") {
       setShowDocumentOption("none")
+      setFormFetchData()
       setShowRadioButtons('block')
     } else {
       setInputValue('none')
       setShowDocumentOption("none")
+      setFormFetchData()
       setShowRadioButtons('none')
-      setShowEmailSendButton("none")
       reset()
     }
   }
@@ -47,17 +39,17 @@ const StudentCom = ({
     const inputValueConst = e.target.value
     setInputValue(inputValueConst)
     if (inputValueConst === "convoc-formation") {
-      console.log(inputValueConst)
-      // setShowEmailSendButton("flex")
+      setFormFetchData()
     } else if (inputValueConst === "relaunch") {
-      console.log(inputValueConst)
-      // setShowEmailSendButton("flex")
       setShowDocumentOption('none')
+      setFormFetchData()
+    } else if (inputValueConst === "convoc-permis") {
+      setShowDocumentOption('none')
+      setFormFetchData()
     } else {
-      console.log(inputValueConst)
       setShowDocumentOption('none')
+      setFormFetchData()
     }
-    console.log(inputValueConst)
   }
 
 
@@ -65,10 +57,145 @@ const StudentCom = ({
       e.preventDefault()
       if (showDocumentOption === "none") {
         setShowDocumentOption("block")
+        setFormFetchData()
       } else {
         setShowDocumentOption("none")
       }
     }
+
+    const manageFetchData = (e) => {
+      e.preventDefault()
+
+      // email & documents timestamp
+      const dateObject = new Date()
+      const datetime = dateObject.toLocaleDateString("fr-FR")
+
+      // Configure the code exam date and time
+      const codeExamDateObject = new Date("January 03, 2025 08:45:00")
+      const examOptionsDate = {
+          weekday: "long",
+          year: "numeric",
+          month: "numeric",
+          day: "numeric"
+      }
+      const examOptionsTime = {
+          hour: '2-digit', 
+          minute:'2-digit'
+      }
+      const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
+      const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
+
+      // Date de début de formation
+      const studentFormationStartDate = new Date(student.formationStart).toLocaleDateString("fr-FR")
+  
+      // Date désirée de fin de formation
+      const studentFormationEndingDesiredDate = new Date(student.formationDesiredEnd).toLocaleDateString("fr-FR")
+
+      let fetchData = {
+        formationData: {
+          formationTitle: localData.formationTitle,
+          drivingTestExamDatetime: {
+            examDate: codeExamDate,
+            examHour: codeExamHour
+          },
+          formationStartDate: {
+            day: studentFormationStartDate.split('/')[0],
+            month: studentFormationStartDate.split('/')[1],
+            year: studentFormationStartDate.split('/')[2]
+          },
+          formationEndingDesiredDate: {
+              day: studentFormationEndingDesiredDate.split('/')[0],
+              month: studentFormationEndingDesiredDate.split('/')[1],
+              year: studentFormationEndingDesiredDate.split('/')[2]
+          },
+        },
+        emailType: 'convocation_formation',
+        studentData: {
+          studentFirstName: student.firstName,
+          studentLastName: student.lastName,
+          studentEmail: student.email
+        },
+        schoolData: {
+          location: {
+            number: "9",
+            street: "Grande rue Charles de Gaulle",
+            town: "Bry-sur-Marne"
+          }
+        },
+      }
+
+      if (formFetchData !== undefined) {
+        fetchData = {
+          fileData: {
+            documentType: 'convocation_formation',
+            documentTitle: formFetchData.fileData.documentTitle.toUpperCase(),
+            dateTime: datetime
+          },
+          formationData: {
+            formationTitle: formFetchData.formationTitle,
+            drivingTestExamDatetime: {
+              examDate: codeExamDate,
+              examHour: codeExamHour
+            },
+            formationStartDate: {
+              day: formFetchData.formationStartDate.day,
+              month: formFetchData.formationStartDate.month,
+              year: formFetchData.formationStartDate.year
+            },
+            formationEndingDesiredDate: {
+                day: formFetchData.formationEndingDesiredDate.day,
+                month: formFetchData.formationEndingDesiredDate.month,
+                year: formFetchData.formationEndingDesiredDate.year
+            },
+            formationMaxEndingDate: {
+                day: formFetchData.formationMaxEndingDate.day,
+                month: formFetchData.formationMaxEndingDate.month,
+                year: formFetchData.formationMaxEndingDate.year
+            },
+            formationDuration: {
+                drivingPractice: formFetchData.formationDuration.drivingPractice
+            }
+          },
+          emailType: 'convocation_formation',
+          studentData: {
+            studentFirstName: formFetchData.studentFirstName,
+            studentLastName: formFetchData.studentLastName,
+            studentEmail: student.email
+          },
+          schoolData: {
+            location: {
+              number: "9",
+              street: "Grande rue Charles de Gaulle",
+              town: "Bry-sur-Marne"
+            }
+          },
+        }
+      }
+      if (inputValue === "relaunch") {
+        fetchData.emailType = "relaunch"
+      }
+      if (inputValue === "convoc-permis") {
+        fetchData.emailType = "convocation_exam"
+      }
+      if (showDocumentOption === "none") {
+        delete fetchData.fileData
+      }
+      
+      console.log('Données à envoyer au serveur :', fetchData)
+
+      // Envoi de la requête
+      axios.post(`http://localhost:3001/api/emails/send-tracked-email/${student.id}`, fetchData)
+      .then(data => {
+        console.log(data.data.message)
+        // setTextAttachmentButton("Ajouter une convocation à la formation en pièce jointe")
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      setFormFetchData()
+    }
+
+
 
 
   return (
@@ -91,19 +218,19 @@ const StudentCom = ({
                   Relance
                 </label>
               </div>
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input className="form-check-input" type="radio" name="email-radio-button" id="radio-convocation-permis" value='convoc-permis' {...register("email-radio-button")} />
                 <label className="form-check-label" htmlFor="radio-convocation-permis">
                   Convocation épreuve du permis
                 </label>
-              </div>
+              </div> */}
             </form>
           </div>
 
           {inputValue !== "none" && (
           <div className={`d-flex flex-column justify-content-start align-items-start p-2 gap-3`}>
             <div className={`d-flex justify-content-center align-items-center`} style={{ height: "80px" }}>
-              <button type="button" className={`btn btn-danger`} style={{ width: "210px", height: "50px", fontSize: "13px" }}>Expédier l'email</button>
+              <button type="button" className={`btn btn-danger`} style={{ width: "210px", height: "50px", fontSize: "13px" }} onClick={(e) => manageFetchData(e)}>Expédier l'email</button>
             </div>
 
             {inputValue === "convoc-formation" && (
@@ -124,43 +251,10 @@ const StudentCom = ({
         <div className="container-md d-flex justify-content-center align-items-center document-viewver bg-secondary bg-opacity-25 mb-3">
           
           {/* Ne pas oublier de passer à <ConvocFormation /> les bonnes données en props quant ce sera le moment */}
-          <ConvocFormation />
+          <ConvocFormation student={student} setFormFetchData={setFormFetchData} />
         </div>
       </div>
       )}
-      
-      
-      {/* <Card.Body>
-        <Card.Title>
-          Communication avec l'étudiant
-        </Card.Title>
-        <Row>
-          <Col md={6}>
-            <p>
-              <strong>Email:</strong> {email}
-            </p>
-            <p>
-              <strong>Téléphone:</strong> {phoneNumber}
-            </p>
-          </Col>
-          <Col md={6}>
-            <p>
-              <strong>Date de naissance:</strong> {birthdate}
-            </p>
-            <p>
-              <strong>Début de la formation:</strong> {formationStart}
-            </p>
-            <p>
-              <strong>Date de fin souhaitée:</strong> {formationDesiredEnd}
-            </p>
-            <p>
-              <strong>Durée maximale de la formation:</strong>{" "}
-              {formationMaxDuration}
-            </p>
-            {showMore && <Link to={`/student/${id}`}>Voir plus</Link>}
-          </Col>
-        </Row>
-      </Card.Body> */}
     </section>
   );
 };
