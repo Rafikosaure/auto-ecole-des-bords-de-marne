@@ -1,19 +1,88 @@
-.modal-overlay {
+/* Styles pour la fenêtre modale */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6); /* Couleur d'arrière-plan avec opacité */
+    z-index: 1050;
+}
+
+.modal-dialog {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    flex-direction: row; /* Organisation horizontale */
+    max-width: 90%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    background: #fff;
-    padding: 20px;
-    max-width: 80%;
-    border-radius: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h5 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.modal-header .close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.modal-body {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body img,
+.modal-body iframe {
+    max-width: 100%;
+    max-height: 500px;
+    border: none;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+}
+
+.modal-footer button {
+    background-color: #007bff; /* Couleur principale */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+    background-color: #0056b3; /* Couleur lors du survol */
 }
