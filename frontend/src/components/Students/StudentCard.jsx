@@ -13,6 +13,7 @@ const StudentCard = ({
   birthdate,
   formationStart,
   formationDesiredEnd,
+  formationMaxEndingDate,
   formationMaxDuration,
   showMore,
 }) => {
@@ -49,6 +50,10 @@ const StudentCard = ({
             <p>
               <strong>Date de fin souhaitée:</strong>{" "}
               {formatDate(formationDesiredEnd)}
+            </p>
+            <p>
+              <strong>Date limite de fin de formation:</strong>{" "}
+              {formatDate(formationMaxEndingDate)}
             </p>
             <p>
               <strong>Durée maximale de la formation:</strong>{" "}

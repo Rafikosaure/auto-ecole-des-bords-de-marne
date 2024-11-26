@@ -71,7 +71,7 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
           'Content-Type': 'application/json', // Définir le type de contenu comme JSON
         }
       })
-      console.log('Signature envoyée avec succès :', response.data)
+      // console.log('Signature envoyée avec succès :', response.data)
       setNumberOfComponent(numberOfComponent + 1)
     } catch(error) {
       console.log(error)

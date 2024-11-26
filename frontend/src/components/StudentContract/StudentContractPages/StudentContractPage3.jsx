@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 
 
 
-export default function StudentContractPage3({ currentPageNumber, student, initialsPage3, setInitialsPage3, setTheoricalFormationLocationOnSite, setTheoricalFormationLocationRemote, setTheoricalFormationLocationOnSiteAndRemote, setTheoricalFormationLocationIndividualCourses, setTheoricalFormationLocationGroupCourses }) {
+export default function StudentContractPage3({ currentPageNumber, student, initialsPage3, setInitialsPage3, setTheoricalFormationLocationOnSite, setTheoricalFormationLocationRemote, setTheoricalFormationLocationOnSiteAndRemote, setTheoricalFormationLocationIndividualCourses, setTheoricalFormationLocationGroupCourses, setPracticalFormationLocationOpenWayWithAnInstructor, setPracticalFormationLocationManualTransmission, setPracticalFormationLocationAutomaticTransmission }) {
 
     // Import des données par défaut
     const data = dataStorage(student)
@@ -83,13 +83,13 @@ export default function StudentContractPage3({ currentPageNumber, student, initi
           <div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'baseline', gap: '15px'}}>
             <div style={{display: 'flex'}}>
               <p className="checkbox-section-element">L'enseignement pratique se déroule :</p>
-              <div className="checkbox-section-element" style={{marginLeft: '22px'}}><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.openWayWithAnInstructor} /><label style={{ marginLeft: '5px' }}>Sur voies ouvertes à la circulation avec un enseignant. En cours
+              <div className="checkbox-section-element" style={{marginLeft: '22px'}}><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.openWayWithAnInstructor} onChange={(e) => setPracticalFormationLocationOpenWayWithAnInstructor(e.target.checked)} /><label style={{ marginLeft: '5px' }}>Sur voies ouvertes à la circulation avec un enseignant. En cours
                   individuel.</label></div>
             </div>
             <div style={{display: 'flex', gap: '100px'}}>
-              <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.manualTransmission} /><label style={{ marginLeft: '5px' }}>Sur
+              <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.manualTransmission} onChange={(e) => setPracticalFormationLocationManualTransmission(e.target.checked)} /><label style={{ marginLeft: '5px' }}>Sur
                   boîte manuelle</label></div>
-              <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.automaticTransmission} /><label style={{ marginLeft: '5px' }}>Sur
+              <div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationType.practicalFormation.location.automaticTransmission} onChange={(e) => setPracticalFormationLocationAutomaticTransmission(e.target.checked)} /><label style={{ marginLeft: '5px' }}>Sur
                   boîte automatique</label></div>
             </div>
           </div>

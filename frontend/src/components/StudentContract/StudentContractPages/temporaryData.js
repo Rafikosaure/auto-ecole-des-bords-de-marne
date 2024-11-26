@@ -6,8 +6,19 @@ const dataStorage = (student) => {
     const datetime = dateObject.toLocaleDateString("fr-FR")
     
     // Gérer les dates de l'étudiant
-    const studentBirthdatDate = new Date(student.birthdate)
-    const studentBirthday = studentBirthdatDate.toLocaleDateString("fr-FR")
+    let studentBirthDate = new Date(student.birthdate)
+    studentBirthDate = studentBirthDate.toLocaleDateString("fr-FR")
+    const birthDay = studentBirthDate.split('/')[0]
+    const birthMonth = studentBirthDate.split('/')[1]
+    const birthYear = studentBirthDate.split('/')[2]
+
+    // Date de fin désirée
+    let formationDesiredEndDate = new Date(student.formationDesiredEnd)
+    formationDesiredEndDate = formationDesiredEndDate.toLocaleDateString("fr-FR")
+
+    // Formation maximum ending date
+    let maxEndingDate = new Date(student.formationMaxEndingDate)
+    maxEndingDate = maxEndingDate.toLocaleDateString("fr-FR")
 
     const data = {
         fileData: {
@@ -17,13 +28,13 @@ const dataStorage = (student) => {
             dateTime: datetime,
             studentContractData: {
               location: "Bry-sur-Marne",
-              isReadAndApproved: 'checked', // traduire en "checked" si true !
+              isReadAndApproved: false, // traduire en "checked" si true !
               initialsOptions: {
-                ifInitialed_page1: 'checked', // traduire en "checked" si true !
-                ifInitialed_page2: 'checked', // traduire en "checked" si true !
-                ifInitialed_page3: 'checked', // traduire en "checked" si true !
-                ifInitialed_page4: 'checked', // traduire en "checked" si true !
-                ifInitialed_page5: 'checked', // traduire en "checked" si true !
+                ifInitialed_page1: false, // traduire en "checked" si true !
+                ifInitialed_page2: false, // traduire en "checked" si true !
+                ifInitialed_page3: false, // traduire en "checked" si true !
+                ifInitialed_page4: false, // traduire en "checked" si true !
+                ifInitialed_page5: false, // traduire en "checked" si true !
                 initialsFileName: "studentInitials"
               },
               signature: {
@@ -43,9 +54,9 @@ const dataStorage = (student) => {
           },
           evaluation: {
             date: {
-              evaluationDay: "", // Vérifier la validité de la date !
-              evaluationMonth: "", // Vérifier la validité de la date !
-              evaluationYear: "" // Vérifier la validité de la date !
+              evaluationDay: "00", // Vérifier la validité de la date !
+              evaluationMonth: "00", // Vérifier la validité de la date !
+              evaluationYear: "0000" // Vérifier la validité de la date !
             },
             instructorFirstName: "",
             vehicleType: ""
@@ -54,8 +65,16 @@ const dataStorage = (student) => {
           studentData: {
             studentFirstName: student.firstName,
             studentLastName: student.lastName,
-            studentBirthDate: studentBirthday,
-            studentAddress: "",
+            studentBirthDate: {
+              birthDay: birthDay,
+              birthMonth: birthMonth,
+              birthYear: birthYear
+            },
+            studentAddress: {
+              number: "",
+              street: "",
+              town: ""
+            },
             studentPhoneNumber: student.phoneNumber,
             studentEmail: student.email
           },
@@ -87,27 +106,27 @@ const dataStorage = (student) => {
             },
             formationTitle: "Permis de conduire (BOITE AUTO ou MECANIQUE)",
             formationStartDate: {
-              day: "00",
-              month: "00",
-              year: "0000"
+              day: datetime.split('/')[0],
+              month: datetime.split('/')[1],
+              year: datetime.split('/')[2]
             },
             formationEndingDesiredDate: {
-              day: "00",
-              month: "00",
-              year: "0000"
+              day: formationDesiredEndDate.split('/')[0],
+              month: formationDesiredEndDate.split('/')[1],
+              year: formationDesiredEndDate.split('/')[2]
             },
             formationMaxEndingDate: {
-              day: "00",
-              month: "00",
-              year: "0000"
+              day: maxEndingDate.split('/')[0],
+              month: maxEndingDate.split('/')[1],
+              year: maxEndingDate.split('/')[2]
             },
             formationDuration: {
               drivingPractice: "000",
               totalDrivingLearningDuration: "00"
             },
             drivingTestExamDatetime: {
-              examDate: "", // Mettre en forme la date d'examen avant la validation !
-              examTime: "" // Mettre en forme l'heure d'examen avant la validation !
+              examDate: "00/00/0000", // Mettre en forme la date d'examen avant la validation !
+              examTime: "00/00/0000" // Mettre en forme l'heure d'examen avant la validation !
             },
             formationPrices: {
               EvaluationPrealable: {

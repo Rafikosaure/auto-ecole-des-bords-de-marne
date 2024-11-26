@@ -86,6 +86,7 @@ const OneStudent = () => {
               birthdate={student.birthdate}
               formationStart={student.formationStart}
               formationDesiredEnd={student.formationDesiredEnd}
+              formationMaxEndingDate={student.formationMaxEndingDate}
               formationMaxDuration={student.formationMaxDuration}
               showMore={false}
             />

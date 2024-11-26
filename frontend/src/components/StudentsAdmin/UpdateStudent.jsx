@@ -11,6 +11,7 @@ const UpdateStudent = ({ student, onUpdate }) => {
   const [birthdate, setBirthdate] = useState("");
   const [formationStart, setFormationStart] = useState("");
   const [formationDesiredEnd, setFormationDesiredEnd] = useState("");
+  const [formationMaxEndingDate, setFormationMaxEndingDate] = useState("");
   const [formationMaxDuration, setFormationMaxDuration] = useState("");
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const UpdateStudent = ({ student, onUpdate }) => {
       setBirthdate(student.birthdate || "");
       setFormationStart(student.formationStart || "");
       setFormationDesiredEnd(student.formationDesiredEnd || "");
+      setFormationMaxEndingDate(student.formationMaxEndingDate || "");
       setFormationMaxDuration(student.formationMaxDuration || "");
     }
   }, [student]);
@@ -38,6 +40,7 @@ const UpdateStudent = ({ student, onUpdate }) => {
         birthdate,
         formationStart,
         formationDesiredEnd,
+        formationMaxEndingDate,
         formationMaxDuration,
       });
 
@@ -112,6 +115,15 @@ const UpdateStudent = ({ student, onUpdate }) => {
           type="date"
           value={formationDesiredEnd}
           onChange={(e) => setFormationDesiredEnd(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="formationMaxEndingDate">
+        <Form.Label>Date maximale de fin</Form.Label>
+        <Form.Control
+          type="date"
+          value={formationMaxEndingDate}
+          onChange={(e) => setFormationMaxEndingDate(e.target.value)}
         />
       </Form.Group>
 

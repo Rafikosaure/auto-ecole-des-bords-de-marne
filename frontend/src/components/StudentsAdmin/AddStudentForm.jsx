@@ -13,6 +13,7 @@ const AddStudentForm = ({ reload }) => {
     birthdate: "",
     formationStart: "",
     formationDesiredEnd: "",
+    formationMaxEndingDate: "",
     formationMaxDuration: "",
   });
 
@@ -68,6 +69,7 @@ const AddStudentForm = ({ reload }) => {
       !student.birthdate ||
       !student.formationStart ||
       !student.formationDesiredEnd ||
+      !student.formationMaxEndingDate ||
       !student.formationMaxDuration
     ) {
       notifyError();
@@ -168,18 +170,19 @@ const AddStudentForm = ({ reload }) => {
           </Col>
         </Row>
 
-        <Row>
+          <Row>
           <Col md={6}>
-            <Form.Group controlId="formationDesiredEnd" className="mb-3">
-              <Form.Label>Date de fin souhaitée de la formation</Form.Label>
+            <Form.Group controlId="formationMaxEndingDate" className="mb-3">
+              <Form.Label>Date maximale de fin de formation</Form.Label>
               <Form.Control
                 type="date"
-                name="formationDesiredEnd"
-                value={student.formationDesiredEnd}
+                name="formationMaxEndingDate"
+                value={student.formationMaxEndingDate}
                 onChange={handleChange}
               />
             </Form.Group>
           </Col>
+
           <Col md={6}>
             <Form.Group controlId="formationMaxDuration" className="mb-3">
               <Form.Label>Durée maximale de la formation</Form.Label>
@@ -189,6 +192,19 @@ const AddStudentForm = ({ reload }) => {
                 value={student.formationMaxDuration}
                 onChange={handleChange}
                 placeholder="Entrez la durée maximale"
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+        <Col md={6}>
+            <Form.Group controlId="formationDesiredEnd" className="mb-3">
+              <Form.Label>Date de fin souhaitée de la formation</Form.Label>
+              <Form.Control
+                type="date"
+                name="formationDesiredEnd"
+                value={student.formationDesiredEnd}
+                onChange={handleChange}
               />
             </Form.Group>
           </Col>

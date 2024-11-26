@@ -31,6 +31,9 @@ const student = (connection, DataTypes) => {
         formationDesiredEnd: {
             type: DataTypes.DATE,
         },
+        formationMaxEndingDate: {
+            type: DataTypes.DATE,
+        },
         formationMaxDuration: {
             type: DataTypes.INTEGER,
             defaultValue: 350
