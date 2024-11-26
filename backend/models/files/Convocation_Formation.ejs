@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convocation Formation Permis de Conduire</title>
+    <style>
+        body {
+            font-family: 'Arial, sans-serif';
+            font-size: 8pt; /* Réduction de la taille globale */
+            margin: 60px 80px; /* Marges plus larges, surtout sur les côtés */
+        }
+        h1 {
+            text-align: center;
+            font-size: 12pt; /* Réduction de la taille du titre principal */
+            font-weight: bold;
+            margin-bottom: 70px; /* Augmentation de l'espace sous le titre */
+        }
+        h2 {
+            font-size: 10pt; /* Réduction de la taille des sous-titres */
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+        p {
+            margin-bottom: 8px; /* Réduction de l'espacement entre les paragraphes */
+            line-height: 1.2;
+        }
+        ul, ol {
+            margin-bottom: 8px; /* Réduction de l'espacement dans les listes */
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+        .section {
+            margin-bottom: 15px;
+        }
+        .footer {
+            margin-top: 150px; /* Augmentation de la séparation avec le corps de texte */
+            font-size: 7pt; /* Réduction de la taille du pied de page */
+            text-align: center;
+        }
+        .footer p {
+            margin: 0;
+        }
+        .add-margin-top {
+            margin-top: 35px;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= fileData.documentTitle %></h1>
+
+    <div class="section">
+        <p>Bonjour Mr/Mme <%= studentData.studentFirstName %> <%= studentData.studentLastName %>,</p>
+        <p>Vous êtes convoqué(e) pour la formation : <strong><%= formationData.formationTitle %></strong></p>
+        <p><strong>Dates de la formation :</strong> Début <%= formationData.formationStartDate.day %>/<%= formationData.formationStartDate.month %>/<%= formationData.formationStartDate.year %> -- Fin souhaitée : <%= formationData.formationEndingDesiredDate.day %>/<%= formationData.formationEndingDesiredDate.month %>/<%= formationData.formationEndingDesiredDate.year %> - Maximum: <%= formationData.formationMaxEndingDate.day %>/<%= formationData.formationMaxEndingDate.month %>/<%= formationData.formationMaxEndingDate.year %> (8 mois maxi)</p>
+        <p><strong>Durée de la formation :</strong> <%= formationData.formationDuration.drivingPractice %> H pratique + Formation code à distance Packweb</p>
+    </div>
+
+    <h2 class="add-margin-top">Objectifs Pédagogiques</h2>
+    <ul>
+        <li>Connaître la réglementation routière</li>
+        <li>Maîtriser le maniement du véhicule</li>
+        <li>Appréhender la route dans des conditions normales (respecter les règles de circulation, adapter son allure aux situations, bien se placer quelque soit le type de route)</li>
+        <li>Circuler dans des conditions difficiles et partager la route avec les autres usagers</li>
+        <li>Pratiquer une conduite sûre et autonome</li>
+        <li>Sensibilisation aux enjeux environnementaux et aux usagers vulnérables</li>
+    </ul>
+
+    <div class="section">
+        <p>Vous trouverez en pièces jointes :</p>
+        <ol>
+            <li>Le plan détaillé de la formation</li>
+            <li>Le déroulement de la formation</li>
+            <li>Le déroulement d'une séance pratique</li>
+            <li>Le programme (Référentiel National REMC : Référentiel Education Mobilité Citoyenne)</li>
+        </ol>
+    </div>
+
+    <h2 class="add-margin-top">Horaires d'ouverture</h2>
+    <div class="section">
+        <p><strong>Bureau et salle de code :</strong></p>
+        <ul>
+            <li>Lundi : 17h-20h</li>
+            <li>Du mardi au vendredi : 15h-20h</li>
+            <li>Le samedi : 10h-12h et 14h-16h</li>
+        </ul>
+
+        <p><strong>Cours de conduite :</strong></p>
+        <ul>
+            <li>Lundi au vendredi : 9h-20h</li>
+            <li>Samedi : 8h-16h</li>
+        </ul>
+    </div>
+
+    <h2 class="add-margin-top">Mode de réservation des cours</h2>
+    <div class="section">
+        <p><strong>CODE :</strong></p>
+        <ul>
+            <li>Formation à distance : un lien avec mot de passe pour la plateforme PACKWEB vous sera fourni.</li>
+            <li>Formation en salle de code : Accès libre sans rendez-vous aux horaires ci-dessus (arrivée toujours à heure pile). Une séance dure environ 50 minutes, vous pouvez faire plusieurs séances d'affilée. Munissez-vous d'un stylo et de votre livre de code.</li>
+        </ul>
+
+        <p><strong>CONDUITE :</strong> Réservation par mail, téléphone ou directement au bureau. Munissez-vous de votre pièce d'identité, livret d'apprentissage et livret d'auto-évaluation.</p>
+    </div>
+
+    <h2 class="add-margin-top">Services à proximité</h2>
+    <div class="section">
+        <ul>
+            <li>Transport : Bus 120, 210, RER A arrêt Bry-sur-Marne</li>
+            <li>Restauration : Pizzeria, restauration rapide, café, brasserie</li>
+            <li>Banques, Tabac-Presse</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>Auto-Ecole des Bords de Marne – 9 Grande rue Charles de Gaulle – 94360 Bry-sur-Marne</p>
+        <p>Tél: 01.49.83.93.91 | Mail : lmyw@sfr.fr</p>
+        <p>Organisme de Formation enregistré à la DIRECCTE Île-de-France sous le numéro 11 94 056 55 94 (cet enregistrement ne vaut pas agrément de l'État)</p>
+    </div>
+</body>
+</html>

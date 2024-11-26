@@ -1,22 +1,31 @@
 // imports
 const express = require("express");
-const controller = require("../controllers/student.controller.js");
+const {
+    addStudent,
+    getStudents,
+    getAllStudents,
+    getStudent,
+    updateStudent,
+    deleteStudent
+} = require("../controllers/student.controller.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
 
 // router initialization
 const router = express.Router();
 
 // routes
-    // CRUD
-        // add
-router.post("/add", controller.addStudent);
-        // get all
-router.get("/getall", controller.getAllStudents);
-        // get one
-router.get("/get/:id", controller.getStudent);
-        // update one
-router.put("/update/:id", verifyToken, controller.updateStudent)
-        // delete one
-router.delete("/delete/:id", verifyToken, controller.deleteStudent);
+// CRUD
+// add
+router.post("/add", verifyToken, addStudent);
 
-exports.router = router;
+router.get("/get", verifyToken, getStudents);
+// get all
+router.get("/getall", verifyToken, getAllStudents);
+// get one
+router.get("/get/:id", verifyToken, getStudent);
+// update one
+router.put("/update/:id", verifyToken, updateStudent);
+// delete one
+router.delete("/delete/:id", verifyToken, deleteStudent);
+
+module.exports = router;

@@ -1,46 +1,43 @@
 // imports
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
 const cors = require("cors");
-const ENV = require("./config/env.js").ENV;
-const studentRouter = require("./routes/student.router.js").router;
-const instructorRouter = require("./routes/instructor.router.js").router;
-const adminRouter = require("./routes/admin.router.js").router;
-const documentRouter = require("./routes/document.router.js").router;
-const remarkRouter = require("./routes/remark.router.js").router;
+const ENV = require("./config/env.js").ENV
+const { expressApp } = require("nodemailer-mail-tracking")
+const { mailTrackingOptions } = require("./sharedFunctions/mailTrackingOptions.js");
+const path = require('path');
+const studentRouter = require("./routes/student.router.js");
+const instructorRouter = require("./routes/instructor.router.js");
+const adminRouter = require("./routes/admin.router.js");
+const documentRouter = require("./routes/document.router.js");
+const remarkRouter = require("./routes/remark.router.js");
+const emailRouter = require("./routes/email.router.js")
 
 // app
 const app = express();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 
-// used to avoid having frontend requests rejected
-app.use((error, req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", ENV.FRONTROUTE);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-    return next();
-});
-
+// cors config
 app.use(cors({
     origin: ENV.FRONTROUTE,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
-app.use((error, req, res, next) => {
-    const status = error.status || 500;
-    const message = error.message || "Something went wrong";
-    return res.status(status).json({
-        success: false,
-        status,
-        message,
-    });
-});
-app.use(cookieParser());
+// Preflight Requests
+app.options('*', cors());
+
+// STATIC FILES FOR STUDENT CONTRACT
+app.use('/contract-signatures', express.static(path.join(__dirname, './assets/contractImages')));
+app.use('/instructors-documents', express.static(path.join(__dirname, './assets/instructorsDocuments')));
+
+// EMAIL TRACKING
+app.use(`/api/${ENV.EMAIL_TRACKING_ENDPOINT}`, expressApp(mailTrackingOptions));
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
@@ -48,6 +45,7 @@ app.use("/api/instructor", instructorRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/document", documentRouter);
 app.use("/api/remark", remarkRouter);
+app.use('/api/emails', emailRouter)
 
 // exports
 exports.app = app;

@@ -7,16 +7,16 @@ const { verifyToken } = require("../middlewares/verifyToken.js");
 const router = express.Router();
 
 // routes
-    // CRUD
-        // add
+// CRUD
+// add
 router.post("/add", verifyToken, controller.addRemark);
-        // get all
+// get all
 router.get("/getall", verifyToken, controller.getAllRemarks);
-        // get one
+// get one
 router.get("/get/:id", verifyToken, controller.getRemark);
-        // update one
+// update one
 router.put("/update/:id", verifyToken, controller.updateRemark);
-        // delete one
+// delete one
 router.delete("/delete/:id", verifyToken, controller.deleteRemark);
 
-exports.router = router;
+module.exports = router;

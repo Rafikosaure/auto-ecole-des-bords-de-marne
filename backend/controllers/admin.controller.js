@@ -7,12 +7,14 @@ const { errorHandler,
         createError,
         contexts,
         errors} = require('../middlewares/errorHandler.js');
+const { forgotPasswordTemplate } = require("../models/emails/forgotPassword.js");
+const { sendEmail }= require("../middlewares/sendEmail.js");
 
 
 const getAllAdmins = async (req, res, next) => {
     try {
         // SQL Select query to get all admins
-        const admins = await Admin.findAll();
+        const admins = await Admin.findAll({attributes: {exclude: ["password"]}});
         res.status(200).json(admins);
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
@@ -22,7 +24,7 @@ const getAllAdmins = async (req, res, next) => {
 const getAdmin = async (req, res, next) => {
     try {
         // SQL Select query to get one admin by ID
-        const admin = await Admin.findByPk(req.params.id);
+        const admin = await Admin.findByPk(req.params.id, {attributes: {exclude: ["password"]}});
         // error if no admin found given the id
         if(!admin) throw createError(req, errors.ErrorNotExist, contexts.admin);
         res.status(200).json(admin);
@@ -43,6 +45,7 @@ const updateAdmin = async (req, res, next) => {
             // password hashing for security
             password: await passwordHashing(req.body.password),
         });
+        delete admin.dataValues.password;
         res.status(200).json({message: "admin updated", admin});
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
@@ -95,6 +98,70 @@ const loginAdmin = async (req, res, next) => {
 }
 
 
+const logoutAdmin = async (req, res, next) => {
+    try {
+        // removes the connection httponly cookie
+        res.clearCookie("access_token").status(200).json({message: "logged out"});
+        console.log("connection cookie has been removed");
+    } catch (error) {
+        return errorHandler(req, res, error, contexts.admin);
+    }
+}
+
+const forgotPassword = async (req, res, next) => {
+    try {        
+        // checks if an email is provided with the request
+        if(!req.body.email) throw createError(req, errors.ErrorUndefinedKey, contexts.admin);
+        // gets an admin given an email
+        const admin = await Admin.findOne({ where: { email: req.body.email }});
+        // if no admin found throws errro
+        if(!admin) throw createError(req, errors.ErrorNotExist, contexts.admin);
+        // gets current date
+        const date = new Date();
+        // Modifies the content of the reset email
+        const mailOption = {
+            // admin's email
+            email: admin.dataValues.email,
+            subject: "Réinitialisation du mot de passe",
+            message: forgotPasswordTemplate(
+                admin.dataValues.username,
+                // date DD/MM/YYYY
+                date.toLocaleDateString("fr-FR"),
+                // datetime HH:mm
+                `${date.toLocaleTimeString("fr-FR").slice(0,5)}`,
+                // jwt token is added to make a per admin TEMPORARY link
+                `${ENV.FRONTROUTE}/password/reset?token=${jwt.sign({id: admin.dataValues.id, date: Date.now()}, ENV.RESETTOKEN)}`,
+            )
+        };
+        // sends the email
+        await sendEmail(mailOption);
+        res.status(200).json({message: "email has been sent"});
+        } catch (error) {
+        return errorHandler(req, res, error, contexts.admin);
+    }
+}
+
+const resetPassword = async (req, res, next) => {
+    try {
+        // check if a query token is present with the request
+        if(!req.query.token) throw createError(req, errors.ErrorNoToken, contexts.admin);
+        // checks the validity of the reset token
+        jwt.verify(req.query.token, ENV.RESETTOKEN, (error, data) => {
+            // if an error occurs while validating throws an error
+            if (error) throw createError(req, errors.ErrorInvalidToken, contexts.admin);
+            // checks if the link has been sent more than ten minutes ago
+            if(Date.now() - data.date > 600000) throw createError(req, errors.ErrorExpiredToken, contexts.admin);
+            // if both verifications are successfull adds the id param to the request
+            req.params.id = data.id;
+            // calls the update admin function to update the password
+            updateAdmin(req, res, next);
+        });
+    } catch (error) {
+        return errorHandler(req, res, error, contexts.admin);
+    }
+}
+
+
 // exports
 exports.getAllAdmins = getAllAdmins;
 exports.getAdmin = getAdmin;
@@ -102,3 +169,6 @@ exports.updateAdmin = updateAdmin;
 exports.deleteAdmin = deleteAdmin;
 exports.registerAdmin = registerAdmin;
 exports.loginAdmin = loginAdmin;
+exports.logoutAdmin = logoutAdmin;
+exports.forgotPassword = forgotPassword;
+exports.resetPassword = resetPassword;

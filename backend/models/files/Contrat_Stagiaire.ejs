@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrat d'Enseignement à la Conduite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 50px 50px;
+            color: #000;
+        }
+        h1,
+        h2 {
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        h2,
+        h3,
+        h4 {
+            font-size: 14px;
+        }
+        h4 {
+            text-decoration: underline;
+        }
+        p,
+        ul {
+            margin-bottom: 8px;
+            line-height: 14px;
+        }
+        .section {
+            margin-bottom: 15px;
+            line-height: 14px;
+        }
+        .school-info,
+        .student-info {
+            margin-bottom: 15px;
+            line-height: 14px;
+            display: inline;
+        }
+        .student-info {
+            position: relative;
+        }
+        .info {
+            position: absolute;
+            left: 300px;
+            width: 300px;
+        }
+        .details {
+            font-size: 14px;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .initials {
+            position: absolute;
+            width: 100%;
+            text-align: right;
+            right: 110px;
+        }
+        .image-initials {
+            position: absolute;
+            width: 70px;
+            height: auto;
+            margin: 0;
+        }
+        .initials-page-1 {
+            top: 1017px;
+        }
+        .initials-page-2 {
+            top: 2141px;
+        }
+        .initials-page-3 {
+            top: 3265px;
+        }
+        .initials-page-4 {
+            top: 4389px;
+        }
+        .initials-page-5 {
+            top: 5513px
+        }
+        .page-break {
+            page-break-before: always;
+            margin-top: 50px;
+        }
+        .footer {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: blue;
+        }
+        .footer-page-1 {
+            top: 1027px;
+        }
+        .footer-page-2 {
+            top: 2151px;
+        }
+        .footer-page-3 {
+            top: 3275px;
+        }
+        .footer-page-4 {
+            top: 4399px;
+        }
+        .footer-page-5 {
+            top: 5523px
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+        .table th,
+        .table td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .unordered-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .checkboxes {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .flex-direction-column {
+            flex-direction: column;
+        }
+        .checkbox-section-element {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        input[type='checkbox'] {
+            accent-color: black;
+            color: white;
+        }
+        .input-shaping {
+            margin-top: 0; 
+            margin-bottom: 0;
+        }
+        .signature-section {
+            margin-top: 40px;
+        }
+        .signature-section div {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .image-signature {
+            width: 115px;
+            height: auto;
+            margin: 0;
+        }
+        .student-signature-section {
+            position: absolute;
+            display: flex; 
+            flex-direction: column; 
+            margin-top: 10px; 
+            padding-left: 15px;
+        }
+        .legal-representative-signature-section {
+            position: absolute;
+            left: 35%;
+        }
+        .enterprise-signature-section {
+            width: 288px;
+            height: auto;
+            margin: 0;
+            position: absolute;
+            left: 59%;
+        }
+    </style>
+</head>
+
+<body style="position: relative;">
+
+    <h1><%= fileData.documentTitle %></h1>
+    <h2 style="text-align: center; font-size: 12px;">Ce contrat porte sur la formation suivante : ARRETE DU 6 JUIN 2020
+    </h2>
+
+    <div class="section">
+        <p class="details">
+            <span>Formation Traditionnelle B <input type="checkbox" <%= formationData.formationType.formationTradB %> style="width: 10px; height: 10px;" ></span>
+            <span>Apprentissage Anticipé de la conduite <input type="checkbox" <%= formationData.formationType.apprentAnticipConduite %> style="width: 10px; height: 10px;"></span>
+            <span>Conduite supervisée <input type="checkbox" <%= formationData.formationType.conduiteSupervis %> style="width: 10px; height: 10px;"></span></p>
+        <p><strong>Entre :</strong></p>
+        <p><strong>Ci-après désigné(e) « l'école de conduite »</strong></p>
+        <p class="school-info">
+            <strong>AUTO-ECOLE DES BORDS DE MARNE</strong><br>
+            9, Grande Rue Charles de Gaulle 94360 BRY SUR MARNE<br>
+            Tél/Fax : 01.49.83.93.91<br>
+            Agrément Préfectoral : E0209403730 délivre le 17/06/2017 Par la préfecture du Vl de Marne<br>
+            SIRET : 421 652 686 00013 RCS CRETEIL au CAPITAL 22403 Euros<br>
+            N° déclaration d'activité (organisme de formation professionnelle) IDF : 11 94 05 65 594<br>
+            Représenté par : MR Lounès HANNICHE Directeur Général
+        </p>
+
+        <p>Et :<br>
+            Ci-après désigné « l'élève »<br>
+        <p class="student-info">
+            Nom : <%= studentData.studentLastName %><span class="info">Prénom: <%= studentData.studentFirstName %></span><br>
+            Date et lieu de naissance : <%= studentData.studentBirthDate.birthDay %>/<%= studentData.studentBirthDate.birthMonth %>/<%= studentData.studentBirthDate.birthYear %> <br>
+            Adresse : <%= studentData.studentAddress.number %> <%= studentData.studentAddress.street %>, <%= studentData.studentAddress.town %><br>
+            Tél : <%= studentData.studentPhoneNumber %><span class="info">Courriel : <%= studentData.studentEmail %></span>
+        </p>
+        </p>
+    </div>
+
+    <div class="section">
+        <p>Évaluation Préalable de l'Élève: L'évaluation du niveau du candidat avant l'entrée en formation est
+            obligatoire. En application de
+            l'article L. 213-2 du Code de la route, le présent contrat est conclu après une évaluation préalable du
+            candidat dans le véhicule ou
+            dans les locaux de l'école de conduite, afin de déterminer le nombre prévisionnel d'heures de formation
+            pratique et / ou théorique à
+            la conduite nécessaire.</p>
+        <p>
+            L'évaluation de l'élève a été réalisée le : <%= evaluation.date.evaluationDay %>/<%= evaluation.date.evaluationMonth %>/<%= evaluation.date.evaluationYear %> par <%= evaluation.instructorFirstName %> avec pour moyen d'évaluation utilisé :
+            <%= evaluation.vehicleType %>
+        </p>
+        <p>Elle a donné lieu à l'élaboration d'une fiche d'évaluation annexée au contrat. A l'issue de cette évaluation,
+            le nombre
+            d'heures prévisionnel de formation pratique est de <%= formationData.formationDuration.drivingPractice %> heures.</p>
+        <p>L’évaluation de départ permet à l'élève d'avoir une estimation du nombre d'heures de cours de conduite qu’il
+            devra prendre pour
+            obtenir son permis de conduire. Il s’agit d'une estimation donc approximative qui n'a qu'une vocation
+            indicative, et non contractuelle,
+            l'auto-école ne pouvant présumer ni de la date exacte à laquelle l'élève parviendra à passer son permis de
+            conduire ni de la certitude
+            de réussite.<br>Notons, que notre établissement comme tout établissement d’enseignement, a une obligation de
+            moyen et non de résultat.</p>
+    </div>
+
+    <div class="section">
+        <h2 style="text-decoration: underline; font-style: italic;">Il est convenu ce qui suit :</h2>
+        <h3>I-Objet du Contrat</h3>
+        <p>Conformément aux articles L. 213-2 et R. 213-3 du code de la route et à l'arrêté du 22 décembre 2009 relatif
+            à l'apprentissage de la
+            conduite des véhicules à moteur de la catégorie B, le présent contrat a pour objet d'établir les conditions
+            et les modalités de
+            l'enseignement, théorique et / ou pratique, de la conduite des véhicules à moteur de la catégorie B et de la
+            sécurité routière</p>
+    </div>
+
+    <div class="section">
+        <h3>II-Date de Prise d'Effet et Durée du Contrat</h3>
+        <p>Le présent contrat entre en vigueur entre les parties au jour de sa signature pour une durée de 8 mois,
+            jusqu’au
+            <%= formationData.formationMaxEndingDate.day %>/<%= formationData.formationMaxEndingDate.month %>/<%= formationData.formationMaxEndingDate.year %>. Les tarifs, les prix détaillés et les termes du contrat ne sont pas révisables pendant toute la
+            durée du
+            contrat sauf modification réglementaire.Il est convenu que le contractant est dans l'obligation, pendant la
+            durée
+            du contrat de consommer la totalité des leçons de conduite de son forfait, soit <%= formationData.formationDuration.totalDrivingLearningDuration %> Heures de conduite</p>
+        <p><strong>Le contrat peut faire l'objet d'une prolongation de la part de l’élève pour un prix de 250
+                EUROS.</strong></p>
+        <p>Au-delà des 12 mois, toutes leçons de conduite non consommées seront définitivement perdues et ne feront
+            objet d’aucun
+            remboursement. Si un événement exceptionnel survient du type confinement ; l'établissement prolongera le
+            contrat gracieusement
+            d'une durée égale à celle de l’événement.</p><br>
+        <p><strong>Afin de respecter les modalités ci-dessus, nous vous conseillons de faire du code et vos heures de
+                conduite simultanément.</strong> Cela vous permettra aussi de mettre en application votre apprentissage
+            de code en conduite et réciproquement. Vous y gagnerez également en motivation.</p>
+    </div>
+
+    <div class="initials initials-page-1"><strong>Initiales:</strong>
+        <% if (fileData.studentContractData.initialsOptions.ifInitialed_page1) { %>
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
+        <% } %>
+    </div>
+    <div class="footer footer-page-1">Page 1 sur 5</div>
+
+
+    <!-- Début de la page 2 -->
+    <div class="page-break"></div>
+    <p><strong>Le présent contrat porte sur une durée de : 8 mois</strong></p>
+
+    <div class="section">
+        <p>Nombre d'heures de formation et d'enseignement:</p>
+        <p style="display: inline; padding-right: 50px;">
+            <input type="checkbox" <%= formationData.formationType.theoricalFormation.isChecked %> style="margin-right: 10px; width: 10px; height: 10px;">Formation théorique : nombre de leçon(s) de formation théorique ou durée de la formation théorique : <%= formationData.formationType.theoricalFormation.duration %></p><br>
+        <p style="display: inline;">
+            <input type="checkbox" <%= formationData.formationType.practicalFormation.isChecked %> style="margin-right: 10px; width: 10px; height: 10px;"><span>Nombre de leçon(s) de formation pratique : <%= formationData.formationType.practicalFormation.duration %></span>
+        </p>
+    </div>
+    <div class="section">
+        <table class="table" CELLPADDING="0">
+            <tr>
+                <th></th>
+                <th>PRESTATION</th>
+                <th>Obligatoire</th>
+                <th>Prix Unitaire (€) TTC</th>
+                <th>Nombre d'heures/Unités</th>
+                <th>Montant TTC</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td><%= formationData.formationPrices.EvaluationPrealable.PRESTATION %></td>
+                <td><%= formationData.formationPrices.EvaluationPrealable.Obligatoire %></td>
+                <td><%= formationData.formationPrices.EvaluationPrealable.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.EvaluationPrealable.NbHeures_ou_Units %></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td ROWSPAN="7">Frais Administratifs</td>
+                <td>Gestion de l’élève (dossier, rdv, planning)</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw001.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw001.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw001.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw001.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Demande de numéro NEPH sur ANTS</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw002.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw002.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw002.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw002.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Demande Fabrication du Titre (Réussite)</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw003.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw003.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw003.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw003.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Livret d'apprentissage</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw004.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw004.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw004.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw004.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Frais de résiliation (uniquement lorsque
+                    l'élève n'a pas de motif légitime et avant le
+                    début de la formation pratique)</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw005.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw005.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw005.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw005.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Frais de Gestion Compte CPF</td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw006.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw006.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw006.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Frais_Administratifs.raw006.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Réservation d'une place d'Examen sur
+                    RDV PERMIS</td>
+                    <td><%= formationData.formationPrices.Frais_Administratifs.raw007.Obligatoire %></td>
+                    <td><%= formationData.formationPrices.Frais_Administratifs.raw007.PrixUnitaireTTC %></td>
+                    <td><%= formationData.formationPrices.Frais_Administratifs.raw007.NbHeures_ou_Units %></td>
+                    <td><%= formationData.formationPrices.Frais_Administratifs.raw007.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td ROWSPAN="5">Théorie</td>
+                <td>Rendez-vous Pédagogique (AAC uniquement)</td>
+                <td><%= formationData.formationPrices.Theorie.raw001.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Theorie.raw001.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Theorie.raw001.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Theorie.raw001.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Contrôles des connaissance (Examen Blanc)</td>
+                <td><%= formationData.formationPrices.Theorie.raw002.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Theorie.raw002.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Theorie.raw002.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Theorie.raw002.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Forfait de Formation Théorique</td>
+                <td><%= formationData.formationPrices.Theorie.raw003.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Theorie.raw003.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Theorie.raw003.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Theorie.raw003.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Livre de Vérification</td>
+                <td><%= formationData.formationPrices.Theorie.raw004.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Theorie.raw004.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Theorie.raw004.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Theorie.raw004.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Accès e-learning (code en ligne) Pack web</td>
+                <td><%= formationData.formationPrices.Theorie.raw005.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Theorie.raw005.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Theorie.raw005.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Theorie.raw005.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td ROWSPAN="6">Pratique</td>
+                <td>Rendez-vous Préalable AAC ou Supervisée</td>
+                <td><%= formationData.formationPrices.Pratique.raw001.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Pratique.raw001.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Pratique.raw001.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Pratique.raw001.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>RDV Pédagogique (Obligatoire pour AAC)</td>
+                <td><%= formationData.formationPrices.Pratique.raw002.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Pratique.raw002.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Pratique.raw002.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Pratique.raw002.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Leçon de Conduite Individuelle BM (*)</td>
+                <td><%= formationData.formationPrices.Pratique.raw003.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Pratique.raw003.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Pratique.raw003.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Pratique.raw003.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Leçon de Conduite Individuelle BVA (**)</td>
+                <td><%= formationData.formationPrices.Pratique.raw004.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Pratique.raw004.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Pratique.raw004.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Pratique.raw004.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Accompagnement à l'Examen (Tarif ne
+                    dépassant pas celui d'1h de conduite)</td>
+                    <td><%= formationData.formationPrices.Pratique.raw005.Obligatoire %></td>
+                    <td><%= formationData.formationPrices.Pratique.raw005.PrixUnitaireTTC %></td>
+                    <td><%= formationData.formationPrices.Pratique.raw005.NbHeures_ou_Units %></td>
+                    <td><%= formationData.formationPrices.Pratique.raw005.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td>Forfait de Formation Pratique</td>
+                <td><%= formationData.formationPrices.Pratique.raw006.Obligatoire %></td>
+                <td><%= formationData.formationPrices.Pratique.raw006.PrixUnitaireTTC %></td>
+                <td><%= formationData.formationPrices.Pratique.raw006.NbHeures_ou_Units %></td>
+                <td><%= formationData.formationPrices.Pratique.raw006.MontantTTC %></td>
+            </tr>
+            <tr>
+                <td><strong>TOTAL</strong></td>
+                <td><strong>TYPE DE FORMATION</strong></td>
+                <td COLSPAN="3"><strong><%= formationData.formationPrices.total.TypeFormation %></strong></td>
+                <td><strong><%= formationData.formationPrices.total.MontantTTC %></strong></td>
+            </tr>
+        </table>
+        <p>*BM : Boite de vitesses Manuelle – **BVA : Boite de vitesses Automatique</p>
+    </div>
+
+    <div class="section">
+        <p><strong>Au titre du présent contrat, la leçon d'une heure de conduite individuelle comprend : le temps
+                nécessaire à l'accueil, à la
+                détermination de l'objectif (5 min), à la conduite (45 minutes environ), à l'évaluation et au bilan de
+                la leçon (5 min).
+                Soit 55 minutes.</strong></p>
+        <p><strong>EXAMEN THEORIQUE (CODE DE LA ROUTE) :</strong><br>Le montant de l'inscription à l'examen de l'épreuve
+            théorique (code) est fixé par arrêté du ministère des finances: <%= formationData.formationPrices.priceOfCodeExam %>.<br>Cette prestation est exclue de
+            tous nos forfaits et prestations. L'élève réserve lui-même sa place et se déplace tout seul.</p>
+        <p><strong>Les tarifs ci-dessus sont inchangés pendant la durée du contrat (8 mois) sauf modification
+                législative ou réglementaire.</strong></p>
+    </div>
+
+    <div class="section" style="margin-top: 20px;">
+        <h3>IV-Programme et déroulement de la formation</h3>
+        <p>L'école de conduite s'engage à délivrer à l'élève une formation théorique et pratique conforme aux
+            dispositions législatives et
+            réglementaires en vigueur.</p>
+    </div>
+    <div class="initials initials-page-2"><strong>Initiales:</strong>
+        <% if (fileData.studentContractData.initialsOptions.ifInitialed_page2) { %>
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
+        <% } %>
+    </div>
+    <div class="footer footer-page-2">Page 2 sur 5</div>
+
+
+
+    <!-- Début de la page 3 -->
+    <div class="page-break"></div>
+    <div class="section">
+        <p>Les objectifs de la formation sont précisés dans les quatre compétences de formation du livret
+            d'apprentissage remis à l'élève le jour de la signature du contrat.</p>
+        <p><strong>Ces compétences sont les suivantes :</strong></p>
+        <ul class="unordered-list">
+            <li><strong>MAÎTRISER LE MANIEMENT</strong> du véhicule dans un trafic faible ou nul</li>
+            <li><strong>APPRÉHENDER</strong> la route et circuler dans des conditions normales</li>
+            <li><strong>CIRCULER</strong> dans des conditions difficiles et partager la route avec les autres usagers
+            </li>
+            <li><strong>PRATIQUER une conduite autonome, sûre et économique</strong></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h4>1.1 Programme de formation théorique en vigueur</h4>
+        <p>La formation théorique générale dispensée par l'école de conduite correspond au programme de l'épreuve
+            théorique générale (ETG). Elle porte notamment sur la connaissance des règlements relatifs à la circulation
+            et la conduite d'un véhicule, ainsi que sur celle des bons comportements du conducteur. Seront également
+            dispensés : les règles de sécurité routière à appliquer dans les tunnels, les précautions à prendre en
+            quittant le véhicule, les facteurs de sécurité concernant le chargement du véhicule et les personnes
+            transportées, les règles de conduite respectueuses de l'environnement, ainsi que la réglementation relative
+            à l'obligation d'assurance et aux documents administratifs liés à l'utilisation du véhicule.</p>
+    </div>
+
+    <div class="section">
+        <h4>1.2 Déroulement de la formation</h4>
+        <div class="checkboxes">
+            <p class="checkbox-section-element"><strong>L'enseignement théorique se déroule: </strong></p>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.theoricalFormation.location.onSite %> ><label>Sur place</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.theoricalFormation.location.remote %> ><label>À distance</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.theoricalFormation.location.onSiteAndRemote %> ><label>Les deux</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.theoricalFormation.location.individualCourses %> ><label>En cours individuel</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.theoricalFormation.location.groupCourses %> ><label> En cours collectif</label></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h4>1.3 Moyens pédagogiques et techniques</h4>
+        <p><strong>Soit : </strong>à distance via l'application PACKWEB 2, un login vous sera fourni (<%= formationData.formationPrices.Theorie.packwebAppAccessCodePrices.pricePerMonth %>/mois ou <%= formationData.formationPrices.Theorie.packwebAppAccessCodePrices.priceForFourMonths %>/4 mois).</p>
+        <p><strong>Soit : </strong>En salle audiovisuelle (écran, tablette, feuille de réponse, émargement) voir
+            horaires d'ouverture.</p>
+    </div>
+
+    <div class="section">
+        <h4>1.4 Accompagnement et inscription à l'épreuve théorique générale (ETG)</h4>
+        <p>Voir au-dessus EXAMEN (code de la Route).</p>
+    </div>
+
+    <div class="section" style="margin-bottom: 30px;">
+        <h4>2.1 Programme de formation en vigueur (voir annexe).</h4>
+    </div>
+
+    <div class="section">
+        <h4>2.2 Calendrier</h4>
+        <p>Le calendrier de formation pratique est établi par l'école de conduite en concertation avec l'élève, en
+            fonction de leurs disponibilités respectives.</p>
+    </div>
+
+    <div class="section">
+        <h4>2.3 Déroulement de la formation</h4>
+        <div style="display: flex; flex-direction: column; width: 100%; align-items: baseline; gap: 15px;">
+            <div style="display: flex;">
+                <p class="checkbox-section-element">L'enseignement pratique se déroule :</p>
+                <div class="checkbox-section-element" style="margin-left: 16px;"><input
+                        type="checkbox" <%= formationData.formationType.practicalFormation.location.openWayWithAnInstructor %> ><label>Sur voies ouvertes à la circulation avec un enseignant. En cours
+                        individuel.</label></div>
+            </div>
+
+            <div style="display: flex; gap: 100px;">
+                <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.practicalFormation.location.manualTransmission %> style="margin-left: 0;"><label>Sur
+                        boîte manuelle</label></div>
+                <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationType.practicalFormation.location.automaticTransmission %> style="margin-left: 0;"><label>Sur
+                        boîte automatique</label></div>
+            </div>
+
+        </div>
+        <p>La durée de chaque leçon en formation pratique comprend le temps nécessaire notamment à l'accueil, la
+            détermination de l'objectif, la leçon, l'évaluation et le bilan de la leçon. Soit 55 minutes.</p>
+    </div>
+
+    <div class="section">
+        <h4>2.4 Évaluation des compétences en fin de formation initiale CAS CONDUITE SUPERVISEE</h4>
+        <p>Pendant la formation pratique définie lors de l'évaluation préalable, ou à tout moment à la demande de
+            l'élève, l'enseignant effectue un bilan des compétences acquises par l'élève : si l'élève satisfait à ce
+            bilan, l'école de conduite lui délivre une attestation de fin de formation initiale. La poursuite de la
+            formation dans le cadre de la conduite supervisée pourra être envisagée. Dans le cas contraire, en fonction
+            du résultat obtenu par l'élève et de son niveau, l'école de conduite précise les points à approfondir.
+            Lorsque le nombre d'heures prévues initialement au contrat, n'a pas suffi à l'élève pour atteindre le niveau
+            lui permettant de se présenter à l'épreuve pratique ou en cas d'échec à cette épreuve, un complément
+            d'heures de formation pourra être proposé par l'école de conduite.</p>
+    </div>
+
+    <div class="section">
+        <h4>2.5 Présentation à l'épreuve pratique du permis de conduire</h4>
+        <p>L'élève sera présenté à l'épreuve pratique par l'école de conduite, suivant les dates arrêtées et
+            communiquées par l'autorité administrative.</p>
+    </div>
+
+    <div class="initials initials-page-3"><strong>Initiales:</strong>
+        <% if (fileData.studentContractData.initialsOptions.ifInitialed_page3) { %>
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
+        <% } %>
+    </div>
+    <div class="footer footer-page-3">Page 3 sur 5</div>
+
+
+    <!-- Début de la page 4 -->
+    <div class="page-break"></div>
+    <div class="section">
+        <p>En cas d'échec, et après accord entre les parties sur les besoins de l'élève, l'école de conduite présentera ce dernier à une nouvelle épreuve pratique après signature d'un nouveau contrat de formation et en fonction du calendrier qui lui est communiqué par l'autorité administrative.</p>
+
+        <p style="margin-top: 50px;"><strong>Expliquons ce qui est écrit ci-dessus !</strong><br>Ce contrat est conclu pour une seule présentation pratique (incluse dans le Forfait de base). C'est à dire qu'à issue de la première présentation, si le résultat à l'examen du permis est défavorable et dans un objectif de réussite à l'examen suivant, <strong>un bilan général de 2h de conduite vous sera proposé</strong>.<br>Pour éviter un nouvel échec, le volume d'heures minimum pour une 2ème présentation ne pourra être inférieur à 4H pour les candidats en Conduite Accompagnée /Supervisée et 6h pour les formations classiques.<br>En cas d'accord, un avenant au présent contrat avec une nouvelle tarification sera signé entre les parties</p>
+
+        <p style="margin-top: 25px;"><strong>En cas de refus : l'école se réserve le droit de ne pas Re-présenter l'élève puisque le contrat de base est signé pour une seule présentation. L'élève pourrait alors s'inscrire dans une autre école de conduite ou se présenter en candidat libre.</strong></p>
+    </div>
+
+    <div class="section">
+        <h4>2-6 Accompagnement à l'épreuve pratique</h4>
+        <p>Le jour de l'épreuve pratique, l'école de conduite assure l'accompagnement de l'élève sur le centre de l'examen et met à sa disposition le véhicule de l'école de conduite pendant toute la durée de l'épreuve.<br>Les frais d'accompagnement facturés à ce titre par l'école de conduite à l'élève correspondent à une heure de conduite, conformément aux dispositions de l'article R. 213-3-3 du code de la route.</p>
+    </div>
+
+    <div class="section">
+        <h3>V - Obligations des parties</h3>
+        <p>En cas d'annulation des leçons en formation pratique : Sauf cas de force majeure ou motif légitime dûment justifié à l'école de conduite, toute leçon non décommandée par l'élève au moins 48 heures à l'avance n'est pas remboursée. Si elle n'a pas été payée à l'avance, elle est considérée comme due. Sauf cas de force majeure ou motif légitime dûment justifié à l'élève, l'école de conduite s'engage à n'annuler aucune leçon moins de 48 heures à l'avance. À défaut la leçon doit être reportée et remboursée.</p>
+
+        <h4>1- Démarches administratives :</h4>
+        <p>En vertu du présent contrat, l'élève peut choisir de mandater l'école de conduite pour accomplir en son nom et place toutes les démarches et formalités nécessaires auprès de l'administration, en vue de l'enregistrement de son livret et de son dossier d'examen. L'élève est avisé par l'école de conduite de la liste des documents à fournir pour constituer son dossier d'examen. L'élève garde la possibilité de mettre fin au mandat à tout moment conformément à la loi, moyennent, le cas échéant, le paiement d'une somme compensant strictement les moyens engagés par l'école de conduite jusqu'à la résiliation. L’école s'engage à déposer le dossier, dès lors qu'il est complet et à fournir à l'élève son numéro d'enregistrement préfectoral harmonisé (NEPH). Le mandataire ne saurait être tenu responsable du retard pris par le mandant pour fournir les pièces justificatives ou de celui imputable à l'autorité compétence pour enregistrer ou valider la demande.</p>
+
+        <h4>2- Inscription aux épreuves théorique et pratique du permis de conduire</h4>
+        <p>
+            <ul class="unordered-list" style="margin-bottom: 0;">
+                <li>- EPREUVE THEORIQUE (code): voir au-dessus</li>
+                <li>- EPREUVE PRATIQUE: L'inscription à l'épreuve pratique est réalisée : Par l'école de conduite</li>
+            </ul>Dans ce cas, en vertu du présent contrat, l'élève peut choisir de mandater l'école de conduite pour accomplir en son nom et place toutes les démarches et formalités nécessaires et de l'administration, en vue de la réservation des places d'examen. L'élève garde la possibilité de mettre fin au mandat à tout moment conformément à la loi, moyennent, le cas échéant, le paiement d'une somme compensant strictement les moyens engagés par l'école de conduite jusqu'à la résiliation.<br>L'école de conduite s'engage à inscrire l'élève aux épreuves pratiques du permis à une date en accord avec ce dernier.</p>
+
+        <h4>3- Obligations de l'élève :</h4>
+        <ul class="unordered-list">
+            <li>- être âgé de 16 ans minimum ou 15 ans minimum en cas d'apprentissage anticipé de la conduite</li>
+            <li>- être détenteur, notamment lors des leçons pratiques, des documents suivants : livret d'apprentissage conforme à la réglementation; formulaire de la demande de permis de conduire validée par le préfet du lieu de département de son dépôt</li>
+            <li>- Respecter le règlement intérieur de l'école figurant en annexe, et dont il a pris connaissance</li>
+        </ul>
+
+        <h4>4- Obligations de l'école :</h4>
+        <ul class="unordered-list">
+            <li>- Délivrer à l'élève une formation théorique et pratique conforme aux programmes en vigueur</li>
+            <li>- Présenter le candidat à l'épreuve ou aux épreuves en fournissant les moyens nécessaires sauf si le candidat souhaite se présenter directement</li>
+        </ul>
+    </div>
+
+    <div class="initials initials-page-4"><strong>Initiales:</strong>
+        <% if (fileData.studentContractData.initialsOptions.ifInitialed_page4) { %>
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
+        <% } %>
+    </div>
+    <div class="footer footer-page-4">Page 4 sur 5</div>
+
+    <!-- Début de la page 5 -->
+    <div class="page-break"></div>
+
+    <div class="section">
+        <h3>5- Modalités de paiement</h3>
+        <p>Le paiement des prestations s'effectue par :</p>
+        <table class="table" CELLPADDING="0">
+            <tr>
+                <td style="width: 100px; height: 30px;"><div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentMethod.creditCard %> ><label>Carte bancaire</label></div></td>
+                <td style="width: 100px; height: 30px;"><div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentMethod.cheque %> ><label>Chèque</label></div></td>
+                <td style="width: 100px; height: 30px;"><div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentMethod.bankTransfer %> ><label>Virement</label></div></td>
+                <td style="width: 100px; height: 30px;"><div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentMethod.cash %> ><label>Espèce</label></div></td>
+                <td style="width: 100px; height: 30px;"><div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentMethod.SEPA_DirectDebit %> ><label>Prélèvement SEPA</label></div></td>
+            </tr>
+        </table>
+        <p>Le paiement pourra s'effectuer selon l'une des modalités suivantes :</p>
+        <div class="checkboxes" style="display: flex; flex-direction: column; align-items: flex-start;">
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentOptions.withDepositAndBalance.isChecked %> class="input-shaping"><label>1 - avec des arrhes et le solde d'un montant de <%= formationData.formationPrices.total.MontantTTC %> devant être réglé le <%= formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentDay %>/<%= formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentMonth %>/<%= formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentYear %></label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentOptions.one_offCashPayment %> class="input-shaping"><label>2 - paiement comptant en un seul versement</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentOptions.pay_as_you_go_afterEachService %> class="input-shaping"><label>3 - à l'unité, après chaque prestation</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentOptions.three_instalments_FreeOfCharge %> class="input-shaping"><label>4 - échelonné en trois versements sans frais</label></div>
+            <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.paymentOptions.five_instalments_FreeOfCharge %> class="input-shaping"><label>5 - échelonné en cinq versements sans frais.</label></div>
+        </div>
+        <p>Si l'option 4 ou 5 est retenue, les versements s'effectueront aux échéances et selon les montants suivants : -1er Versement à l’inscription – 2 -ème versement le mois suivant – 3 -ème versement le mois d’après et ainsi de suite.</p>
+        <p>L'école de conduite délivre une note à l'élève avant le paiement de la prestation. Pour les prestations forfaitaires, la note indique la liste détaillée des prestations comprises dans le forfait. Conformément à l'article 1 de l'arrêté du 3 octobre 1983, toute prestation dont le prix est égal ou supérieur à 25 € TTC fera l'objet de la délivrance d'une note. Elle peut être remise sur simple demande de l'élève pour des prestations dont le prix est inférieur à 25 €.</p>
+        
+        <p style="margin-bottom: 0;">En cas de défaillance de l'école de conduite, celle-ci a souscrit à un dispositif de garantie financière :</p>
+        <div class="checkbox-section-element"><input type="checkbox" <%= formationData.formationPrices.failOfTheDrivingSchool.yesOption.isChecked %> style="margin-left: 0;">Oui<input type="checkbox" <%= formationData.formationPrices.failOfTheDrivingSchool.noOptionIsChecked %> style="margin-left: 20px;">Non, car l’auto-école des bords de marne dispose de fond propre supérieurs à 300 000 euros.</div>
+        <p style="margin-top: 0; margin-bottom: 15px;">Nom et adresse de l'organisme garant : <span><%= formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.name %><br><%= formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.number %> <%= formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.street %> <%= formationData.formationPrices.failOfTheDrivingSchool.yesOption.garantEntity.address.town %></span>
+        </p>
+    </div>
+
+    <div class="section">
+        <h3>VII - Conditions de rétractation ou de résiliation</h3>
+
+        <h4>1- Rétractation</h4>
+        <p>Dans le cadre d'un contrat conclu à distance tel que défini à l'article L. 221-1 du code de la consommation, l'élève bénéficie, à compter de la date de la signature du présent contrat, d'un droit de rétraction de 14 jours conformément à l'article L. 221-18 du même code.<br>Dans l'hypothèse où l'élève souhaite exercer ce droit, il adresse sa décision de se rétracter à l'école de conduite soit par lettre recommandée ou envoi recommandé électronique avec avis de réception à l'adresse postale de l'école de conduite ou par courriel à l'adresse électronique de l'école de conduite.<br>Le formulaire de rétractation figurant en annexe peut être utilisé par l'élève.<br>Si l'élève a expressément demandé à débuter sa formation avant l'expiration du délai de rétractation, l'école de conduite lui facturera le montant des prestations réalisées jusqu'à la notification par l'élève de sa décision de se rétracter.<br>En cas de prestations déjà réglées par l'élève dans le cadre d'un forfait, le remboursement s'effectue au prorata des prestations déjà réalisées. En cas de prestations non encore facturées à l'élève dans le cadre d'un forfait, la facturation s'effectue au prorata des prestations déjà réalisées.</p>
+
+        <h4>2- Résiliation</h4>
+        <p>L'élève peut résilier le présent contrat à tout moment par lettre recommandée ou envoi recommandé électronique avec avis de réception à l'adresse postale de l'école de conduite ou par courriel à l'adresse électronique de l'école de conduite, moyennant paiement des prestations déjà réalisées.<br>La résiliation prend effet 15 jours à compter de la date de première présentation de la lettre recommandée ou de l'envoi recommandé électronique. Ce délai de préavis ne s'applique pas en cas de motif légitime.<br>L'école de conduite peut résilier le présent contrat en cas de violence avérée, de mise en danger d'autrui, d'incivilités ou de manquements répétés à l'une de ses obligations issues du présent contrat (hypothèse : retards de paiement non régularisés), après mise en demeure spécifiant le motif de la résiliation notifiée par lettre recommandée ou de l'envoi recommandé électronique avec avis de réception. La résiliation prend effet 15 jours à compter de la date de première présentation de la lettre recommandée ou de l'envoi recommandé électronique. L'élève peut contester la décision de l'école de conduite. A défaut de solution, il peut recourir à une procédure de médiation.<br>La résiliation du présent contrat avant son terme entraîne l'apurement définitif des comptes. L'école de conduite facturera le montant des prestations réalisées jusqu'à la date de la prise d'effet de la résiliation. En cas de prestations déjà réglées par l'élève dans le cadre d'un forfait, le remboursement s'effectue au prorata des prestations déjà réalisées. En cas de prestations non encore facturées à l'élève dans le cadre d'un forfait, la facturation s'effectue au prorata des prestations déjà réalisées.</p>
+    </div>
+
+    <div class="signature-section" style="margin: 0;">
+        <p style="margin-top: 0px;">Fait en 2 exemplaires, à BRY-SUR-MARNE, le <%= fileData.dateTime %></p>
+        <p style="margin-top: 0px; margin-bottom: 0;">Signatures (avec mention lu et approuvé et avoir pris un exemplaire)</p>
+        <div style="margin: 0; display: flex; flex: 1;"><p style="text-align: center; width: 120px; margin-bottom: 0;">Élève:</p><p style="text-align: center; margin-bottom: 0;">Représentant légal (élève mineur):</p><p style="text-align: center; margin-bottom: 0;">Cachet et signature de l'établissement:</p></div>
+        <div>
+            <% if (fileData.studentContractData.isReadAndApproved) { %>
+                <span class="student-signature-section">LU ET APPROUVÉ <img class="image-signature" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.studentSignature %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="signature de l'élève"></span>
+            <% } else { %>
+                <span style="display: flex; flex-direction: column; margin-top: 15px; padding-left: 15px;"></span>
+            <% } %><img class="image-signature legal-representative-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.legalRepresentativeSignature %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="signature du représentant légal"><img class="enterprise-signature-section" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.signature.enterpriseSignature %>.png" alt="cachet & signature de l'établissement"></div>
+    </div>
+
+    <div class="initials initials-page-5"><strong>Initiales:</strong>
+        <% if (fileData.studentContractData.initialsOptions.ifInitialed_page5) { %>
+            <img class="image-initials" src="<%= COMPLETE_IMAGES_SIGNATURES_PATH %>/<%= fileData.studentContractData.initialsOptions.initialsFileName %>-<%= fileData.studentContractData.signature.studentId %>.png" alt="paraphe de l'étudiant">
+        <% } %>
+        </div>
+    <div class="footer footer-page-5">Page 5 sur 5</div>
+</body>
+
+</html>

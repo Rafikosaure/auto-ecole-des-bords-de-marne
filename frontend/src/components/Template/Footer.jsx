@@ -1,9 +1,10 @@
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./Footer.css"
 
 const Footer = () => {
   return (
-    <footer className="footer bg-light py-3 mt-auto">
+    <footer className="page-footer bg-light py-3 mt-auto">
       <Container className="text-center">
         <Link to="/mentions-legales" className="footer-link">
           Mentions légales

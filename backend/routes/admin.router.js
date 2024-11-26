@@ -21,5 +21,10 @@ router.delete("/delete/:id", verifyToken, controller.deleteAdmin);
 router.post("/signup", verifyToken, controller.registerAdmin);
         // login
 router.post("/login", controller.loginAdmin);
+        // logout
+router.post("/logout", verifyToken, controller.logoutAdmin);
+    // PASSWORD RESET
+router.post("/password/forgot", controller.forgotPassword);
+router.put("/password/reset", controller.resetPassword);
 
-exports.router = router;
+module.exports = router;

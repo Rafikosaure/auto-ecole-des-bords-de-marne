@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convocation Permis de Conduire</title>
+    <style>
+        body {
+            font-family: 'Arial, sans-serif';
+            font-size: 14pt;
+            margin: 60px 80px;
+        }
+        .header {
+            margin-top: 20px;
+            margin-bottom: 170px;
+            text-align: center;
+        }
+        .header p {
+            margin: 5px 0;
+            line-height: 18px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 22px;
+            margin-top: 170px;
+        }
+        p {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p><strong>Auto-Ecole des Bords de Marne</strong></p>
+        <p>9 Grande rue Charles de Gaulle - BRY-SUR-MARNE</p>
+        <p>Tél: 01.49.83.93.91 | Email : <a href="mailto:lmyw@sfr.fr">lmyw@sfr.fr</a></p>
+        <p>Organisme de Formation enregistré à la DIRECCTE Ile-de-France sous le numéro 11 94 056 55 94</p>
+        <p>(cet enregistrement ne vaut pas agrément de l'Etat)</p>
+    </div>
+
+    <h1 class="add-margin-top">CONVOCATION</h1>
+
+    <p style="text-align: center;"><strong>Mme <%= studentData.studentFirstName %> <%= studentData.studentLastName %></strong></p>
+
+    <p>Vous êtes convoqué à l'examen du permis de conduire le 09/10/2024.</p>
+
+    <p>Le Rendez-vous est fixé à 9h30 à l'AUTO-ECOLE.</p>
+
+    <p>L'examen aura lieu à CRETEIL à 10h30.</p>
+
+    <p>Reste à régler : 0€</p>
+
+    <p>Pièce d'identité VALIDE obligatoire.</p>
+    
+
+    <p style="text-align: right; margin-top: 80px;">Fait à Bry-sur-Marne le <%= fileData.dateTime %></p>
+
+    
+</body>
+</html>

@@ -1,13 +1,25 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Logo from "../../images/logo.webp";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-
+import "./Header.css"
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+
+    if (response.ok) {
+      navigate('/connexion');
+    }
+  }
 
   return (
     <Navbar expand="lg" className="custom-header">
@@ -24,9 +36,9 @@ const Header = () => {
                   <Nav.Link className="fs-3">Étudiants</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/connexion">
+                <LinkContainer to="/connexion" onClick={handleLogout}>
                   <Nav.Link className="fs-3">Déconnexion</Nav.Link>
                 </LinkContainer>
               </>
@@ -38,19 +50,19 @@ const Header = () => {
                 <LinkContainer to="/admin">
                   <Nav.Link className="fs-3">Administrateurs</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/connexion">
+                <LinkContainer to="/connexion" onClick={handleLogout}>
                   <Nav.Link className="fs-3">Déconnexion</Nav.Link>
                 </LinkContainer>
               </>
             ) : location.pathname === "/students" ? (
               <>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/admin">
                   <Nav.Link className="fs-3">Administrateurs</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/connexion">
+                <LinkContainer to="/connexion" onClick={handleLogout}>
                   <Nav.Link className="fs-3">Déconnexion</Nav.Link>
                 </LinkContainer>
               </>
@@ -60,7 +72,7 @@ const Header = () => {
                   <Nav.Link className="fs-3">Étudiants</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/instructors">
-                  <Nav.Link className="fs-3">Formateurs</Nav.Link>
+                  <Nav.Link className="fs-3">Moniteurs</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/admin">
                   <Nav.Link className="fs-3">Administrateurs</Nav.Link>
