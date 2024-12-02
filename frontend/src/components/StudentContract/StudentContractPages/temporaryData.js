@@ -274,6 +274,7 @@ const dataStorage = (student) => {
               },
               total: {
                 TypeFormation: "Forfait AAC - 20h Manuelle avec Code",
+                WithDeposit: "",
                 MontantTTC: "1299 €" // Gérer le symbole "€" avant la validation !
               },
               paymentMethod: {
