@@ -1,4 +1,4 @@
-const { Remark, Student, studentsDocument } = require("../models/index.js");
+const { Remark, Student, StudentsDocument } = require("../models/index.js");
 
 const {
   errorHandler,
@@ -30,7 +30,7 @@ const getStudents = async (req, res, next) => {
         // includes values from other tables
         include: [
           {
-            model: studentsDocument,
+            model: StudentsDocument,
             as: "documents"
           },
           {
@@ -57,7 +57,7 @@ const getAllStudents = async (req, res, next) => {
       offset,
       include: [
         {
-          model: studentsDocument,
+          model: StudentsDocument,
           as: "documents",
         },
         {
@@ -83,7 +83,7 @@ const getStudent = async (req, res, next) => {
     const student = await Student.findByPk(req.params.id, {
       include: [
         {
-          model: studentsDocument,
+          model: StudentsDocument,
           as: "documents",
         },
         {
