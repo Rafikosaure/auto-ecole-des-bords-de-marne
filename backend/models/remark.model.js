@@ -1,6 +1,6 @@
 const remark =  (connection, DataTypes) => {
     connection.define(
-    "Remark",
+    "remark",
     {
         content: {
             type: DataTypes.STRING,

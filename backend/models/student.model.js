@@ -1,6 +1,6 @@
 const student = (connection, DataTypes) => {
     connection.define(
-    "Student",
+    "student",
     {
         lastName: {
             type: DataTypes.STRING,

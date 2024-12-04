@@ -29,7 +29,6 @@ const ConnexionPage = () => {
         password: admin.password.trim()
       };
 
-      console.log("Objet de la requête :", trimmedAdmin);
       const response = await apiClient.post('/admin/login', {
         username: trimmedAdmin.username,
         password: trimmedAdmin.password,
@@ -37,7 +36,6 @@ const ConnexionPage = () => {
           'Content-Type': 'application/json'
         }
       });
-      console.log('notre réponse :', response);
       setMessage(`Connexion réussie: ${response.data}`);
       
       setAdmin({

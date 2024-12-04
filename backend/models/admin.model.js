@@ -1,6 +1,6 @@
 const admin = (connection, DataTypes) => {
     connection.define(
-    "Admin",
+    "admin",
     {
         username: {
             type: DataTypes.STRING,

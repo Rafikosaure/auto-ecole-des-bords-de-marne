@@ -78,7 +78,6 @@ const AddStudentForm = ({ reload }) => {
 
     try {
       const response = await addStudent(student);
-      console.log(response);
       confirmation();
       await reload(0);
     } catch (e) {
