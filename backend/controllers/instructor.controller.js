@@ -122,7 +122,7 @@ const addDocument = async (req, res, next) => {
             const index = req.files.filenames.indexOf(filename);
             // console.log(index);
             // SQL create query
-            await instructorsDocument.create({
+            await InstructorsDocument.create({
                 ...req.body,
                 // type will be null if a filesType stringified ARRAY is not provided
                 // ?. are here to avoid errors if the filesType stringified ARRAY is not provided
