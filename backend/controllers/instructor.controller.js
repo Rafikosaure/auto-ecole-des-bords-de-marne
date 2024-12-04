@@ -57,7 +57,7 @@ const getInstructor = async (req, res, next) => {
                 // includes values from other tables
                 include: [
                     {
-                        model: instructorsDocument,
+                        model: InstructorsDocument,
                         as: "documents"
                     },
                     {
@@ -150,7 +150,7 @@ const updateDocument = async (req, res, any) => {
         // checks if any file has been sent with the request
         if (req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
         // SQL select query
-        const document = await instructorsDocument.findByPk(req.params.id);
+        const document = await InstructorsDocument.findByPk(req.params.id);
         if (!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // full path to file
         const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
@@ -176,7 +176,7 @@ const updateDocument = async (req, res, any) => {
 const deleteDocument = async (req, res, next) => {
     try {
         // checks if the document exists and throws an error if not
-        const document = await instructorsDocument.findByPk(req.params.id);
+        const document = await InstructorsDocument.findByPk(req.params.id);
         if (!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
         // SQL Delete request
         await document.destroy({
