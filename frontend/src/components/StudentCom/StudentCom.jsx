@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 // import { useSelector } from 'react-redux'
 // import { selectDocumentData } from '../../redux/slices/documentData'
 import localData from './ConvocFormation/temporaryData'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -62,6 +64,18 @@ const StudentCom = ({ student }) => {
         setShowDocumentOption("none")
       }
     }
+
+
+    const notifyIfEmailIsArrived = () => toast.success("Email arrivé à bon port !", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
 
     const manageFetchData = (e) => {
       e.preventDefault()
@@ -186,7 +200,10 @@ const StudentCom = ({ student }) => {
       // Envoi de la requête
       axios.post(`http://localhost:3001/api/emails/send-tracked-email/${student.id}`, fetchData)
       .then(data => {
-        console.log(data.data.message)
+        if (data.data.emailIsArrived === true) {
+          notifyIfEmailIsArrived()
+        }
+
         // setTextAttachmentButton("Ajouter une convocation à la formation en pièce jointe")
       })
       .catch(error => {
@@ -255,6 +272,7 @@ const StudentCom = ({ student }) => {
         </div>
       </div>
       )}
+      <ToastContainer />
     </section>
   );
 };

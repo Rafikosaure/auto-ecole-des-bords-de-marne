@@ -11,6 +11,9 @@ exports.mailTrackingOptions = {
         // return { ...data, hello: 'world' };
         console.log('Email arrivé à bon port !')
         notifier.notify('Email arrivé à bon port !');
+        return {
+            isRecepted: true
+        }
     },
     onBlankImageView: data => {
         // console.log('Email ouvert !')

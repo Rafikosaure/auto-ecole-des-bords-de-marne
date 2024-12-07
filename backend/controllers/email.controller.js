@@ -8,7 +8,7 @@ const { mailTrackingOptions } = require('../sharedFunctions/mailTrackingOptions'
 const { transporter } = require('../sharedFunctions/transporter')
 
 
-exports.sendMailWithTracking = (req, res) => {
+exports.sendMailWithTracking = async (req, res) => {
     try {
         // Define the student ID
         const studentId = req.params.studentId
@@ -93,10 +93,13 @@ exports.sendMailWithTracking = (req, res) => {
             subject: emailTypeToSend.subject,
             html: emailTypeToSend.html
         }
-        sendingProcess(req.body, studentId, sendMailOptions)
 
+        const isArrived = await sendingProcess(req.body, studentId, sendMailOptions)
+        console.log('Email arrivé à bon port :', isArrived)
+        
         res.status(200).json({
-            message: 'Email sending is success!'
+            message: 'Email sending is success!',
+            emailIsArrived: isArrived
         })
 
     } catch {
@@ -114,11 +117,14 @@ exports.sendMailWithTracking = (req, res) => {
     }
 }
 
-const sendingProcess = (dataRequest, studentId, sendMailOptions) => {
-    sendMail(mailTrackingOptions, transporter, sendMailOptions)
-    .then(data => {
-        if (dataRequest.fileData) {
-            deleteFile(`${dataRequest.fileData.documentType}-${studentId}`, './emailAttachments/', '.pdf')
-        }
-    })
+const sendingProcess = async (dataRequest, studentId, sendMailOptions) => {
+    const data = await sendMail(mailTrackingOptions, transporter, sendMailOptions)
+    if (dataRequest.fileData) {
+        deleteFile(`${dataRequest.fileData.documentType}-${studentId}`, './emailAttachments/', '.pdf')
+    }
+    console.log('DATA :', data[0].result.accepted)
+    if (data[0].result.accepted[0] === dataRequest.studentData.studentEmail) {
+        return true
+    }
+    return false
 }
