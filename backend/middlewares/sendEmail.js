@@ -8,7 +8,9 @@ const { ENV } = require("../config/env.js")
 exports.sendEmail = async (option) => {
     try {
       const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: ENV.EMAIL_HOST,
+        port: ENV.EMAIL_PORT,
+        secure: true, // use false for STARTTLS; true for SSL on port 465
         auth: {
           user: ENV.EMAIL_SENDER_ADDRESS,
           pass: ENV.GMAIL_APP_PASSWORD,
