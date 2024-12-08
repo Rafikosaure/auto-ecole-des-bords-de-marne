@@ -4,6 +4,7 @@ import StudentCard from "../../components/Students/StudentCard";
 import { getAllStudents } from "../../api/api-client";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import AddStudentForm from "../../components/StudentsAdmin/AddStudentForm";
+import "./StudentsPage.css"
 
 const StudentsPage = () => {
   const [students, setStudents] = useState([]); 
@@ -57,7 +58,7 @@ const StudentsPage = () => {
         isSearchActive={filteredStudents.length !== students.length}
         reloadPage={reloadPage}
       />
-      <h2 className="text-center" style={{ fontSize: '32px', fontWeight: 'bold', textTransform: 'uppercase' }}>Tous les étudiants</h2>
+      <h2 className="text-center titles-style" style={{ fontWeight: 'bold', textTransform: 'uppercase', marginTop: '25px' }}>Tous les étudiants</h2>
       <Row>
         <Col>
           <ListGroup variant="flush">

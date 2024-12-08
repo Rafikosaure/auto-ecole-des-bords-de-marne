@@ -131,6 +131,18 @@
   min-width: 150px;
 }
 
+.titles-style {
+  font-size: 32px !important;
+  margin-top: 25px !important;
+  margin-bottom: 25px !important;
+}
+
+@media screen and (max-width: 767px) {
+  .titles-style {
+      font-size: 22px !important;
+  }   
+}
+
 /* Responsivité */
 
 /* Grands écrans (minimum 1201px) */

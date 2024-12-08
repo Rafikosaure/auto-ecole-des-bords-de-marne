@@ -1,0 +1,9 @@
+.titles-style {
+    font-size: 32px !important;
+}
+
+@media screen and (max-width: 767px) {
+    .titles-style {
+        font-size: 22px !important;
+    }   
+}
