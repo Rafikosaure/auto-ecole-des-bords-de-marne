@@ -57,7 +57,7 @@ const StudentsPage = () => {
         isSearchActive={filteredStudents.length !== students.length}
         reloadPage={reloadPage}
       />
-      <h2 className="text-center">Tous les étudiants</h2>
+      <h2 className="text-center" style={{ fontSize: '32px', fontWeight: 'bold', textTransform: 'uppercase' }}>Tous les étudiants</h2>
       <Row>
         <Col>
           <ListGroup variant="flush">

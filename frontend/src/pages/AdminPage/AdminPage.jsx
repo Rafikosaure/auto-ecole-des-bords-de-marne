@@ -82,7 +82,7 @@ const AdminPage = () => {
 
   return (
     <div className="container mt-5 admins-container">
-      <h2 className="mb-4 text-center">Liste des Administrateurs</h2>
+      <h2 className="mb-4 text-center" style={{ fontSize: '32px', fontWeight: 'bold', textTransform: 'uppercase' }}>Liste des Administrateurs</h2>
 
       <button
         className="btn btn-success mb-4 admin-button btn-add-admin"
