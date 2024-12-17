@@ -4,8 +4,6 @@ import { useState } from "react";
 import ConvocFormation from './ConvocFormation/ConvocFormation'
 import './StudentCom.css'
 import { useForm } from 'react-hook-form'
-// import { useSelector } from 'react-redux'
-// import { selectDocumentData } from '../../redux/slices/documentData'
 import localData from './ConvocFormation/temporaryData'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -141,7 +139,7 @@ const StudentCom = ({ student }) => {
       if (formFetchData !== undefined) {
         fetchData = {
           fileData: {
-            documentType: 'convocation_formation',
+            documentType: 'Convocation_Formation',
             documentTitle: formFetchData.fileData.documentTitle.toUpperCase(),
             dateTime: datetime
           },
@@ -198,7 +196,7 @@ const StudentCom = ({ student }) => {
       console.log('Données à envoyer au serveur :', fetchData)
 
       // Envoi de la requête
-      axios.post(`http://localhost:3001/api/emails/send-tracked-email/${student.id}`, fetchData)
+      axios.post(`https://api.adb-manager.fr/api/emails/send-tracked-email/${student.id}`, fetchData)
       .then(data => {
         if (data.data.emailIsArrived === true) {
           notifyIfEmailIsArrived()
@@ -208,6 +206,7 @@ const StudentCom = ({ student }) => {
       })
       .catch(error => {
         console.log(error)
+        setShowDocumentOption("none")
       })
       setFormFetchData()
     }
