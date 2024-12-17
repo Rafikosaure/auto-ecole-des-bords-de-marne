@@ -315,7 +315,7 @@ export default function PrintContractButton({ setNumberOfComponent, student }) {
       // Envoie la requête POST avec axios
 
       const response = await axios.post(
-        `http://localhost:3001/api/document/downloadOneDocument/${student.id}`,
+        `https://api.adb-manager.fr/api/document/downloadOneDocument/${student.id}`,
         // data
         fetchData
         /* { fileData: {
