@@ -53,10 +53,10 @@ exports.generatePDFfromHTML = async (req, res, next) => {
         }
         next()
 
-    } catch {
+    } catch (error) {
         res.status(500).json({
-            message: "PDF file generation failed!"
+            message: error
         })
     }
-    
+
 }
