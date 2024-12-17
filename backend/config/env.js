@@ -1,7 +1,7 @@
 // imports
 const dotenv = require("dotenv");
 
-dotenv.config(); 
+dotenv.config();
 
 // stores env variables into process.env
 const ENV = {
@@ -21,14 +21,16 @@ const ENV = {
   DEFAULTADMINPASSWORD: process.env.DEFAULTADMINPASSWORD,
   INSTRUCTORSDOCUMENTSPATH: `${__dirname}/../assets/instructorsDocuments`,
   STUDENTCONTRACTIMAGESPATH: `${__dirname}/../assets/contractImages`,
-
   // EMAIL & ATTACHMENTS VARIABLES
   EMAIL_SENDER_ADDRESS: process.env.EMAIL_SENDER_ADDRESS,
   GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
   EMAIL_HOST: process.env.EMAIL_HOST,
   EMAIL_PORT: process.env.EMAIL_PORT,
   EMAIL_TRACKING_ENDPOINT: process.env.EMAIL_TRACKING_ENDPOINT,
-  COMPLETE_IMAGES_SIGNATURES_PATH: process.env.COMPLETE_IMAGES_SIGNATURES_PATH
+  COMPLETE_IMAGES_SIGNATURES_PATH: process.env.COMPLETE_IMAGES_SIGNATURES_PATH,
+
+  // Chemin d'installation de playwright
+  PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH || './.cache/browsers',
 }
 
 // exports
