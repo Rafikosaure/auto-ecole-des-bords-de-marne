@@ -25,19 +25,23 @@ exports.generatePDFfromHTML = async (req, res, next) => {
             // Render HTML content using the template
             const htmlContent = compiledTemplate({ ...req.body, ...ENV });
 
+            console.log('STEP 3')
+            console.log(chromium);
             // Launch browser
             const browser = await chromium.launch();
 
+            console.log('STEP 4')
             // Create a new browser context
             const context = await browser.newContext();
 
+            console.log('STEP 5')
             // Create a new page
             const page = await context.newPage();
 
             // Set HTML content directly using setContent
             await page.setContent(htmlContent);
 
-            console.log('STEP 3')
+            // console.log('STEP 3')
             // Generate PDF from HTML
             await page.pdf({
                 path: `./emailAttachments/${fileName}.pdf`, // Specify the path to save the PDF file
