@@ -26,7 +26,6 @@ exports.generatePDFfromHTML = async (req, res, next) => {
             const htmlContent = compiledTemplate({ ...req.body, ...ENV });
 
             console.log('STEP 3')
-            console.log(chromium);
             // Launch browser
             const browser = await chromium.launch();
 
@@ -58,6 +57,7 @@ exports.generatePDFfromHTML = async (req, res, next) => {
         next()
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: error
         })
