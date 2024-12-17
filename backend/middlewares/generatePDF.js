@@ -28,7 +28,8 @@ exports.generatePDFfromHTML = async (req, res, next) => {
             console.log('STEP 3')
             // Launch browser
             const browser = await chromium.launch({
-                executablePath: ENV.PLAYWRIGHT_BROWSERS_PATH
+                executablePath: ENV.PLAYWRIGHT_BROWSERS_PATH,
+                args: ['--no-sandbox']
             });
 
             console.log('STEP 4')
