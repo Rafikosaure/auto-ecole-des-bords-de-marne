@@ -206,7 +206,7 @@ const StudentCom = ({ student }) => {
       })
       .catch(error => {
         console.log(error)
-        // setShowDocumentOption("none")
+        setShowDocumentOption("none")
       })
       setFormFetchData()
     }
