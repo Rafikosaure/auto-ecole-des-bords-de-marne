@@ -196,11 +196,11 @@ const StudentCom = ({ student }) => {
       console.log('Données à envoyer au serveur :', fetchData)
 
       // Envoi de la requête
-      axios.post(`https://api.adb-manager.fr/api/emails/send-tracked-email/${student.id}`, fetchData)
+      axios.post(`http://localhost:3001/api/emails/send-tracked-email/${student.id}`, fetchData)
       .then(data => {
-        if (data.data.emailIsArrived === true) {
-          notifyIfEmailIsArrived()
-        }
+        // if (data.data.emailIsArrived === true) {
+        //   notifyIfEmailIsArrived()
+        // }
 
         // setTextAttachmentButton("Ajouter une convocation à la formation en pièce jointe")
       })
