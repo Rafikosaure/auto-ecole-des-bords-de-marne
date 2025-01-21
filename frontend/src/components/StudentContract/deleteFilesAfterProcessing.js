@@ -1,9 +1,10 @@
 import axios from "axios";
+import config from "../../config";
 
 
 // Fonction de nettoyage des fichiers inutiles côté serveur
 const deleteFilesAfterProcessing = (studentId) => {
-    axios.delete(`http://localhost:3001/api/document/deleteDocumentsAfterContractGeneration/${studentId}`,)
+    axios.delete(`${config.apiBaseUrl}/document/deleteDocumentsAfterContractGeneration/${studentId}`,)
     .then(response => {
         // console.log(response)
     })

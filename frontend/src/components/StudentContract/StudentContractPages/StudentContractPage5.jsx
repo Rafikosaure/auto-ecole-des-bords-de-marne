@@ -1,6 +1,8 @@
 import './StudentContractPages.css'
 import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
+import SecondTable from './images/second_table.png'
+import config from '../../../config'
 
 
 
@@ -30,16 +32,14 @@ export default function StudentContractPage5({ currentPageNumber, datetime, stud
         <div className="section">
         <h3>5- Modalités de paiement</h3>
         <p>Le paiement des prestations s'effectue par :</p>
-        <table className="table" cellPadding={0}>
-            <tbody><tr>
-                <td style={{width: '100px', height: '30px'}}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.creditCard} onChange={(e) => setFormationPricesPaymentMethodCreditCard(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Carte bancaire</label></div></td>
-                <td style={{width: '100px', height: '30px'}}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.cheque} onChange={(e) => setFormationPricesPaymentMethodCheque(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Chèque</label></div></td>
-                <td style={{width: '100px', height: '30px'}}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.bankTransfer} onChange={(e) => setFormationPricesPaymentMethodBankTransfer(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Virement</label></div></td>
-                <td style={{width: '100px', height: '30px'}}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.cash} onChange={(e) => setFormationPricesPaymentMethodCash(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Espèce</label></div></td>
-                <td style={{width: '100px', height: '30px'}}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.SEPA_DirectDebit} onChange={(e) => setFormationPricesPaymentMethodSEPA_DirectDebit(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Prélèvement SEPA</label></div></td>
-            </tr>
-            </tbody>
-        </table>
+        <div className="paymentTable" style={{ position: 'relative' }}>
+            <img style={{ width: '100%', height: '30px', position: 'absolute', top: '0', left: '0', right: '0', bottom: '0' }} src={SecondTable} alt="grille des paiements" />
+            <span><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.creditCard} onChange={(e) => setFormationPricesPaymentMethodCreditCard(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Carte bancaire</label></div></span>
+            <span style={{ left: '20%' }}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.cheque} onChange={(e) => setFormationPricesPaymentMethodCheque(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Chèque</label></div></span>
+            <span style={{ left: '40%' }}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.bankTransfer} onChange={(e) => setFormationPricesPaymentMethodBankTransfer(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Virement</label></div></span>
+            <span style={{ left: '60%' }}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.cash} onChange={(e) => setFormationPricesPaymentMethodCash(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Espèce</label></div></span>
+            <span style={{ left: '80%' }}><div className="checkbox-section-element"><input type="checkbox" className='input-checkbox' defaultChecked={data.formationData.formationPrices.paymentMethod.SEPA_DirectDebit} onChange={(e) => setFormationPricesPaymentMethodSEPA_DirectDebit(e.target.checked)} /><label style={{ marginLeft: '2px' }}>Prélèvement SEPA</label></div></span>
+        </div>
         <p style={{ marginTop: '5px' }}>Le paiement pourra s'effectuer selon l'une des modalités suivantes :</p>
         <div className="checkboxes" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px'}}>
             <div className="checkbox-section-element"><input type="checkbox" className="input-shaping input-checkbox" defaultChecked={data.formationData.formationPrices.paymentOptions.withDepositAndBalance.isChecked} onChange={(e) => setFormationPricesPaymentOptionWithDepositAndBalance(e.target.checked)} /><label style={{ marginLeft: '2px' }}>1 - avec des arrhes et le solde d'un montant de <input type="text" className='input-type-text' style={{ width: '50px' }} defaultValue={data.formationData.formationPrices.total.WithDeposit} onChange={(e) => setTotalFormationPricesWithDeposit(e.target.value)} /> € devant être réglé le <input type="text" className='input-type-text' style={{ width: '80px' }} defaultValue={`${data.formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentDay}/${data.formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentMonth}/${data.formationData.formationPrices.paymentOptions.withDepositAndBalance.paymentDate.paymentYear}`} onChange={(e) => setFormationPricesPaymentOptionWithDepositAndBalancePaymentDate(e.target.value)} /></label></div>
@@ -73,20 +73,20 @@ export default function StudentContractPage5({ currentPageNumber, datetime, stud
         
         <div>
             {studentSignature && (
-                <span className="student-signature-section">LU ET APPROUVÉ <img className="image-signature" src={`http://localhost:3001/contract-signatures/studentSignature-${student.id}.png`} alt="signature de l'élève" /></span>
+                <span className="student-signature-section">LU ET APPROUVÉ <img className="image-signature" src={`${config.apiBaseUrlImages}/contract-signatures/studentSignature-${student.id}.png`} alt="signature de l'élève" /></span>
             )}
             {legalRepresent && (
-                <img className="image-signature legal-representative-signature-section" src={`http://localhost:3001/contract-signatures/legalRepresentSignature-${student.id}.png`} alt="signature du représentant légal" />
+                <img className="image-signature legal-representative-signature-section" src={`${config.apiBaseUrlImages}/contract-signatures/legalRepresentSignature-${student.id}.png`} alt="signature du représentant légal" />
             )}
             {entrepriseSignatureAndStamp && (
-                <img className="enterprise-signature-section" src={`http://localhost:3001/contract-signatures/enterpriseSignature.png`} alt="cachet & signature de l'établissement" />
+                <img className="enterprise-signature-section" src={`${config.apiBaseUrlImages}/contract-signatures/enterpriseSignature.png`} alt="cachet & signature de l'établissement" />
             )}
             </div>
         </div>
 
         <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page5} onChange={(e) => setInitialsPage5(e.target.checked)} /> <strong>Initiales:</strong>
             {initialsPage5 ? (
-                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
+                <img className="image-initials" src={`${config.apiBaseUrlImages}/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

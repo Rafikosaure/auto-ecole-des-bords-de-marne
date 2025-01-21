@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import localData from './ConvocFormation/temporaryData'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import config from '../../config.js'
 
 
 
@@ -70,8 +71,8 @@ const StudentCom = ({ student }) => {
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+      draggable: false,
+      progress: undefined
     });
 
 
@@ -196,7 +197,7 @@ const StudentCom = ({ student }) => {
       // console.log('Données à envoyer au serveur :', fetchData)
 
       // Envoi de la requête
-      axios.post(`https://api.adb-manager.fr/api/emails/send-tracked-email/${student.id}`, fetchData)
+      axios.post(`${config.apiBaseUrl}/emails/send-tracked-email/${student.id}`, fetchData)
       .then(data => {
         if (data.data.emailIsArrived === true) {
           notifyIfEmailIsArrived()
@@ -209,6 +210,8 @@ const StudentCom = ({ student }) => {
       })
       reset()
       setFormFetchData()
+      setInputValue('none')
+      setShowRadioButtons('none')
       setShowDocumentOption("none")
     }
 

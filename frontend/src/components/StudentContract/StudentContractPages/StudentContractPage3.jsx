@@ -1,7 +1,7 @@
 import './StudentContractPages.css'
 import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
-
+import config from '../../../config'
 
 
 
@@ -118,7 +118,7 @@ export default function StudentContractPage3({ currentPageNumber, student, initi
 
         <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page3} onChange={(e) => setInitialsPage3(e.target.checked)} /> <strong>Initiales:</strong>
             {initialsPage3 ? (
-                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
+                <img className="image-initials" src={`${config.apiBaseUrlImages}/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

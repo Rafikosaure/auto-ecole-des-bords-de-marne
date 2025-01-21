@@ -1,6 +1,7 @@
 import './StudentContractPages.css'
 import dataStorage from './temporaryData'
 import React, { useState, useEffect } from 'react'
+import config from '../../../config'
 
 
 
@@ -25,7 +26,7 @@ export default function StudentContractPage1({ currentPageNumber, student, setDo
   return (
     <div className='wrapper' style={{ display: `${pageDisplay}` }}>
         <h1>
-            <input type='text' name="documentTitle" defaultValue={data.fileData.documentTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '100%', textAlign: "center" }} />
+            <input type='text' name="documentTitle" defaultValue={data.fileData.documentTitle} onChange={(e) => setDocumentTitle(e.target.value)} style={{ marginRight: "auto", marginLeft: "auto", width: '100%', textAlign: "center", fontSize: '15px', fontWeight: 'bold' }} />
         </h1>
 
         <h2 style={{ textAlign: "center", fontSize: '12px' }}>Ce contrat porte sur la formation suivante : ARRETE DU 6 JUIN 2020</h2>
@@ -105,7 +106,7 @@ export default function StudentContractPage1({ currentPageNumber, student, setDo
 
         <div className="initials"><input type="checkbox" className='input-checkbox' defaultChecked={data.fileData.studentContractData.initialsOptions.ifInitialed_page1} onChange={(e) => setInitialsPage1(e.target.checked)} /> <strong>Initiales:</strong>
             {initialsPage1 ? (
-                <img className="image-initials" src={`http://localhost:3001/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
+                <img className="image-initials" src={`${config.apiBaseUrlImages}/contract-signatures/studentInitials-${student.id}.png`} alt="paraphe de l'étudiant" />
             ) : (
                 null
             )}

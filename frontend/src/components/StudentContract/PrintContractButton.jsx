@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import axios from 'axios'
 import Button from 'react-bootstrap/Button';
 import deleteFilesAfterProcessing from './deleteFilesAfterProcessing';
-import dataStorage from './StudentContractPages/temporaryData';
+// import dataStorage from './StudentContractPages/temporaryData';
 import { useSelector } from 'react-redux';
 import { selectPrintFileData } from '../../redux/slices/printFileDataSlice';
+import config from '../../config';
 
 
 
@@ -16,9 +17,9 @@ export default function PrintContractButton({ setNumberOfComponent, student }) {
   // Redux store
   const fetchData = useSelector(selectPrintFileData)
 
-  useEffect(() => {
-    console.log(fetchData)
-  }, [fetchData])
+  // useEffect(() => {
+  //   console.log(fetchData)
+  // }, [fetchData])
 
 
   // Données à envoyer au serveur
@@ -315,7 +316,7 @@ export default function PrintContractButton({ setNumberOfComponent, student }) {
       // Envoie la requête POST avec axios
 
       const response = await axios.post(
-        `https://api.adb-manager.fr/api/document/downloadOneDocument/${student.id}`,
+        `${config.apiBaseUrl}/document/downloadOneDocument/${student.id}`,
         // data
         fetchData
         /* { fileData: {

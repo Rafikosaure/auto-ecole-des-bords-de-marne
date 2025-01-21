@@ -205,7 +205,7 @@ const AdminPage = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin) => (
+          {admins.map((admin, index) => (
             <tr key={admin.id}>
               <td className="admin-name text-center">{admin.username}</td>
               <td className="admin-email text-center">{admin.email}</td>
@@ -214,9 +214,11 @@ const AdminPage = () => {
                   <button type="button" className="btn btn-warning admin-action-button me-2" onClick={() => handleEditClick(admin)}>
                     Modifier
                   </button>
-                  <button type="button" className="btn btn-danger admin-action-button" onClick={() => handleDelete(admin.id)}>
-                    Supprimer
-                  </button>
+                  {index !== 0 &&
+                    <button type="button" className="btn btn-danger admin-action-button" onClick={() => handleDelete(admin.id)}>
+                      Supprimer
+                    </button>
+                  }
                 </div>
               </td>
             </tr>
