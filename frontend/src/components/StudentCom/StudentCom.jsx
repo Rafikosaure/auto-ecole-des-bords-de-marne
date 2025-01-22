@@ -193,8 +193,7 @@ const StudentCom = ({ student }) => {
       if (showDocumentOption === "none") {
         delete fetchData.fileData
       }
-      
-      // console.log('Données à envoyer au serveur :', fetchData)
+    
 
       // Envoi de la requête
       axios.post(`${config.apiBaseUrl}/emails/send-tracked-email/${student.id}`, fetchData)
@@ -203,7 +202,7 @@ const StudentCom = ({ student }) => {
           notifyIfEmailIsArrived()
         }
 
-        // setTextAttachmentButton("Ajouter une convocation à la formation en pièce jointe")
+      
       })
       .catch(error => {
         console.log(error)

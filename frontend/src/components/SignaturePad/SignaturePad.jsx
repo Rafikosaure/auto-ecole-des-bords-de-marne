@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import config from "../../config.js";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./SignaturePad.css";
 
 const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberOfComponent }) => {
@@ -23,15 +23,6 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
       document.removeEventListener("touchmove", disableScrollOnCanvas);
     };
   }, []);
-
-  // const getTouchPos = (e) => {
-  //   const rect = canvasRef.current.getBoundingClientRect();
-  //   const touch = e.touches[0];
-  //   return {
-  //     x: touch.clientX - rect.left,
-  //     y: touch.clientY - rect.top,
-  //   };
-  // };
 
   const getTouchPos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect(); // Position et taille du canvas dans le DOM
@@ -77,22 +68,6 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
     ctx.lineCap = "round";
     setContext(ctx);
   };
-
-  // const startDrawing = (e) => {
-  //   if (context) {
-  //     setIsDrawing(true);
-  //     const pos = e.type === "touchstart" ? getTouchPos(e) : { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
-  //     context.moveTo(pos.x, pos.y);
-  //     context.beginPath();
-  //   }
-  // };
-
-  // const draw = (e) => {
-  //   if (!isDrawing || !context) return;
-  //   const pos = e.type === "touchmove" ? getTouchPos(e) : { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY };
-  //   context.lineTo(pos.x, pos.y);
-  //   context.stroke();
-  // };
 
   const stopDrawing = (e) => {
     e.preventDefault();

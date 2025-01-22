@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import dataStorage from './StudentContractPages/temporaryData'
@@ -42,9 +43,6 @@ export default function PrintContractViewerWindow({ student }) {
         hour: '2-digit', 
         minute:'2-digit'
     }
-    // Lieu, jour et heure de l'examen
-    // const codeExamDate = codeExamDateObject.toLocaleDateString("fr-FR", examOptionsDate).toUpperCase()
-    // const codeExamHour = codeExamDateObject.toLocaleTimeString("fr-FR", examOptionsTime).replace(':', 'h')
 
     // Titre du document
     const [documentType, setDocumentType] = useState(localData.fileData.documentType)
@@ -63,9 +61,6 @@ export default function PrintContractViewerWindow({ student }) {
     // Coordonnées de l'étudiant
     const [studentLastName, setStudentLastName] = useState(localData.studentData.studentLastName)
     const [studentFirstName, setStudentFirstName] = useState(localData.studentData.studentFirstName)
-    // const [studentBirthDay, setStudentBirthDay] = useState(localData.studentData.studentBirthDate.birthDay)
-    // const [studentBirthMonth, setStudentBirthMonth] = useState(localData.studentData.studentBirthDate.birthMonth)
-    // const [studentBirthYear, setStudentBirthYear] = useState(localData.studentData.studentBirthDate.birthYear)
     const [studentBirthDate, setStudentBirthDate] = useState(`${localData.studentData.studentBirthDate.birthDay}/${localData.studentData.studentBirthDate.birthMonth}/${localData.studentData.studentBirthDate.birthYear}`)
     const [studentAddressNumber, setStudentAddressNumber] = useState(localData.studentData.studentAddress.number)
     const [studentAddressStreet, setStudentAddressStreet] = useState(localData.studentData.studentAddress.street)
@@ -86,17 +81,9 @@ export default function PrintContractViewerWindow({ student }) {
     // Formation suivie
     const [formationDurationDrivingPractice, setFormationDurationDrivingPractice] = useState()
     const [formationDurationTotalDrivingLearning, setFormationDurationTotalDrivingLearning] = useState(localData.formationData.formationDuration.totalDrivingLearningDuration)
-    // const [formationMaxEndingDay, setFormationMaxEndingDay] = useState(localData.formationData.formationMaxEndingDate.day)
-    // const [formationMaxEndingMonth, setFormationMaxEndingMonth] = useState(localData.formationData.formationMaxEndingDate.month)
-    // const [formationMaxEndingYear, setFormationMaxEndingYear] = useState(localData.formationData.formationMaxEndingDate.year)
     const [formationMaxEndingDate, setFormationMaxEndingDate] = useState(`${localData.formationData.formationMaxEndingDate.day}/${localData.formationData.formationMaxEndingDate.month}/${localData.formationData.formationMaxEndingDate.year}`)
     const [formationStartDate, setFormationStartDate] = useState(startDate)
     const [formationEndingDesiredDate, setEndingDesiredDate] = useState(`${localData.formationData.formationEndingDesiredDate.day}/${localData.formationData.formationEndingDesiredDate.month}/${localData.formationData.formationEndingDesiredDate.year}`)
-
-    // Localisation de l'auto-école
-    // const [schoolLocationNumber, setSchoolLocationNumber] = useState(localData.schoolData.location.number)
-    // const [schoolLocationStreet, setSchoolLocationStreet] = useState(localData.schoolData.location.street)
-    // const [schoolLocationTown, setSchoolLocationTown] = useState(localData.schoolData.location.town)
 
     // Elements de signature du contrat
     const [initialsPage1, setInitialsPage1] = useState(localData.fileData.studentContractData.initialsOptions.ifInitialed_page1)
@@ -104,7 +91,6 @@ export default function PrintContractViewerWindow({ student }) {
     const [initialsPage3, setInitialsPage3] = useState(localData.fileData.studentContractData.initialsOptions.ifInitialed_page3)
     const [initialsPage4, setInitialsPage4] = useState(localData.fileData.studentContractData.initialsOptions.ifInitialed_page4)
     const [initialsPage5, setInitialsPage5] = useState(localData.fileData.studentContractData.initialsOptions.ifInitialed_page5)
-    // const [failToTheDrivingSchoolIsYes, setFailToTheDrivingSchoolIsYes] = useState(data.formationData.formationPrices.failOfTheDrivingSchool.yesOption.isChecked)
     const [studentSignature, setStudentSignature] = useState(localData.fileData.studentContractData.isReadAndApproved)
     const [legalRepresent, setLegalRepresent] = useState(false)
     const [entrepriseSignatureAndStamp, setEntrepriseSignatureAndStamp] = useState(false)
@@ -561,7 +547,7 @@ export default function PrintContractViewerWindow({ student }) {
         setCurrentPageIndex(currentPageIndex + 1)
     }
 
-
+    // Fonction de gestion des symboles monétaires
     // const addCurrencySymbol = (string) => {
     //     const currentString = string.replaceAll("€", '').replaceAll(" ", '')
     //     const newString = `${currentString} €`
