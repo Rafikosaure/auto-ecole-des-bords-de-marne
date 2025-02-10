@@ -13,6 +13,9 @@ exports.sendMailWithTracking = async (req, res) => {
         // Define the student ID
         const studentId = req.params.studentId
         
+        // Email data for driven-school student tracking
+        let trackingToastMessage;
+
         // Configure the datetime
         const dateObject = new Date()
         const options = {
@@ -30,11 +33,13 @@ exports.sendMailWithTracking = async (req, res) => {
         // Manage type of email
         let emailTypeToSend;
         if (req.body.emailType === "convocation_formation") {
+            trackingToastMessage = `${req.body.studentData.studentFirstName} ${req.body.studentData.studentLastName} a bien reçu l'email de convocation à la formation !`
             emailTypeToSend = {
                 subject: `Convocation Formation - ${req.body.studentData.studentFirstName} ${req.body.studentData.studentLastName}`,
                 html: emailConvocFormation(req.body, datetime)
             }
         } else if (req.body.emailType === "relaunch") {
+            trackingToastMessage = `${req.body.studentData.studentFirstName} ${req.body.studentData.studentLastName} a bien reçu l'email de relance !`
             emailTypeToSend = {
                 subject: `Relance - ${req.body.studentData.studentFirstName} ${req.body.studentData.studentLastName}`,
                 html: emailRelaunch(req.body, datetime)
@@ -99,7 +104,9 @@ exports.sendMailWithTracking = async (req, res) => {
         
         res.status(200).json({
             message: 'Email sending is success!',
-            emailIsArrived: isArrived
+            emailIsArrived: isArrived,
+            toastNotification: trackingToastMessage,
+            datetime: datetime
         })
 
     } catch {
