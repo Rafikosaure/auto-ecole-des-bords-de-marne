@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React from 'react'
+import { useState, useEffect } from 'react'
 import dataStorage from './StudentContractPages/temporaryData'
 import './PrintContractStyles.css'
 import leftBolt from './images/left-bolt.png'
