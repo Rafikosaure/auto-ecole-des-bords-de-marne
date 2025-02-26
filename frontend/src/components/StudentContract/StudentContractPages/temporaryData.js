@@ -133,7 +133,7 @@ const dataStorage = (student) => {
                 PRESTATION: "Évaluation Préalable",
                 Obligatoire: "OUI",
                 PrixUnitaireTTC: "60,00 €", // Gérer le symbole "€" avant la validation !
-                NbHeures_ou_Units: "Hors forfait",
+                NbHeures_ou_Units: "",
                 MontantTTC: "" // Gérer le symbole "€" avant la validation !
               },
               Frais_Administratifs: {
@@ -141,29 +141,29 @@ const dataStorage = (student) => {
                   PRESTATION: "Gestion de l’élève (dossier, rdv, planning)",
                   Obligatoire: "OUI",
                   PrixUnitaireTTC: "150,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1 Inclus",
-                  MontantTTC: "80,00 €" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw002: {
                   PRESTATION: "Demande de numéro NEPH sur ANTS",
                   Obligatoire: "OUI",
                   PrixUnitaireTTC: "60,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1 Inclus",
-                  MontantTTC: "50,00 €" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw003: {
                   PRESTATION: "Demande Fabrication du Titre (Réussite)",
                   Obligatoire: "",
                   PrixUnitaireTTC: "60,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1 Inclus",
-                  MontantTTC: "50,00 €" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw004: {
                   PRESTATION: "Livret d'apprentissage",
                   Obligatoire: "",
                   PrixUnitaireTTC: "20,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1 Inclus",
-                  MontantTTC: "20,00 €" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw005: {
                   PRESTATION: "Frais de résiliation (uniquement lorsque l'élève n'a pas de motif légitime et avant le début de la formation pratique)",
@@ -183,8 +183,8 @@ const dataStorage = (student) => {
                   PRESTATION: "Réservation d'une place d'Examen sur RDV PERMIS",
                   Obligatoire: "OUI",
                   PrixUnitaireTTC: "65,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1X65€ Non Inclus",
-                  MontantTTC: "Non Inclus" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 }
               },
               Theorie: {
@@ -196,8 +196,8 @@ const dataStorage = (student) => {
                   PRESTATION: "Rendez-vous Pédagogique (AAC uniquement)",
                   Obligatoire: "",
                   PrixUnitaireTTC: "55,00 €",
-                  NbHeures_ou_Units: "3X57€ Non Inclus",
-                  MontantTTC: "Non Inclus"
+                  NbHeures_ou_Units: "",
+                  MontantTTC: ""
                 },
                 raw002: {
                   PRESTATION: "Contrôles des connaissance (Examen Blanc)",
@@ -210,8 +210,8 @@ const dataStorage = (student) => {
                   PRESTATION: "Forfait de Formation Théorique",
                   Obligatoire: "",
                   PrixUnitaireTTC: "150,00 €",
-                  NbHeures_ou_Units: "1 Inclus",
-                  MontantTTC: "99,00 €"
+                  NbHeures_ou_Units: "",
+                  MontantTTC: ""
                 },
                 raw004: {
                   PRESTATION: "Livre de Vérification",
@@ -240,15 +240,15 @@ const dataStorage = (student) => {
                   PRESTATION: "RDV Pédagogique (Obligatoire pour AAC)",
                   Obligatoire: "",
                   PrixUnitaireTTC: "55,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "3X57€ Non Inclus",
-                  MontantTTC: "Non Inclus" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw003: {
                   PRESTATION: "Leçon de Conduite Individuelle BM (*)",
                   Obligatoire: "OUI",
                   PrixUnitaireTTC: "57,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "20x50€ inclus",
-                  MontantTTC: "1 000,00 €" // Gérer le symbole "€" avant la validation !
+                  NbHeures_ou_Units: "",
+                  MontantTTC: "" // Gérer le symbole "€" avant la validation !
                 },
                 raw004: {
                   PRESTATION: "Leçon de Conduite Individuelle BVA (**)",
@@ -261,8 +261,8 @@ const dataStorage = (student) => {
                   PRESTATION: "Accompagnement à l'Examen (Tarif ne dépassant pas celui d'1h de conduite)",
                   Obligatoire: "OUI",
                   PrixUnitaireTTC: "57,00 €", // Gérer le symbole "€" avant la validation !
-                  NbHeures_ou_Units: "1x57€ Non Inclus",
-                  MontantTTC: "Non Inclus"
+                  NbHeures_ou_Units: "",
+                  MontantTTC: ""
                 },
                 raw006: {
                   PRESTATION: "Forfait de Formation Pratique",
@@ -273,9 +273,9 @@ const dataStorage = (student) => {
                 }
               },
               total: {
-                TypeFormation: "Forfait AAC - 20h Manuelle avec Code",
+                TypeFormation: "",
                 WithDeposit: "",
-                MontantTTC: "1299 €" // Gérer le symbole "€" avant la validation !
+                MontantTTC: "" // Gérer le symbole "€" avant la validation !
               },
               paymentMethod: {
                 creditCard: false, // traduire en "checked" si true !
