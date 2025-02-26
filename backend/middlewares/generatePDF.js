@@ -7,7 +7,6 @@ const ENV = require('../config/env').ENV
 
 exports.generatePDFfromHTML = async (req, res, next) => {
     try {
-        console.log('Données reçues côté serveur :', req.body)
         if (req.body.fileData) {
 
             // Get the student ID
