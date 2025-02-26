@@ -65,7 +65,13 @@ const StudentCom = ({ student }) => {
     }
 
 
-    const notifyIfEmailIsArrived = () => toast.success("Email arrivé à bon port !", {
+    const notifyIfEmailIsArrived = (toastNotification, datetime) => toast.success(<div><p>{toastNotification}</p><br /><p>Date & heure de la réception : {datetime}.</p></div>, {
+      style: {
+        minWidth: '300px',
+        height: 'fit-content',
+        padding: '10px',
+        fontSize: '14px'
+      },
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -199,9 +205,8 @@ const StudentCom = ({ student }) => {
       axios.post(`${config.apiBaseUrl}/emails/send-tracked-email/${student.id}`, fetchData)
       .then(data => {
         if (data.data.emailIsArrived === true) {
-          notifyIfEmailIsArrived()
+          notifyIfEmailIsArrived(data.data.toastNotification, data.data.datetime)
         }
-
       
       })
       .catch(error => {
