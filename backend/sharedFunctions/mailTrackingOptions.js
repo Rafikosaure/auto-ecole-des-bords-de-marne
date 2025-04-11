@@ -1,6 +1,4 @@
 const ENV = require('../config/env').ENV
-const notifier = require('node-notifier')
-
 
 
 exports.mailTrackingOptions = {
@@ -10,14 +8,12 @@ exports.mailTrackingOptions = {
         // recipient: { ENV.EMAIL_RECIPIENT_ADDRESS }
         // return { ...data, hello: 'world' };
         console.log('Email arrivé à bon port !')
-        notifier.notify('Email arrivé à bon port !');
         return {
             isRecepted: true
         }
     },
     onBlankImageView: data => {
         // console.log('Email ouvert !')
-        // notifier.notify('Email ouvert par le destinataire !')
         // console.log(data)
         /* 
             When email is opened 
