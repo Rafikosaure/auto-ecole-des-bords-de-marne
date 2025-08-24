@@ -9,6 +9,7 @@ exports.emailConvocFormation = (data, datetime) => {
             <title></title>
             </head>
             <body style="font-family: sans-serif;">
+            <img src="../../assets/pixel.png" alt="pixel de suivi" style="display: none; width: 1px; height: 1px; visibility: hidden;"/>
             <div style="display: block; margin: auto; max-width: 800px; width: 90%;" class="main">
             <p>Envoyé le ${datetime}</p><br>
             <br>

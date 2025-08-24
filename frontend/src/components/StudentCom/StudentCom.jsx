@@ -1,4 +1,3 @@
-import React from "react"
 import axios from 'axios'
 import { useState } from "react";
 import ConvocFormation from './ConvocFormation/ConvocFormation'
@@ -202,7 +201,7 @@ const StudentCom = ({ student }) => {
     
 
       // Envoi de la requête
-      axios.post(`${config.apiBaseUrl}/emails/send-tracked-email/${student.id}`, fetchData)
+      axios.post(`${config.apiBaseUrl}/emails/send-mail/${student.id}`, fetchData)
       .then(data => {
         if (data.data.emailIsArrived === true) {
           notifyIfEmailIsArrived(data.data.toastNotification, data.data.datetime)

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react'
 import { useState, useEffect } from 'react'
 import dataStorage from './StudentContractPages/temporaryData'
 import './PrintContractStyles.css'

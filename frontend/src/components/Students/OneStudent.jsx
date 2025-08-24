@@ -8,7 +8,7 @@ import {
   updateStudent,
 } from "../../api/api-client.js";
 import StudentCard from "./StudentCard.jsx";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "../StudentsAdmin/UpdateStudent.jsx";
 import StudentCom from "../StudentCom/StudentCom.jsx";
@@ -32,11 +32,17 @@ const OneStudent = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (student && numberOfComponent === 1) {
+  //     deleteFilesAfterProcessing(student.id)
+  //   }
+  // })
   useEffect(() => {
-    if (student && numberOfComponent === 1) {
-      deleteFilesAfterProcessing(student.id)
+    if (student?.id && numberOfComponent === 1) {
+      deleteFilesAfterProcessing(student.id);
     }
-  })
+  }, [student?.id, numberOfComponent]);
+
 
 
   useEffect(() => {
@@ -63,9 +69,9 @@ const OneStudent = () => {
   const modifyStudent = async (updatedStudent) => {
     try {
       await updateStudent(updatedStudent);
+      await fetchStudent();
       setIsEditing(false);
-      fetchStudent();
-      toast.success("L'étudiant a été mis à jour avec succès.");
+      toast.success("L'étudiant a été mis à jour avec succès !");
     } catch (error) {
       console.error("Erreur lors de la modification de l'étudiant :", error);
       toast.error("Erreur lors de la modification de l'étudiant.");
@@ -134,9 +140,6 @@ const OneStudent = () => {
             <PrintContractView setNumberOfComponent={setNumberOfComponent} student={student} />
           )}          
         </Container>
-
-
-      <ToastContainer />
     </>
   );
 };

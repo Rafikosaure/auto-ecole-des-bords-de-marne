@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { addStudent } from "../../api/api-client";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddStudentForm = ({ reload }) => {
@@ -77,7 +77,7 @@ const AddStudentForm = ({ reload }) => {
     }
 
     try {
-      const response = await addStudent(student);
+      await addStudent(student);
       confirmation();
       await reload(0);
     } catch (e) {
@@ -220,7 +220,6 @@ const AddStudentForm = ({ reload }) => {
           </Button>
         </div>
       </Form>
-      <ToastContainer />
     </Container>
   );
 };

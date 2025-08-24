@@ -8,6 +8,7 @@ exports.emailRelaunch = (data, datetime) => {
             <title>relance</title>
             </head>
             <body style="display: block; margin: auto; max-width: 800px; width: 90%;">
+            <img src="../../assets/pixel.png" alt="pixel de suivi" style="display: none; width: 1px; height: 1px; visibility: hidden;"/>
             <div>
                 <div>${datetime.charAt(0).toUpperCase() + datetime.slice(1)}</div><br><br>
                 <div>Bonjour ${data.studentData.studentFirstName} ${data.studentData.studentLastName},

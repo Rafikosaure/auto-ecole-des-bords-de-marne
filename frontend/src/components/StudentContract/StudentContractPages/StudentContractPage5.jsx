@@ -1,6 +1,6 @@
 import './StudentContractPages.css'
 import dataStorage from './temporaryData'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import SecondTable from './images/second_table.png'
 import config from '../../../config'
 

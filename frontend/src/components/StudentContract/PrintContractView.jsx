@@ -1,9 +1,6 @@
-import React from 'react'
 import PrintContractViewerWindow from './PrintContractViewerWindow'
 import PrintContractButton from '../StudentContract/PrintContractButton'
 import './PrintContractStyles.css'
-
-
 
 
 export default function PrintContractView({ setNumberOfComponent, student }) {

@@ -3,12 +3,13 @@ const { deleteFile } = require('../sharedFunctions/deleteFile')
 const { emailConvocFormation } = require('../models/emails/convoc_formation_email')
 const { emailRelaunch } = require('../models/emails/relaunch_email')
 const { emailConvocPermis } = require('../models/emails/convoc_permis_email')
-const { sendMail } = require("nodemailer-mail-tracking")
-const { mailTrackingOptions } = require('../sharedFunctions/mailTrackingOptions')
+// const { sendMail } = require("nodemailer-mail-tracking")
+// const { mailTrackingOptions } = require('../sharedFunctions/mailTrackingOptions')
+// const { transporter } = require('nodemailer')
 const { transporter } = require('../sharedFunctions/transporter')
 
 
-exports.sendMailWithTracking = async (req, res) => {
+exports.sendMail = async (req, res) => {
     try {
         // Define the student ID
         const studentId = req.params.studentId
@@ -125,13 +126,35 @@ exports.sendMailWithTracking = async (req, res) => {
 }
 
 const sendingProcess = async (dataRequest, studentId, sendMailOptions) => {
-    const data = await sendMail(mailTrackingOptions, transporter, sendMailOptions)
+    const data = await transporter.sendMail(sendMailOptions)
     if (dataRequest.fileData) {
         deleteFile(`${dataRequest.fileData.documentType}-${studentId}`, './emailAttachments/', '.pdf')
     }
-    console.log('DATA :', data[0].result.accepted)
-    if (data[0].result.accepted[0] === dataRequest.studentData.studentEmail) {
+    // console.log('DATA :', data[0].result.accepted)
+    // if (data[0].result.accepted[0] === dataRequest.studentData.studentEmail) {
+    //     return true
+    // }
+    console.log('DATA :', data.accepted)
+    if (data.accepted.includes(dataRequest.studentData.studentEmail)) {
         return true
     }
     return false
 }
+
+
+exports.trackEmailOpen = (req, res) => {
+    const { studentId, email } = req.query;
+    const timestamp = new Date().toISOString();
+
+    console.log(`[📩] Email ouvert par ${email} (ID: ${studentId}) à ${timestamp}`);
+
+    // Option : enregistrer en BDD ici
+
+    // Retourner une image 1x1 transparente
+    res.setHeader("Content-Type", "image/png");
+    const pixelBuffer = Buffer.from(
+      '89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000a49444154789c630001000101000018dddc0d0000000049454e44ae426082',
+      'hex'
+    );
+    res.end(pixelBuffer);
+};

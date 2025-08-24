@@ -92,10 +92,10 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
     };
 
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/document/uploadOneDocument/${student.id}`, signatureData, {
+      await axios.post(`${config.apiBaseUrl}/document/uploadOneDocument/${student.id}`, signatureData, {
         headers: {
           "Content-Type": "application/json",
-        },
+        }
       });
       setNumberOfComponent(numberOfComponent + 1);
     } catch (error) {

@@ -9,6 +9,7 @@ exports.emailConvocPermis = (data, datetime) => {
             <title>convocation permis</title>
         </head>
             <body>
+                <img src="../../assets/pixel.png" alt="pixel de suivi" style="display: none; width: 1px; height: 1px; visibility: hidden;"/>
                 <div class="moz-text-html" lang="x-unicode">
                 <div dir="ltr">
                     <p>${datetime.charAt(0).toUpperCase() + datetime.slice(1)}</p><br><br>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import './ConvocFormation.css';
 import data from './temporaryData'

@@ -3,9 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const ENV = require("./config/env.js").ENV
-const { expressApp } = require("nodemailer-mail-tracking")
-const { mailTrackingOptions } = require("./sharedFunctions/mailTrackingOptions.js");
+const { ENV } = require("./config/env.js");
 const path = require('path');
 const studentRouter = require("./routes/student.router.js");
 const instructorRouter = require("./routes/instructor.router.js");
@@ -37,7 +35,7 @@ app.use('/contract-signatures', express.static(path.join(__dirname, './assets/co
 app.use('/instructors-documents', express.static(path.join(__dirname, './assets/instructorsDocuments')));
 
 // EMAIL TRACKING
-app.use(`/api/${ENV.EMAIL_TRACKING_ENDPOINT}`, expressApp(mailTrackingOptions));
+app.use('/api/tracking', emailRouter);
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
