@@ -13,7 +13,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-      {/* Un seul container global pour toute l’app */}
       <ToastContainer
         position="top-right"
         autoClose={4000}
@@ -21,6 +20,12 @@ root.render(
         closeOnClick
         pauseOnHover
         draggable
+        style={{
+          minWidth: '300px',
+          height: 'fit-content',
+          padding: '10px',
+          fontSize: '14px'
+        }}
       />
     </Provider>
   </React.StrictMode>

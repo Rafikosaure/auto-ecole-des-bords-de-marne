@@ -4,7 +4,7 @@ import ConvocFormation from './ConvocFormation/ConvocFormation'
 import './StudentCom.css'
 import { useForm } from 'react-hook-form'
 import localData from './ConvocFormation/temporaryData'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import config from '../../config.js'
 
@@ -63,22 +63,18 @@ const StudentCom = ({ student }) => {
       }
     }
 
+    
+    const notifyIfSendingFailed = () => 
+      toast.error("L'envoi de l'email a échoué. Veuillez vérifier la validité de l'adresse email et réessayer. Si le problème persiste, contactez l'administrateur. Merci.");
 
-    const notifyIfEmailIsArrived = (toastNotification, datetime) => toast.success(<div><p>{toastNotification}</p><br /><p>Date & heure de la réception : {datetime}.</p></div>, {
-      style: {
-        minWidth: '300px',
-        height: 'fit-content',
-        padding: '10px',
-        fontSize: '14px'
-      },
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined
-    });
+
+    const notifyIfEmailIsArrived = (toastNotification, datetime) => 
+      toast.success(
+        <div>
+          <p>{toastNotification}</p><br />
+          <p>Date & heure de l'envoi: {datetime}.</p>
+        </div>
+      );
 
 
     const manageFetchData = (e) => {
@@ -210,6 +206,7 @@ const StudentCom = ({ student }) => {
       })
       .catch(error => {
         console.log(error)
+        notifyIfSendingFailed()
       })
       reset()
       setFormFetchData()
@@ -278,7 +275,6 @@ const StudentCom = ({ student }) => {
         </div>
       </div>
       )}
-      <ToastContainer />
     </section>
   );
 };
