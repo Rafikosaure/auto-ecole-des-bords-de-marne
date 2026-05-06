@@ -11,7 +11,7 @@ const AdminPage = () => {
 
   const fetchAdmins = async () => {
     try {
-      const response = await apiClient.get('/admin/getall');
+      const response = await apiClient.get('/admin/get-all');
       setAdmins(response.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des administrateurs:', error);
