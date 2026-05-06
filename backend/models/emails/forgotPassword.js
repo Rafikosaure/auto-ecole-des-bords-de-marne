@@ -5,6 +5,8 @@
  * @param {string} time - current time HH:mm (french format).
  * @param {string} link - the reset link.
  */
+
+// Oubli mot de passe email template
 exports.forgotPasswordTemplate = (username, date, time, link) => {
     return `<!DOCTYPE html>
 <html lang="fr">
@@ -90,7 +92,6 @@ exports.forgotPasswordTemplate = (username, date, time, link) => {
     </style>
 </head>
 <body>
-    <img src="../../assets/pixel.png" alt="pixel de suivi" style="display: none; width: 1px; height: 1px; visibility: hidden;"/>
     <div class="email-container">
         <div class="header">
             <h1>Réinitialisation de votre mot de passe</h1>
