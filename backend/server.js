@@ -1,6 +1,6 @@
 // imports
-const app = require("./app").app
-const ENV = require("./config/env").ENV
+const { app } = require("./app")
+const { ENV } = require("./config/env")
 
 // sets the server port
 const PORT =  ENV.SERVERPORT || 8000;
