@@ -31,7 +31,7 @@ export default apiClient;
 export const getStudents = () => apiClient.get(`${studentsRoute}get`);
 
 export const getAllStudents = (page, limit) =>
-  apiClient.get(`${studentsRoute}getall?page=${page}&limit=${limit}`);
+  apiClient.get(`${studentsRoute}get-all?page=${page}&limit=${limit}`);
 
 export const getStudentById = (id) =>
   apiClient.get(`${studentsRoute}get/${id}`);
