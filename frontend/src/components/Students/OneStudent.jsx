@@ -11,7 +11,7 @@ import StudentCard from "./StudentCard.jsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "../StudentsAdmin/UpdateStudent.jsx";
-import StudentCom from "../StudentCom/StudentCom.jsx";
+import StudentCommunication from "../StudentCom/StudentCommunication.jsx";
 import SignaturePad from "../SignaturePad/SignaturePad.jsx"
 import PrintContractView from "../StudentContract/PrintContractView.jsx";
 import deleteFilesAfterProcessing from "../StudentContract/deleteFilesAfterProcessing.js";
@@ -117,7 +117,7 @@ const OneStudent = () => {
       )}
 
         <Container>
-          <StudentCom student={student} />
+          <StudentCommunication student={student} />
         </Container>
 
 

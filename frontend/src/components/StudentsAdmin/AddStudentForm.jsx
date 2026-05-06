@@ -81,7 +81,7 @@ const AddStudentForm = ({ reload }) => {
       confirmation();
       await reload(0);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       notify();
     }
   };
