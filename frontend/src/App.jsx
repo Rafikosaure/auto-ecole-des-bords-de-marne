@@ -6,7 +6,7 @@ import {
 
 import Template from "./components/Template/Template";
 import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
-import InstructorsPage from "./pages/InstructorsPage/InstructorPage";
+import InstructorsPage from "./pages/InstructorsPage/InstructorsPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 import StudentPage from "./pages/StudentsPage/StudentsPage";
