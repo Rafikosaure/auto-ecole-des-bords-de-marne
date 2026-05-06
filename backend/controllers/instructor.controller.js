@@ -68,7 +68,7 @@ const getInstructor = async (req, res, next) => {
             }
         );
         // error if no instructor is found given the id
-        if (!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
+        if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
         // converts documents buffer to base64 for an easy frontend integration
         instructor.dataValues.documents.map(instructorsDocument => {
             data = instructorsDocument.dataValues;
@@ -85,7 +85,7 @@ const updateInstructor = async (req, res, next) => {
         // SQL Select query to get one instructor by ID
         const instructor = await Instructor.findByPk(req.params.id);
         // return an error if no instructor found
-        if (!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
+        if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
         // SQL Select query to update selected instructor with request's body
         await instructor.update(req.body);
         res.status(200).json({ message: "instructor updated", instructor });
@@ -99,7 +99,7 @@ const deleteInstructor = async (req, res, next) => {
         // SQL Delete query to delete one instructor by ID
         const instructor = await Instructor.destroy({ where: { id: req.params.id } });
         // return error if instructor not found
-        if (!instructor) throw createError(req, errors.ErrorNotExist, contexts.instructor);
+        if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
         res.status(200).json({ message: "Instructor Deleted" });
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
@@ -109,18 +109,17 @@ const deleteInstructor = async (req, res, next) => {
 const addDocument = async (req, res, next) => {
     try {
         // checks if an instructorId is provided with the request
-        if (!req.body.instructorId) throw createError(req, errors.ErrorUndefinedKey, contexts.instructorDocuments);
+        if (!req.body.instructorId) throw createError(req, errors.undefinedKey, contexts.instructorDocuments);
         // checks if instructorId is valid
-        if (!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.ErrorNotExist, contexts.instructor);
+        if (!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.notExist, contexts.instructor);
         // checks if any file has been sent with the request
-        if (req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
+        if (req.files.length == 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
         // maps over the req.files.filenames array that stores the filenames of the file recieved
         // the actual files are then found in the assets/instructors directory
         for (const filename of req.files.filenames) {
             // full path to file
             const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
             const index = req.files.filenames.indexOf(filename);
-            // console.log(index);
             // SQL create query
             await InstructorsDocument.create({
                 ...req.body,
@@ -148,10 +147,10 @@ const addDocument = async (req, res, next) => {
 const updateDocument = async (req, res, any) => {
     try {
         // checks if any file has been sent with the request
-        if (req.files.length == 0) throw createError(req, errors.ErrorNoFileProvided, contexts.instructorDocuments);
+        if (req.files.length == 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
         // SQL select query
         const document = await InstructorsDocument.findByPk(req.params.id);
-        if (!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
+        if (!document) throw createError(req, errors.notExist, contexts.instructorDocuments);
         // full path to file
         const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
         await document.update({
@@ -177,7 +176,7 @@ const deleteDocument = async (req, res, next) => {
     try {
         // checks if the document exists and throws an error if not
         const document = await InstructorsDocument.findByPk(req.params.id);
-        if (!document) throw createError(req, errors.ErrorNotExist, contexts.instructorDocuments);
+        if (!document) throw createError(req, errors.notExist, contexts.instructorDocuments);
         // SQL Delete request
         await document.destroy({
             ...req.body,

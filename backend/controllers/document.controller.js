@@ -1,5 +1,5 @@
 const path = require('path')
-const { deleteFile } = require('../sharedFunctions/deleteFile.js')
+const { deleteFile } = require('../utils/deleteFile.js')
 const sharp = require('sharp');
 const fs = require('fs');
 
@@ -66,7 +66,6 @@ const downloadOneDocument = async (req, res) => {
         // Définir le nom du fichier
         const filename = `${req.body.fileData.documentType}-${req.params.studentId}`
         
-        console.log('ERREUR !')
         // Supprimer le fichier en cas d'erreur
         deleteFile(filename, './emailAttachments/', '.pdf')
 
@@ -118,7 +117,7 @@ const deleteDocumentsAfterContractGeneration = async (req, res) => {
 
     } catch(error) {
 
-        console.log('Erreur lors de la suppression des fichiers :', error)
+        console.error('Erreur lors de la suppression des fichiers :', error)
         res.status(400).json({
             message: "La suppression des fichiers a échouée !"
         })

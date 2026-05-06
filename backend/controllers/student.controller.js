@@ -93,7 +93,7 @@ const getStudent = async (req, res, next) => {
       ],
     });
     if (!student)
-      throw createError(req, errors.ErrorNotExist, contexts.student);
+      throw createError(req, errors.notExist, contexts.student);
     res.status(200).json(student);
   } catch (error) {
     return errorHandler(req, res, error, contexts.student);
@@ -104,7 +104,7 @@ const updateStudent = async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.id);
     if (!student)
-      throw createError(req, errors.ErrorNotExist, contexts.student);
+      throw createError(req, errors.notExist, contexts.student);
     await student.update(req.body);
     res.status(200).json({ message: "Student updated", student });
   } catch (error) {
@@ -116,10 +116,9 @@ const deleteStudent = async (req, res, next) => {
   try {
     const student = await Student.destroy({ where: { id: req.params.id } });
     if (!student)
-      throw createError(req, errors.ErrorNotExist, contexts.student);
+      throw createError(req, errors.notExist, contexts.student);
     res.status(200).json({ message: "Student Deleted" });
   } catch (error) {
-    console.log(error.message);
     return errorHandler(req, res, error, contexts.student);
   }
 };
