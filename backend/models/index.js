@@ -1,71 +1,96 @@
 const { Sequelize } = require("sequelize");
-const connection = require("../config/db.js").connection;
-const ENV = require("../config/env.js").ENV;
-const passwordHashing = require("../middlewares/bcryptPassword.js").passwordHashing;
+const { connection } = require("../config/db.js");
+const { ENV } = require("../config/env.js");
+const { passwordHashing } = require("../middlewares/bcryptPassword.js");
 
-const adminModel = require("./admin.model.js").admin;
-const studentModel = require("./student.model.js").student;
-const remarksModel = require("./remark.model.js").remark;
-const instructorModel = require("./instructor.model.js").instructor;
-const studentDocumentModel = require("./studentsDocument.model.js").studentsDocument;
-const instructorDocumentModel = require("./instructorDocument.model.js").instructorsDocument;
+const { emailOpen } = require("./emailOpen.model.js");
+const { emailMessage } = require("./emailMessage.model.js");
+const { admin: adminModel } = require("./admin.model.js");
+const { student: studentModel } = require("./student.model.js");
+const { remark: remarksModel } = require("./remark.model.js");
+const { instructor: instructorModel } = require("./instructor.model.js");
+const { studentsDocument: studentDocumentModel } = require("./studentsDocument.model.js");
+const { instructorsDocument: instructorDocumentModel } = require("./instructorDocument.model.js");
 
 try {
-    // database server authentication and database selection
-    connection.authenticate()
-        .then(console.log(`Connection to "${ENV.DBNAME}" has been successful`));
+  // Init models
+  adminModel(connection, Sequelize);
+  studentModel(connection, Sequelize);
+  remarksModel(connection, Sequelize);
+  studentDocumentModel(connection, Sequelize);
+  instructorModel(connection, Sequelize);
+  instructorDocumentModel(connection, Sequelize);
+  emailOpen(connection, Sequelize);
+  emailMessage(connection, Sequelize);
 
-    // models inithialization
-    adminModel(connection, Sequelize);
-    studentModel(connection, Sequelize);
-    remarksModel(connection, Sequelize);
-    studentDocumentModel(connection, Sequelize);
-    instructorModel(connection, Sequelize);
-    instructorDocumentModel(connection, Sequelize);
+  // Models instanciés
+  const { admin, student, remark, studentsdocument, instructor, instructorsdocument, emailopen, emailmessage  } = connection.models;
 
-    // models destructuration
-    const { admin, student, remark, studentsdocument, instructor, instructorsdocument } = connection.models;
+  // Associations
+  student.hasMany(studentsdocument, { onDelete: "cascade", foreignKey: "studentId", as: "documents" });
+  studentsdocument.belongsTo(student, { foreignKey: "studentId", as: "student" });
 
-    console.log(connection.models)
+  student.hasMany(remark, { onDelete: "cascade", foreignKey: "studentId", as: "remarks" });
+  remark.belongsTo(student, { foreignKey: "studentId", as: "student" });
 
-    // ASSOCIATIONS (foreignKeys)
-    //One-to-Many Association between Students and studentsdocuments
-    student.hasMany(studentsdocument, { onDelete: "cascade", foreignKey: "studentId", as: "documents" });
-    studentsdocument.belongsTo(student, { foreignKey: "studentId", as: "student" });
-    //One-to-Many Association between Students and Remarks
-    student.hasMany(remark, { onDelete: "cascade", foreignKey: "studentId", as: "remarks" });
-    remark.belongsTo(student, { foreignKey: "studentId", as: "student" });
-    //One-to-Many Association between Instructors and Remarks
-    instructor.hasMany(remark, { onDelete: "cascade", foreignKey: "instructorId", as: "remarks" });
-    remark.belongsTo(instructor, { foreignKey: "instructorId", as: "instructor" });
-    //One-to-Many Association between Instructors and instructorsdocuments
-    instructor.hasMany(instructorsdocument, { onDelete: "cascade", foreignKey: "instructorId", as: "documents" });
-    instructorsdocument.belongsTo(instructor, { foreignKey: "instructorId", as: "instructor" });
+  instructor.hasMany(remark, { onDelete: "cascade", foreignKey: "instructorId", as: "remarks" });
+  remark.belongsTo(instructor, { foreignKey: "instructorId", as: "instructor" });
 
-    // Synchronize the models with the database
-    connection.sync()
-        .then(async () => {
-            // checks if an admins exists in the db
-            if (!(await admin.findAndCountAll()).count) {
-                // creates default admin if no admin is in the db
-                await admin.create({
-                    username: ENV.DEFAULTADMINUSERNAME,
-                    email: ENV.DEFAULTADMINEMAIL,
-                    password: await passwordHashing(ENV.DEFAULTADMINPASSWORD)
-                });
-                console.log(`Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`);
-            };
-        })
-        .then(console.log(`Synchronized with "${ENV.DBNAME}"`));
+  instructor.hasMany(instructorsdocument, { onDelete: "cascade", foreignKey: "instructorId", as: "documents" });
+  instructorsdocument.belongsTo(instructor, { foreignKey: "instructorId", as: "instructor" });
 
-    // Export models
-    exports.Admin = admin;
-    exports.Student = student;
-    exports.Remark = remark;
-    exports.StudentsDocument = studentsdocument;
-    exports.Instructor = instructor;
-    exports.InstructorsDocument = instructorsdocument;
+  // EmailMessage <-> EmailOpen (1-to-1 via messageId, constraints: false car messageId n'est pas la PK)
+  emailmessage.hasOne(emailopen, { foreignKey: 'messageId', sourceKey: 'messageId', as: 'open', constraints: false });
+  emailopen.belongsTo(emailmessage, { foreignKey: 'messageId', targetKey: 'messageId', as: 'message', constraints: false });
+
+  // Student <-> EmailMessage (logique uniquement : pas de FK DB, studentId est STRING vs id INTEGER)
+  student.hasMany(emailmessage, { foreignKey: 'studentId', as: 'emailMessages', constraints: false });
+  emailmessage.belongsTo(student, { foreignKey: 'studentId', as: 'student', constraints: false });
+
+  // Connexion + sync
+  connection.authenticate()
+    .then(() => console.log(`Connection to "${ENV.DBNAME}" has been successful`))
+    .catch((err) => console.error('DB authenticate failed:', err));
+
+
+connection.sync()
+  .then(async () => {
+    const { admin } = connection.models;
+
+    // ✅ Création idempotente basée sur l'email, sans toucher si l'admin existe déjà
+    const [adminRow, created] = await admin.findOrCreate({
+      where: { email: ENV.DEFAULTADMINEMAIL },
+      defaults: {
+        username: ENV.DEFAULTADMINUSERNAME,
+        email: ENV.DEFAULTADMINEMAIL,
+        password: await passwordHashing(ENV.DEFAULTADMINPASSWORD),
+      },
+    });
+
+    console.log(
+      created
+        ? `Default admin ${ENV.DEFAULTADMINUSERNAME} has been created`
+        : `Default admin already exists: ${adminRow.email}`
+    );
+  })
+  .then(() => console.log(`Synchronized with "${ENV.DBNAME}"`))
+  .catch((err) => console.error('DB sync failed:', err));
+
+
+
+
+
+  // Exports
+  exports.Admin = admin;
+  exports.Student = student;
+  exports.Remark = remark;
+  exports.StudentsDocument = studentsdocument;
+  exports.Instructor = instructor;
+  exports.InstructorsDocument = instructorsdocument;
+  exports.EmailOpen = emailopen;
+  exports.EmailMessage = emailmessage;
+  exports.sequelize = connection;
 
 } catch (error) {
-    console.error(`Unable to connect to "${ENV.DBNAME}" : ${error.message}`);
+  console.error(`Unable to connect to "${ENV.DBNAME}" : ${error.message}`);
 }
