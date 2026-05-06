@@ -22,7 +22,7 @@ app.use(bodyParser.json({ limit: '50mb' })); // Limite des requêtes à 50MB (po
 
 // cors config
 app.use(cors({
-    origin: ENV.FRONTROUTE,
+    origin: ENV.FRONTENDROUTE,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -36,6 +36,7 @@ app.use('/instructors-documents', express.static(path.join(__dirname, './assets/
 
 // EMAIL TRACKING
 app.use('/api/tracking', emailRouter);
+app.set('trust proxy', true);
 
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
@@ -43,7 +44,7 @@ app.use("/api/instructor", instructorRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/document", documentRouter);
 app.use("/api/remark", remarkRouter);
-app.use('/api/emails', emailRouter)
+app.use('/api/email', emailRouter)
 
 // exports
 exports.app = app;
