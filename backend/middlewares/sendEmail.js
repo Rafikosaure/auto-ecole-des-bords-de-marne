@@ -23,9 +23,9 @@ exports.sendEmail = async (option) => {
         html: option.message,
       };
       await transporter.sendMail(mailOption, (err, info) => {
-        if (err) console.log(err);
+        if (err) console.error(err);
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };

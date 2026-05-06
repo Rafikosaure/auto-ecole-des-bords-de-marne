@@ -1,14 +1,14 @@
 // errors references for createError switch case
 const errors = {
-    ErrorNotExist: "notExist",
-    ErrorWrongCredentials: "wrongCredentials",
-    ErrorWrongFileFormat: "wrongFileFormat",
-    ErrorUndefinedKey: "undefinedKey",
-    ErrorNoToken: "noToken",
-    ErrorInvalidToken: "invalidToken",
-    ErrorNoFileProvided: "noFileProvided",
-    ErrorFileTooLarge: "FileTooLarge",
-    ErrorExpiredToken: "expiredToken",
+    notExist: "notExist",
+    wrongCredentials: "wrongCredentials",
+    wrongFileFormat: "wrongFileFormat",
+    undefinedKey: "undefinedKey",
+    noToken: "noToken",
+    invalidToken: "invalidToken",
+    noFileProvided: "noFileProvided",
+    fileTooLarge: "fileTooLarge",
+    expiredToken: "expiredToken",
 }
 
 // errors contexts for error handler messages (where error happens)
@@ -17,7 +17,7 @@ const contexts = {
     admin: "Admin",
     instructor: "Instructor",
     student: "Student",
-    Token: "Token",
+    token: "Token",
     instructorDocuments: "Instructors document"
 }
 
@@ -29,7 +29,7 @@ const contexts = {
  * @param {string} context - Where the error occured, found in the `contexts` object.
  * @returns {object} Http(s) response to its sender.
  */
-const errorHandler = (req, res, error, context) => {    
+const errorHandler = (req, res, error, context) => {
     // log
     console.log({Error:
         {
@@ -56,7 +56,7 @@ const errorHandler = (req, res, error, context) => {
         case "KeyNotProvided":
         case "NoToken":
         case "InvalidToken":
-        case "FileTooLarge":
+        case "fileTooLarge":
         case "ExpiredToken":
             // if error has no status (undefined) it will be 404 by default
             error.status ??= 404;
@@ -76,22 +76,22 @@ const errorHandler = (req, res, error, context) => {
 const createError = (req, issue, context) => {
     const error = new Error();
     switch (issue) {
-        case errors.ErrorNotExist:
+        case errors.notExist:
             error.name = "DoesNotExistInDb";
             req.params.id && (error.message = `${context} with id={${req.params.id}} does not exsist`);
             req.body.instructorId && (error.message = `${context} with id={${req.body.instructorId}} does not exsist`);
             break;
-        case errors.ErrorWrongCredentials:
+        case errors.wrongCredentials:
             error.name = "WrongCredentials";
             error.message = `Invalid credentials provided`;
             break;
-        case errors.ErrorWrongFileFormat:
+        case errors.wrongFileFormat:
             // unsupported media type
             error.status = 415;
             error.name = "WrongFileFormat";
             error.message = `Supported file formats are: .png .jpg .jpeg .pdf`;
             break;
-        case errors.ErrorUndefinedKey:
+        case errors.undefinedKey:
             error.name = "KeyNotProvided";
             switch (context) {
                 case contexts.remark:
@@ -105,12 +105,12 @@ const createError = (req, issue, context) => {
                     break;
             }
             break;
-        case errors.ErrorNoToken:
+        case errors.noToken:
             // if no token unauthorized => 401
             error.status = 401;
             error.name = "NoToken";
             switch (context) {
-                case contexts.Token:
+                case contexts.token:
                     error.message = "Admin must be logged in";
                     break;
                 case contexts.admin:
@@ -118,12 +118,12 @@ const createError = (req, issue, context) => {
                     break;
             }
             break;
-        case errors.ErrorInvalidToken:
+        case errors.invalidToken:
             // if token but wrong token forbidden => 403
             error.status = 403;
             error.name = "InvalidToken";
             switch (context) {
-                case contexts.Token:
+                case contexts.token:
                     error.message = "Connexion token is not valid";
                     break;
                 case contexts.admin:
@@ -131,19 +131,19 @@ const createError = (req, issue, context) => {
                     break;
             }
             break;
-        case errors.ErrorExpiredToken:
+        case errors.expiredToken:
             error.status = 403;
             error.name = "ExpiredToken";
             error.message = "Reset token has expired";
             break;
-        case errors.ErrorNoFileProvided:
+        case errors.noFileProvided:
             error.status = 400;
             error.name = "noFileProvided";
             error.message = "No documents were sent with the request";
             break;
-        case errors.ErrorFileTooLarge:
+        case errors.fileTooLarge:
             error.status = 400;
-            error.name = "FileTooLarge";
+            error.name = "fileTooLarge";
             error.message = "One or multiple sent files are larger than 1Mb";
             break;
         default:

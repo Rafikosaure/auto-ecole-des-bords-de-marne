@@ -11,7 +11,7 @@ const { createError, errors, contexts } = require("./errorHandler");
  */
 const processImage = async (file, extension) => {
     // raises an error if a pdf is larger than 1Mb
-    if (extension == "pdf" && Buffer.byteLength(file) > 1000000) throw createError(null, errors.ErrorFileTooLarge, contexts.instructorDocuments);
+    if (extension == "pdf" && Buffer.byteLength(file) > 1000000) throw createError(null, errors.fileTooLarge, contexts.instructorDocuments);
     if (extension != "pdf") file = await sharp(file).resize(1920, 1080, { fit: 'inside', gravity: "center" }).toBuffer();
     return file;
 }

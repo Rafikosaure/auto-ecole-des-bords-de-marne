@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
 
         // Si le jeton (token) n'est pas présent,
         // renvoie une erreur 401 (accès refusé)
-        if (!token) throw createError(req, errors.ErrorNoToken, contexts.Token);
+        if (!token) throw createError(req, errors.noToken, contexts.token);
 
         // Vérifier la validité du jeton en utilisant jwt.verify
         jwt.verify(token, ENV.TOKEN, (error, user) => {
@@ -27,7 +27,7 @@ const verifyToken = (req, res, next) => {
             if (error) {
                 // Renvoie une erreur 403 (interdit)
                 // car le jeton (token) n'est pas valide
-                throw createError(req, errors.ErrorInvalidToken, contexts.Token);
+                throw createError(req, errors.invalidToken, contexts.token);
             }
             // si la vérification réussit,
             // ajoute les information de l'utilisateur
@@ -37,8 +37,8 @@ const verifyToken = (req, res, next) => {
             return next();
         });
     } catch (error) {
-        if (error.status == 401) return next(errorHandler(req, res, error, contexts.Token));
-        return next(errorHandler(req, res, error, contexts.invalidToken));
+        if (error.status == 401) return next(errorHandler(req, res, error, contexts.token));
+        return next(errorHandler(req, res, error, contexts.token));
     }
 };
 

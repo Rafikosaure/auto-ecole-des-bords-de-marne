@@ -12,7 +12,6 @@ const { ENV } = require("../config/env.js");
 if(!fs.existsSync(ENV.INSTRUCTORSDOCUMENTSPATH)){
     // creates the directory if it doesn't exists
     fs.mkdirSync(ENV.INSTRUCTORSDOCUMENTSPATH, {recursive: true});
-    console.log(`Path ${ENV.INSTRUCTORSDOCUMENTSPATH} has been created`);
 };
 
 const storage = multer.diskStorage({
@@ -57,7 +56,7 @@ const createUpload = (multiple=true) => {
                 && extension !== ".jpeg"
                 && extension !== ".pdf"
             ) {
-                return(cb(createError(req, errors.ErrorWrongFileFormat, contexts.instructorDocuments)));
+                return(cb(createError(req, errors.wrongFileFormat, contexts.instructorDocuments)));
             };
             cb(null, true);
         }
