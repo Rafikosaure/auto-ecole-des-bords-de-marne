@@ -20,7 +20,7 @@ router.post("/add", verifyToken, addStudent);
 
 router.get("/get", verifyToken, getStudents);
 // get all
-router.get("/getall", verifyToken, getAllStudents);
+router.get("/get-all", verifyToken, getAllStudents);
 // get one
 router.get("/get/:id", verifyToken, getStudent);
 // update one

@@ -15,7 +15,7 @@ router.post("/add/:studentId", verifyToken, controller.addAllDocuments);
 // add one document for a student
 router.post("/add/:studentId/:documentId", verifyToken, controller.addDocument);
 // get all documents for a student
-router.get("/getall/:studentId", verifyToken, controller.getAllDocuments);
+router.get("/get-all/:studentId", verifyToken, controller.getAllDocuments);
 // get one document for a student
 router.get("/get/:studentId/:documentId", verifyToken, controller.getDocument);
 // update all documents of a student

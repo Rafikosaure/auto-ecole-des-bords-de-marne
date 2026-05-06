@@ -11,7 +11,7 @@ const router = express.Router();
 // add
 router.post("/add", verifyToken, controller.addRemark);
 // get all
-router.get("/getall", verifyToken, controller.getAllRemarks);
+router.get("/get-all", verifyToken, controller.getAllRemarks);
 // get one
 router.get("/get/:id", verifyToken, controller.getRemark);
 // update one

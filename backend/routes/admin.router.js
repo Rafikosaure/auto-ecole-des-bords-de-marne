@@ -9,7 +9,7 @@ const router = express.Router();
 // routes
     // CRUD
         // get all
-router.get("/getall", verifyToken, controller.getAllAdmins);
+router.get("/get-all", verifyToken, controller.getAllAdmins);
         // get one
 router.get("/get/:id", verifyToken, controller.getAdmin);
         // update one

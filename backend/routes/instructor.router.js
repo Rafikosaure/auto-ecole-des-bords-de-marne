@@ -13,7 +13,7 @@ const router = express.Router();
 // add
 router.post("/add", verifyToken, controller.addInstructor);
 // get all
-router.get("/getall", verifyToken, controller.getAllInstructors);
+router.get("/get-all", verifyToken, controller.getAllInstructors);
 // get one
 router.get("/get/:id", verifyToken, controller.getInstructor);
 // update one
