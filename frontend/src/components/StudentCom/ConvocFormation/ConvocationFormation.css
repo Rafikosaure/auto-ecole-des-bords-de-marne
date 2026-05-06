@@ -1,0 +1,148 @@
+#wrapper {
+    transform: scale(.856);
+	position: absolute;
+}
+#p1 {
+	width: 909px;
+	height: 1286px; 
+}
+@media screen and (max-width: 1380px) {
+	#wrapper {
+		transform: scale(80%);
+	}
+}
+@media screen and (max-width: 1023px) {
+	#wrapper {
+		transform: scale(65%);
+	}
+}
+@media screen and (max-width: 991px) {
+	#wrapper {
+		transform: scale(50%);
+	}
+}
+@media screen and (max-width: 767px) {
+	#wrapper {
+		transform: scale(50%) !important;
+	}
+}
+@media screen and (max-width: 660px) {
+	#wrapper {
+		transform: scale(35%) !important;
+	}
+}
+@media screen and (max-width: 420px) {
+	#wrapper {
+		transform: scale(25%) !important;
+	}
+}
+.t {
+	transform-origin: bottom left;
+	z-index: 2;
+	position: absolute;
+	white-space: pre;
+	overflow: visible;
+	line-height: 1.5;
+}
+.text-container {
+	white-space: pre;
+    font-size: 0;
+}
+@supports (-webkit-touch-callout: none) {
+	.text-container {
+		white-space: normal;
+	}
+}
+
+#t1_1{left:216px;bottom:1174px;letter-spacing:0.12px;word-spacing:0.09px;}
+#t2_1{left:87px;bottom:1131px;letter-spacing:0.09px;word-spacing:0.01px;}
+#t3_1{left:87px;bottom:1102px;letter-spacing:0.09px;word-spacing:-0.11px;}
+#t4_1{left:308px;bottom:1102px;letter-spacing:0.25px;word-spacing:0.06px;}
+#t5_1{left:87px;bottom:1074px;letter-spacing:0.22px;word-spacing:-0.03px;}
+#t6_1{left:211px;bottom:1073px;letter-spacing:0.09px;word-spacing:0.01px;}
+#t7_1{left:277px;bottom:1073px;letter-spacing:0.03px;}
+#t8_1{left:299px;bottom:1073px;letter-spacing:0.14px;word-spacing:-0.18px;}
+#t9_1{left:441px;bottom:1073px;letter-spacing:0.12px;}
+#ta_1{left:460px;bottom:1073px;}
+#tb_1{left:464px;bottom:1073px;letter-spacing:0.03px;}
+#tc_1{left:494px;bottom:1073px;letter-spacing:0.11px;word-spacing:0.01px;}
+#td_1{left:603px;bottom:1073px;letter-spacing:0.03px;}
+#te_1{left:622px;bottom:1073px;}
+#tf_1{left:626px;bottom:1073px;letter-spacing:0.07px;}
+#tg_1{left:660px;bottom:1073px;letter-spacing:0.14px;word-spacing:-0.21px;}
+#th_1{left:87px;bottom:1045px;letter-spacing:0.22px;word-spacing:-0.02px;}
+#ti_1{left:216px;bottom:1044px;}
+#tj_1{left:220px;bottom:1044px;letter-spacing:0.03px;}
+#tk_1{left:261px;bottom:1044px;letter-spacing:0.07px;word-spacing:0.06px;}
+#tl_1{left:87px;bottom:1015px;letter-spacing:0.23px;word-spacing:-0.04px;}
+#tm_1{left:87px;bottom:998px;letter-spacing:-0.1px;word-spacing:-0.14px;}
+#tn_1{left:87px;bottom:981px;letter-spacing:-0.12px;word-spacing:0.09px;}
+#to_1{left:87px;bottom:965px;letter-spacing:-0.12px;word-spacing:-0.03px;}
+#tp_1{left:87px;bottom:948px;letter-spacing:-0.1px;word-spacing:-0.07px;}
+#tq_1{left:87px;bottom:932px;letter-spacing:-0.11px;word-spacing:-0.01px;}
+#tr_1{left:87px;bottom:915px;letter-spacing:-0.11px;word-spacing:-0.11px;}
+#ts_1{left:87px;bottom:898px;letter-spacing:-0.12px;word-spacing:-0.05px;}
+#tt_1{left:87px;bottom:860px;letter-spacing:-0.13px;word-spacing:-0.05px;}
+#tu_1{left:318px;bottom:860px;}
+#tv_1{left:87px;bottom:843px;letter-spacing:-0.07px;word-spacing:-0.21px;}
+#tw_1{left:87px;bottom:826px;letter-spacing:-0.13px;word-spacing:0.12px;}
+#tx_1{left:87px;bottom:810px;letter-spacing:-0.11px;word-spacing:-0.04px;}
+#ty_1{left:87px;bottom:793px;letter-spacing:-0.12px;word-spacing:-0.01px;}
+#tz_1{left:87px;bottom:755px;letter-spacing:-0.13px;word-spacing:0.04px;}
+#t10_1{left:259px;bottom:755px;}
+#t11_1{left:87px;bottom:733px;letter-spacing:-0.04px;word-spacing:-0.32px;}
+#t12_1{left:235px;bottom:733px;letter-spacing:-0.12px;word-spacing:0.04px;}
+#t13_1{left:87px;bottom:716px;letter-spacing:-0.11px;word-spacing:0.01px;}
+#t14_1{left:87px;bottom:699px;letter-spacing:-0.1px;word-spacing:0.01px;}
+#t15_1{left:87px;bottom:660px;letter-spacing:-0.11px;word-spacing:-0.05px;}
+#t16_1{left:87px;bottom:639px;letter-spacing:-0.1px;}
+#t17_1{left:131px;bottom:639px;}
+#t18_1{left:84.5px;bottom:621.7px;letter-spacing:-0.25px;word-spacing:-0.15px;}
+#t19_1{left:236px;bottom:622px;}
+#t1a_1{left:245px;bottom:622px;letter-spacing:-0.15px;word-spacing:0.06px;}
+#t1b_1{left:84.5px;bottom:604.9px;letter-spacing:-0.25px;word-spacing:-0.06px;}
+#t1c_1{left:276px;bottom:605px;}
+#t1d_1{left:87px;bottom:588px;}
+#t1e_1{left:92px;bottom:588px;letter-spacing:-0.1px;word-spacing:-0.08px;}
+#t1f_1{left:87px;bottom:572px;letter-spacing:-0.13px;word-spacing:0.01px;}
+#t1g_1{left:87px;bottom:555px;letter-spacing:-0.12px;word-spacing:-0.09px;}
+#t1h_1{left:87px;bottom:513px;letter-spacing:-0.12px;}
+#t1i_1{left:167px;bottom:513px;letter-spacing:-0.12px;word-spacing:-0.04px;}
+#t1j_1{left:87px;bottom:496px;letter-spacing:-0.15px;word-spacing:0.11px;}
+#t1k_1{left:87px;bottom:452px;letter-spacing:-0.11px;word-spacing:-0.16px;}
+#t1l_1{left:233px;bottom:452px;}
+#t1m_1{left:87px;bottom:435px;letter-spacing:-0.15px;word-spacing:-0.02px;}
+#t1n_1{left:87px;bottom:418px;letter-spacing:-0.13px;}
+#t1o_1{left:170px;bottom:417.8px;letter-spacing:-0.22px;word-spacing:-0.13px;}
+#t1p_1{left:87px;bottom:401px;letter-spacing:-0.11px;word-spacing:0.08px;}
+#t1q_1{left:87px;bottom:385px;letter-spacing:-0.2px;word-spacing:0.17px;}
+#t1r_1{left:215px;bottom:260px;letter-spacing:0.1px;word-spacing:-0.02px;}
+#t1s_1{left:354px;bottom:245px;letter-spacing:0.11px;word-spacing:-0.19px;}
+#t1t_1{left:497px;bottom:245px;letter-spacing:0.03px;}
+#t1u_1{left:191px;bottom:230px;letter-spacing:0.11px;word-spacing:-0.11px;}
+#t1v_1{left:315px;bottom:215px;letter-spacing:0.07px;word-spacing:0.05px;}
+
+.s0{font-size:14px;font-family:sub_Arial-BoldMT_lsb;color:#000;}
+.s1{font-size:12px;font-family:Tahoma_3j;color:#000;}
+.s2{font-size:11px;font-family:Tahoma-Bold_3n;color:#000;}
+.s3{font-size:14px;font-family:Tahoma_3j;color:#000;}
+.s4{font-size:14px;font-family:Tahoma-Bold_3n;color:#000;}
+.s5{font-size:15px;font-family:Tahoma-Bold_3n;color:#000;}
+.s6{font-size:15px;font-family:Tahoma_3j;color:#000;}
+.s7{font-size:11px;font-family:Tahoma_3j;color:#4D90FE;}
+.t.m0{transform:matrix(0.948,0,-0.32,0.95,0,0);}
+
+@font-face {
+	font-family: Tahoma-Bold_3n;
+	src: url("./fonts/Tahoma-Bold.woff") format("woff");
+}
+
+@font-face {
+	font-family: Tahoma_3j;
+	src: url("./fonts/Tahoma.woff") format("woff");
+}
+
+@font-face {
+	font-family: sub_Arial-BoldMT_lsb;
+	src: url("./fonts/Arial-BoldMT.woff") format("woff");
+}
