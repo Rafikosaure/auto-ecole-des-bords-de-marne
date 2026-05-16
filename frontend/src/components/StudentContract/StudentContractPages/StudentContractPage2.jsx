@@ -1,6 +1,6 @@
 import './StudentContractPages.css'
 import dataStorage from './temporaryData'
-import TableGrid from './images/table_grid.png'
+import TableGrid from './images/tableGrid.png'
 import { useState, useEffect } from 'react'
 import config from '../../../config'
 
