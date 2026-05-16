@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import { updateStudent, getStudentById } from "../../api/api-client";
+import { Form, Button, InputGroup } from "react-bootstrap";
+import { updateStudent, getStudentById } from "../../api/apiClient";
+import { formatPhoneDisplay, normalizePhone } from "../../utils/phoneUtils";
 
 
 const UpdateStudent = ({ student, onUpdate }) => {
@@ -19,7 +20,7 @@ const UpdateStudent = ({ student, onUpdate }) => {
       setLastName(student.lastName || "");
       setFirstName(student.firstName || "");
       setEmail(student.email || "");
-      setPhoneNumber(student.phoneNumber || "");
+      setPhoneNumber(formatPhoneDisplay(student.phoneNumber || ""));
       setBirthdate(student.birthdate || "");
       setFormationStart(student.formationStart || "");
       setFormationDesiredEnd(student.formationDesiredEnd || "");
@@ -36,7 +37,7 @@ const UpdateStudent = ({ student, onUpdate }) => {
         lastName,
         firstName,
         email,
-        phoneNumber,
+        phoneNumber: normalizePhone(phoneNumber),
         birthdate,
         formationStart,
         formationDesiredEnd,
@@ -55,43 +56,47 @@ const UpdateStudent = ({ student, onUpdate }) => {
 
   return (
     <Form onSubmit={handleUpdate} autoComplete="off">
-      <Form.Group controlId="lastName">
-        <Form.Label>Nom</Form.Label>
+      <Form.Group controlId="lastName" className="mb-3">
+        <Form.Label>Nom de famille</Form.Label>
         <Form.Control
           type="text"
           value={lastName}
+          placeholder="Ex : Dupont"
           onChange={(e) => setLastName(e.target.value)}
         />
       </Form.Group>
 
-      <Form.Group controlId="firstName">
+      <Form.Group controlId="firstName" className="mb-3">
         <Form.Label>Prénom</Form.Label>
         <Form.Control
           type="text"
           value={firstName}
+          placeholder="Ex : Jean"
           onChange={(e) => setFirstName(e.target.value)}
         />
       </Form.Group>
 
-      <Form.Group controlId="email">
-        <Form.Label>Email</Form.Label>
+      <Form.Group controlId="email" className="mb-3">
+        <Form.Label>Adresse e-mail</Form.Label>
         <Form.Control
           type="email"
           value={email}
+          placeholder="jean.dupont@email.com"
           onChange={(e) => setEmail(e.target.value)}
         />
       </Form.Group>
 
-      <Form.Group controlId="phoneNumber">
+      <Form.Group controlId="phoneNumber" className="mb-3">
         <Form.Label>Numéro de téléphone</Form.Label>
         <Form.Control
           type="text"
           value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="Ex : 06 12 34 56 78"
+          onChange={(e) => setPhoneNumber(formatPhoneDisplay(e.target.value))}
         />
       </Form.Group>
 
-      <Form.Group controlId="birthdate">
+      <Form.Group controlId="birthdate" className="mb-3">
         <Form.Label>Date de naissance</Form.Label>
         <Form.Control
           type="date"
@@ -100,8 +105,8 @@ const UpdateStudent = ({ student, onUpdate }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formationStart">
-        <Form.Label>Date de début de formation</Form.Label>
+      <Form.Group controlId="formationStart" className="mb-3">
+        <Form.Label>Date de début de la formation</Form.Label>
         <Form.Control
           type="date"
           value={formationStart}
@@ -109,8 +114,8 @@ const UpdateStudent = ({ student, onUpdate }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formationDesiredEnd">
-        <Form.Label>Date de fin souhaitée</Form.Label>
+      <Form.Group controlId="formationDesiredEnd" className="mb-3">
+        <Form.Label>Date de fin souhaitée de la formation</Form.Label>
         <Form.Control
           type="date"
           value={formationDesiredEnd}
@@ -118,8 +123,8 @@ const UpdateStudent = ({ student, onUpdate }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formationMaxEndingDate">
-        <Form.Label>Date maximale de fin</Form.Label>
+      <Form.Group controlId="formationMaxEndingDate" className="mb-3">
+        <Form.Label>Date maximale de fin de formation</Form.Label>
         <Form.Control
           type="date"
           value={formationMaxEndingDate}
@@ -127,13 +132,17 @@ const UpdateStudent = ({ student, onUpdate }) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="formationMaxDuration">
-        <Form.Label>Durée maximale de formation</Form.Label>
-        <Form.Control
-          type="text"
-          value={formationMaxDuration}
-          onChange={(e) => setFormationMaxDuration(e.target.value)}
-        />
+      <Form.Group controlId="formationMaxDuration" className="mb-3">
+        <Form.Label>Durée maximale de la formation</Form.Label>
+        <InputGroup>
+          <Form.Control
+            type="text"
+            value={formationMaxDuration}
+            placeholder="Ex : 8"
+            onChange={(e) => setFormationMaxDuration(e.target.value)}
+          />
+          <InputGroup.Text>mois</InputGroup.Text>
+        </InputGroup>
       </Form.Group>
 
       <Button variant="primary" type="submit" className="mt-3">
