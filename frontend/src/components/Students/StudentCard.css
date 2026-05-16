@@ -1,0 +1,14 @@
+.student-card {
+  border-radius: var(--bs-border-radius);
+  transition: box-shadow 0.2s ease;
+}
+
+.student-card:focus,
+.student-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.student-card-active {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}

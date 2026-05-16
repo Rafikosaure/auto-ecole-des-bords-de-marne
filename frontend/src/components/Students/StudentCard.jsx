@@ -1,22 +1,19 @@
 import { Link } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale"; 
+import { fr } from "date-fns/locale";
+import "./StudentCard.css";
 
 const StudentCard = ({
   id,
   lastName,
   firstName,
-  email,
-  phoneNumber,
-  birthdate,
   formationStart,
-  formationDesiredEnd,
   formationMaxEndingDate,
   formationMaxDuration,
-  showMore,
+  isActive,
 }) => {
-  
+
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -24,45 +21,31 @@ const StudentCard = ({
   };
 
   return (
-    <Card className="mb-3">
-      <Card.Body>
-        <Card.Title>
-          {lastName} {firstName}
-        </Card.Title>
-        <Row>
-          <Col md={6}>
-            <p>
-              <strong>Email:</strong> {email}
-            </p>
-            <p>
-              <strong>Téléphone:</strong> {phoneNumber}
-            </p>
-          </Col>
-          <Col md={6}>
-            <p>
-              <strong>Date de naissance:</strong> {formatDate(birthdate)}
-            </p>
-            <p>
-              <strong>Début de la formation:</strong>{" "}
-              {formatDate(formationStart)}
-            </p>
-            <p>
-              <strong>Date de fin souhaitée:</strong>{" "}
-              {formatDate(formationDesiredEnd)}
-            </p>
-            <p>
-              <strong>Date limite de fin de formation:</strong>{" "}
-              {formatDate(formationMaxEndingDate)}
-            </p>
-            <p>
-              <strong>Durée maximale de la formation:</strong>{" "}
-              {formationMaxDuration}
-            </p>
-            {showMore && <Link to={`/student/${id}`}>Voir plus</Link>}
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+    <Link
+      to={`/student/${id}`}
+      className={`d-block text-decoration-none text-reset mb-2 student-card${isActive ? ' student-card-active' : ''}`}
+    >
+      <Card className="h-100">
+        <Card.Body className="py-2 px-3">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <Card.Title className="mb-0 fs-5">
+              {lastName} {firstName}
+            </Card.Title>
+          </div>
+          <Row className="g-1">
+            <Col xs={12} sm={4}>
+              <p className="mb-0"><strong>Début :</strong> {formatDate(formationStart)}</p>
+            </Col>
+            <Col xs={12} sm={4}>
+              <p className="mb-0"><strong>Date limite :</strong> {formatDate(formationMaxEndingDate)}</p>
+            </Col>
+            <Col xs={12} sm={4}>
+              <p className="mb-0"><strong>Durée max. :</strong> {formationMaxDuration} mois</p>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+    </Link>
   );
 };
 
