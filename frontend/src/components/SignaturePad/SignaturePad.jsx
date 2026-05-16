@@ -108,9 +108,9 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
   }, []);
 
   return (
-    <div className="container mt-1 pad-container">
-      <h2 className="text-center pad-title">{title}</h2>
-      <div className="text-center pad-responsive-design">
+    <div className="container mt-1 p-0">
+      <h2 className="text-center mt-2 mb-2">{title}</h2>
+      <div className="d-flex justify-content-center align-items-center pad-responsive-design">
         <canvas
           ref={canvasRef}
           width={500}
@@ -125,7 +125,7 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
           onTouchEnd={stopDrawing}
         />
       </div>
-      <div className="d-flex justify-content-center pad-buttons">
+      <div className="d-flex justify-content-center mt-3">
         <button className="btn btn-danger me-2" onClick={clearCanvas}>
           Effacer
         </button>
