@@ -1,4 +1,4 @@
-//src/api/api-client.js
+//src/api/apiClient.js
 
 import axios from "axios";
 import config from "../config.js";
