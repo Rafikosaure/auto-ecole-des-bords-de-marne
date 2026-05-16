@@ -92,7 +92,7 @@ exports.sendMail = async (req, res) => {
                 }
             )
         }
-        if (req.body.fileData && req.body.emailType === "convocation_formation") {
+        if (req.body.fileData && req.body.emailType === "convocationFormation") {
             const fileName = `${req.body.fileData.documentType}-${sid}.pdf`
             attachments.push({
                 filename: fileName,

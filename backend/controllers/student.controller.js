@@ -27,7 +27,6 @@ const getStudents = async (req, res, next) => {
     // SQL Select query to get all students
     const students = await Student.findAll(
       {
-        // includes values from other tables
         include: [
           {
             model: StudentsDocument,
@@ -37,7 +36,8 @@ const getStudents = async (req, res, next) => {
             model: Remark,
             as: "remarks"
           }
-        ]
+        ],
+        order: [['lastName', 'ASC']]
       });
     res.status(200).json(students);
   } catch (error) {
@@ -65,6 +65,7 @@ const getAllStudents = async (req, res, next) => {
           as: "remarks",
         },
       ],
+      order: [['lastName', 'ASC']],
     });
 
     res.status(200).json({

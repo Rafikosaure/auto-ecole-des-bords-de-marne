@@ -14,7 +14,7 @@ const { sendEmail } = require("../middlewares/sendEmail.js");
 const getAllAdmins = async (req, res, next) => {
     try {
         // SQL Select query to get all admins
-        const admins = await Admin.findAll({ attributes: { exclude: ["password"] } });
+        const admins = await Admin.findAll({ attributes: { exclude: ["password"] }, order: [['username', 'ASC']] });
         res.status(200).json(admins);
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);

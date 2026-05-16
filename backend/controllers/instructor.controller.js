@@ -34,7 +34,8 @@ const getAllInstructors = async (req, res, next) => {
                     model: Remark,
                     as: "remarks"
                 }
-            ]
+            ],
+            order: [['lastName', 'ASC']],
         });
         // converts documents buffer to base64 for an easy frontend integration
         instructors.map(instructor => {
