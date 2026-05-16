@@ -267,7 +267,7 @@ const StudentCommunication = ({ student }) => {
 
       {showDocumentOption === "block" && (
         <div className="d-flex flex-column">
-        <div className="d-flex justify-content-center align-items-center" style={{ width: "auto", height: "20px", fontSize: "12px", backgroundColor: "lightgreen" }}>Modifiez le document si nécessaire</div>
+        <div className="d-flex justify-content-center align-items-center bg-success bg-opacity-25" style={{ height: "20px", fontSize: "12px" }}>Modifiez le document si nécessaire</div>
         <div className="container-md d-flex justify-content-center align-items-center document-viewver bg-secondary bg-opacity-25 mb-3">
           
           {/* Ne pas oublier de passer à <ConvocFormation /> les bonnes données en props quant ce sera le moment */}

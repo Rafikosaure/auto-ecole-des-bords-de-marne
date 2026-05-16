@@ -4,6 +4,8 @@
     align-items: flex-end;
 }
 .document-viewver {
+    position: relative;
+    overflow-y: auto;
     height: 1250px;
 }
 @media screen and (max-width: 1023px) {
@@ -18,7 +20,6 @@
 }
 @media screen and (max-width: 767px) {
 	.document-viewver {
-        /* max-height: calc(100vh - 20px); */
         height: 800px;
     }
 }
