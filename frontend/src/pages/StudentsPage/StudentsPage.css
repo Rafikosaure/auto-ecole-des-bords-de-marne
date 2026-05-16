@@ -1,9 +1,9 @@
-.titles-style {
-    font-size: 32px !important;
+.students-list-min-height {
+  min-height: 300px;
 }
 
-@media screen and (max-width: 767px) {
-    .titles-style {
-        font-size: 22px !important;
-    }   
+@media (min-width: 768px) {
+  .students-list-min-height {
+    min-height: 280px;
+  }
 }
