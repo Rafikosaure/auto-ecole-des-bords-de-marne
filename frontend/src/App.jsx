@@ -12,7 +12,6 @@ import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 import StudentPage from "./pages/StudentsPage/StudentsPage";
 import InstructorProfilPage from "./pages/InstructorProfilPage/InstructorProfilPage";
 
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
