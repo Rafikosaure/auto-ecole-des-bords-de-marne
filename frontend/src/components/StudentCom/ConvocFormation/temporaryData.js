@@ -1,6 +1,6 @@
 const data = {
     fileData: {
-      documentType: "convocation",
+      documentType: "convocationFormation",
       documentTitle: "CONVOCATION FORMATION PERMIS DE CONDUIRE B"
     },
     emailType: "convocation_formation",
