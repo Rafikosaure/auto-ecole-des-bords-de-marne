@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { addStudent } from "../../api/api-client";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { addStudent } from "../../api/apiClient";
+import { Form, Button, Container, Row, Col, InputGroup } from "react-bootstrap";
+import { formatPhoneDisplay, normalizePhone } from "../../utils/phoneUtils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -54,7 +55,7 @@ const AddStudentForm = ({ reload }) => {
     const { name, value } = event.target;
     setStudent((prevStudent) => ({
       ...prevStudent,
-      [name]: value,
+      [name]: name === 'phoneNumber' ? formatPhoneDisplay(value) : value,
     }));
   };
 
@@ -77,8 +78,19 @@ const AddStudentForm = ({ reload }) => {
     }
 
     try {
-      await addStudent(student);
+      await addStudent({ ...student, phoneNumber: normalizePhone(student.phoneNumber) });
       confirmation();
+      setStudent({
+        lastName: "",
+        firstName: "",
+        email: "",
+        phoneNumber: "",
+        birthdate: "",
+        formationStart: "",
+        formationDesiredEnd: "",
+        formationMaxEndingDate: "",
+        formationMaxDuration: "",
+      });
       await reload(0);
     } catch (e) {
       console.error(e);
@@ -185,13 +197,16 @@ const AddStudentForm = ({ reload }) => {
           <Col md={6}>
             <Form.Group controlId="formationMaxDuration" className="mb-3">
               <Form.Label>Durée maximale de la formation</Form.Label>
-              <Form.Control
-                type="text"
-                name="formationMaxDuration"
-                value={student.formationMaxDuration}
-                onChange={handleChange}
-                placeholder="Entrez la durée maximale"
-              />
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  name="formationMaxDuration"
+                  value={student.formationMaxDuration}
+                  onChange={handleChange}
+                  placeholder="Ex : 8"
+                />
+                <InputGroup.Text>mois</InputGroup.Text>
+              </InputGroup>
             </Form.Group>
           </Col>
         </Row>
