@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import './ConvocationFormation.css';
 import data from './temporaryData'
+import './ConvocationFormation.css'
 
 
 export default function ConvocationFormation({ student, setFormFetchData }) {
