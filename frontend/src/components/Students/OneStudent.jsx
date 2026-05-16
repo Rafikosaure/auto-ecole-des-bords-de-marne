@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import { Container, Table, Button } from "react-bootstrap";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { format } from "date-fns";
+import { formatPhoneDisplay } from "../../utils/phoneUtils";
+import { fr } from "date-fns/locale";
 import {
   getStudentById,
   deleteStudent,
   updateStudent,
-} from "../../api/api-client.js";
-import StudentCard from "./StudentCard.jsx";
+} from "../../api/apiClient.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateStudent from "../StudentsAdmin/UpdateStudent.jsx";
@@ -49,6 +51,12 @@ const OneStudent = () => {
     fetchStudent();
   }, [id]);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "—";
+    const date = new Date(dateString);
+    return isNaN(date) ? "—" : format(date, "dd/MM/yyyy", { locale: fr });
+  };
+
   if (!student) {
     return <div>Chargement...</div>;
   }
@@ -81,33 +89,70 @@ const OneStudent = () => {
   return (
     <>
       <Container className="my-4">
-        <Row>
-          <Col>
-            <StudentCard
-              id={student.id}
-              lastName={student.lastName}
-              firstName={student.firstName}
-              email={student.email}
-              phoneNumber={student.phoneNumber}
-              birthdate={student.birthdate}
-              formationStart={student.formationStart}
-              formationDesiredEnd={student.formationDesiredEnd}
-              formationMaxEndingDate={student.formationMaxEndingDate}
-              formationMaxDuration={student.formationMaxDuration}
-              showMore={false}
-            />
-            <Button
-              variant="danger"
-              onClick={deleteOneStudent}
-              style={{ marginRight: "10px" }}
-            >
-              <FaTrash />
-            </Button>
-            <Button variant="warning" onClick={() => setIsEditing(true)}>
+        <div className="d-flex align-items-center justify-content-between mb-4">
+          <h2 className="fw-bold text-uppercase mb-0 fs-3">
+            {student.lastName} {student.firstName}
+          </h2>
+          <div className="d-flex gap-2">
+            <Button variant="warning" onClick={() => setIsEditing(!isEditing)}>
               <FaEdit />
             </Button>
-          </Col>
-        </Row>
+            <Button variant="danger" onClick={deleteOneStudent}>
+              <FaTrash />
+            </Button>
+          </div>
+        </div>
+
+        <Table bordered hover responsive>
+          <tbody>
+            <tr className="table-secondary">
+              <th colSpan={2} className="text-uppercase fs-6 py-2">
+                Informations personnelles
+              </th>
+            </tr>
+            <tr>
+              <th style={{ width: '40%' }}>Nom de famille</th>
+              <td>{student.lastName}</td>
+            </tr>
+            <tr>
+              <th>Prénom</th>
+              <td>{student.firstName}</td>
+            </tr>
+            <tr>
+              <th>Adresse e-mail</th>
+              <td>{student.email}</td>
+            </tr>
+            <tr>
+              <th>Téléphone</th>
+              <td>{formatPhoneDisplay(student.phoneNumber)}</td>
+            </tr>
+            <tr>
+              <th>Date de naissance</th>
+              <td>{formatDate(student.birthdate)}</td>
+            </tr>
+            <tr className="table-secondary">
+              <th colSpan={2} className="text-uppercase fs-6 py-2">
+                Formation
+              </th>
+            </tr>
+            <tr>
+              <th>Début de la formation</th>
+              <td>{formatDate(student.formationStart)}</td>
+            </tr>
+            <tr>
+              <th>Date de fin souhaitée</th>
+              <td>{formatDate(student.formationDesiredEnd)}</td>
+            </tr>
+            <tr>
+              <th>Date limite de fin</th>
+              <td>{formatDate(student.formationMaxEndingDate)}</td>
+            </tr>
+            <tr>
+              <th>Durée maximale</th>
+              <td>{student.formationMaxDuration} mois</td>
+            </tr>
+          </tbody>
+        </Table>
       </Container>
 
       {isEditing && (
