@@ -1,85 +1,51 @@
+import { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Logo from "../../images/logo.webp";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import config from "../../config";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "./Header.css"
+import "./Header.css";
 
 const Header = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const [navExpanded, setNavExpanded] = useState(false);
+
+  const closeNav = () => setNavExpanded(false);
 
   const handleLogout = async () => {
+    closeNav();
     const response = await fetch(`${config.apiBaseUrl}/admin/logout`, {
       method: 'POST',
       credentials: 'include',
-    })
-
+    });
     if (response.ok) {
       navigate('/connexion');
     }
-  }
+  };
 
   return (
-    <Navbar expand="lg" className="custom-header">
+    <Navbar expand="lg" className="bg-white shadow-sm border-bottom" expanded={navExpanded} onToggle={setNavExpanded}>
       <Container>
-        <Navbar.Brand href="/students" className="d-flex align-items-center">
-          <img src={Logo} alt="Logo" className="logo" />
+        <Navbar.Brand as={Link} to="/students" className="d-flex align-items-center" onClick={closeNav}>
+          <img src={Logo} alt="Logo" style={{ width: 'clamp(100px, 25vw, 300px)', height: 'auto' }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            {location.pathname === "/admin" ? (
-              <>
-                <Nav.Link as={NavLink} to="/students">
-                  <p className="fs-3">Étudiants</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/instructors">
-                  <p className="fs-3">Moniteurs</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/connexion" onClick={handleLogout}>
-                  <p className="fs-3">Déconnexion</p>
-                </Nav.Link>
-              </>
-            ) : location.pathname === "/instructors" ? (
-              <>
-                <Nav.Link as={NavLink} to="/students">
-                  <p className="fs-3">Étudiants</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/admin">
-                  <p className="fs-3">Administrateurs</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/connexion" onClick={handleLogout}>
-                  <p className="fs-3">Déconnexion</p>
-                </Nav.Link>
-              </>
-            ) : location.pathname === "/students" ? (
-              <>
-                <Nav.Link as={NavLink} to="/instructors">
-                  <p className="fs-3">Moniteurs</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/admin">
-                  <p className="fs-3">Administrateurs</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/connexion" onClick={handleLogout}>
-                  <p className="fs-3">Déconnexion</p>
-                </Nav.Link>
-              </>
-            ) : (
-              <>
-                <Nav.Link as={NavLink} to="/students">
-                  <p className="fs-3">Étudiants</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/instructors">
-                  <p className="fs-3">Moniteurs</p>
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/admin">
-                  <p className="fs-3">Administrateurs</p>
-                </Nav.Link>
-              </>
-            )}
+          <Nav className="ms-auto gap-1">
+            <Nav.Link as={NavLink} to="/students" className="nav-item-link" onClick={closeNav}>
+              Étudiants
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/instructors" className="nav-item-link" onClick={closeNav}>
+              Moniteurs
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/admin" className="nav-item-link" onClick={closeNav}>
+              Administrateurs
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/connexion" className="nav-item-link" onClick={handleLogout}>
+              Déconnexion
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
