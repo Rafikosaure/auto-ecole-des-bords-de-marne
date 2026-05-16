@@ -23,7 +23,7 @@ const dataStorage = (student) => {
     const data = {
         fileData: {
             print: true,
-            documentType: "Contrat_Stagiaire",
+            documentType: "contratStagiaire",
             documentTitle: "CONTRAT D'ENSEIGNEMENT À LA CONDUITE - CATÉGORIE B DU PERMIS DE CONDUIRE",
             dateTime: datetime,
             studentContractData: {
