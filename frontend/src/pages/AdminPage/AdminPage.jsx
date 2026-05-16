@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import './AdminPage.css';
-import apiClient from '../../api/api-client';
+import apiClient from '../../api/apiClient';
 
 const AdminPage = () => {
   const [admins, setAdmins] = useState([]);
@@ -77,21 +76,21 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="container mt-5 admins-container">
-      <h2 className="mb-4 text-center titles-style" style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Liste des Administrateurs</h2>
+    <div className="container mt-5 shadow rounded bg-white p-3">
+      <h2 className="mb-4 mt-4 text-center fw-bold text-uppercase fs-2">Liste des Administrateurs</h2>
 
       <button
-        className="btn btn-success mb-4 admin-button btn-add-admin"
+        className="btn btn-success mb-4 d-block mx-auto"
         onClick={() => setShowAddForm(!showAddForm)}
       >
         {showAddForm ? "Annuler" : "Rajouter un Administrateur"}
       </button>
 
       {showAddForm && (
-        <div className="add-admin-container mb-4">
+        <div className="d-flex flex-column align-items-center w-100 p-3 shadow rounded bg-light text-center mb-4">
           <h3>Ajouter un Administrateur</h3>
-          <form onSubmit={handleRegisterAdmin} className="add-admin-form">
-            <div className="form-group mb-3">
+          <form onSubmit={handleRegisterAdmin} className="d-flex flex-column align-items-center w-100">
+            <div className="mb-3 w-100 d-flex flex-column align-items-center">
               <label>Nom d'utilisateur</label>
               <input
                 type="text"
@@ -103,7 +102,7 @@ const AdminPage = () => {
               />
             </div>
 
-            <div className="form-group mb-3">
+            <div className="mb-3 w-100 d-flex flex-column align-items-center">
               <label>Adresse e-mail</label>
               <input
                 type="email"
@@ -115,7 +114,7 @@ const AdminPage = () => {
               />
             </div>
 
-            <div className="form-group mb-3">
+            <div className="mb-3 w-100 d-flex flex-column align-items-center">
               <label>Mot de passe</label>
               <input
                 type="password"
@@ -131,7 +130,7 @@ const AdminPage = () => {
 
             <button
               type="submit"
-              className="btn btn-primary admin-button btn-full-width"
+              className="btn btn-primary w-100"
             >
               Ajouter un Administrateur
             </button>
@@ -140,9 +139,9 @@ const AdminPage = () => {
       )}
 
       {editingAdmin && (
-        <div className="edit-admin-container mb-4">
+        <div className="d-flex flex-column align-items-center w-100 p-3 shadow rounded bg-white mb-4">
           <h3>Modifier Administrateur</h3>
-          <form onSubmit={handleEditSubmit} className="edit-admin-form">
+          <form onSubmit={handleEditSubmit} className="d-flex flex-column align-items-center w-100">
             <div className="mb-3">
               <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
               <input
@@ -178,11 +177,11 @@ const AdminPage = () => {
                 required
               />
             </div>
-            <div className="form-buttons">
-              <button type="submit" className="btn btn-primary admin-action-button">Enregistrer les modifications</button>
+            <div className="d-flex flex-column align-items-center justify-content-center w-100 gap-2 mt-2">
+              <button type="submit" className="btn btn-primary">Enregistrer les modifications</button>
               <button
                 type="button"
-                className="btn btn-secondary admin-action-button btn-cancel"
+                className="btn btn-secondary"
                 onClick={() => setEditingAdmin(null)}
               >
                 Annuler
@@ -195,23 +194,23 @@ const AdminPage = () => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th className="text-center">Nom</th>
+            <th className="text-center">Nom d'utilisateur</th>
             <th className="text-center">Email</th>
-            <th className="actions-header text-center">Actions</th>
+            <th className="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           {admins.map((admin, index) => (
             <tr key={admin.id}>
-              <td className="admin-name text-center">{admin.username}</td>
-              <td className="admin-email text-center">{admin.email}</td>
-              <td className="text-center actions">
-                <div className="action-buttons">
-                  <button type="button" className="btn btn-warning admin-action-button me-2" onClick={() => handleEditClick(admin)}>
+              <td className="text-center">{admin.username}</td>
+              <td className="text-center">{admin.email}</td>
+              <td className="text-center">
+                <div className="d-flex justify-content-center gap-2">
+                  <button type="button" className="btn btn-warning me-2" onClick={() => handleEditClick(admin)}>
                     Modifier
                   </button>
                   {index !== 0 &&
-                    <button type="button" className="btn btn-danger admin-action-button" onClick={() => handleDelete(admin.id)}>
+                    <button type="button" className="btn btn-danger" onClick={() => handleDelete(admin.id)}>
                       Supprimer
                     </button>
                   }
