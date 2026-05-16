@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import apiClient from '../../api/api-client';
-import './InstructorProfilPage.css';
+import apiClient from '../../api/apiClient';
 
 
 const InstructorProfilPage = () => {
@@ -120,11 +119,11 @@ const InstructorProfilPage = () => {
                 key={type}
                 style={{ cursor: 'pointer' }}
             >
-                <div className="card" style={{ border: '1px solid black', borderRadius: '5px' }}>
-                    <div className="card-body" style={{ padding: '0px' }}>
+                <div className="card border border-dark rounded">
+                    <div className="card-body p-0">
                         <h5
-                            className="card-title"
-                            style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                            className="card-title text-decoration-underline"
+                            style={{ cursor: 'pointer' }}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 openFileInput(type); // Ouvre l'input pour l'upload
@@ -133,21 +132,15 @@ const InstructorProfilPage = () => {
                             {type}
                         </h5>
                         <div
-                            style={{
-                                height: '200px',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                border: '1px solid black',
-                                borderRadius: '5px',
-                                overflow: 'hidden',
-                            }}
+                            className="d-flex justify-content-center align-items-center border border-dark rounded overflow-hidden"
+                            style={{ height: '200px' }}
                             onClick={() => document && openDocument(document)} // L'ouverture de la modale se fait par le bouton "Agrandir"
                         >
                             {document ? (
                                 document.baseExtension !== "pdf" ? (
                                     <img
-                                        style={{ height: "100%", width: "auto", objectFit: "contain" }}
+                                        className="h-100 w-auto"
+                                        style={{ objectFit: "contain" }}
                                         src={`data:image/${document.baseExtension};base64, ${document.document}`}
                                         alt={type}
                                     />
@@ -155,7 +148,7 @@ const InstructorProfilPage = () => {
                                     <iframe
                                         src={`data:application/pdf;base64,${document.document}`}
                                         title={`Document PDF - ${type}`} // Ajout du titre unique pour l'iframe
-                                        style={{ width: "100%", height: "100%" }}
+                                        className="w-100 h-100"
                                     />
                                 )
                             ) : (
@@ -198,7 +191,7 @@ const InstructorProfilPage = () => {
                 <input
                     type="file"
                     ref={(el) => (cardRefs.current[type] = el)}
-                    style={{ display: 'none' }}
+                    className="d-none"
                     onChange={(e) => handleUpload(type, e.target.files)}
                 />
             </div>
@@ -230,23 +223,8 @@ const InstructorProfilPage = () => {
             </div>
 
             {selectedDocument && (
-                <div className="modal" style={{
-                    display: 'block',
-                    position: 'fixed',
-                    top: '0',
-                    left: '0',
-                    right: '0',
-                    bottom: '0',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    zIndex: 1050,
-                    overflowY: 'auto'
-                }}>
-                    <div className="modal-dialog" style={{
-                        maxWidth: '90%',
-                        marginTop: '10px',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                    }}>
+                <div className="modal bg-black bg-opacity-50" style={{ display: 'block' }}>
+                    <div className="modal-dialog mt-2" style={{ maxWidth: '90%' }}>
                         <div className="modal-content" style={{ height: '80vh' }}>
                             <div className="modal-header">
                                 <h5 className="modal-title">Document {selectedDocument.type}</h5>
@@ -255,7 +233,8 @@ const InstructorProfilPage = () => {
                             <div className="modal-body">
                                 {selectedDocument.baseExtension !== "pdf" ? (
                                     <img
-                                        style={{ width: "100%", height: "auto", objectFit: "contain" }}
+                                        className="w-100 h-auto"
+                                        style={{ objectFit: "contain" }}
                                         src={`data:image/${selectedDocument.baseExtension};base64, ${selectedDocument.document}`}
                                         alt={selectedDocument.type}
                                     />
@@ -263,7 +242,7 @@ const InstructorProfilPage = () => {
                                     <iframe
                                         src={`data:application/pdf;base64,${selectedDocument.document}`}
                                         title={`Document PDF - ${selectedDocument.type}`}
-                                        style={{ width: "100%", height: "100%" }}
+                                        className="w-100 h-100"
                                     />
                                 )}
                             </div>
