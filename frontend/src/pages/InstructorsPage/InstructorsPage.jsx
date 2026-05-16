@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Pour gérer la navigation
-import './InstructorsPage.css';
-import apiClient from '../../api/api-client';
-import SearchForm from '../../components/SearchForm/SearchForm';  // Ajustez le chemin d'importation si nécessaire
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/apiClient';
+import SearchForm from '../../components/SearchForm/SearchForm';
+import { formatPhoneDisplay, normalizePhone } from '../../utils/phoneUtils';
 
 const InstructorsPage = () => {
     const [instructors, setInstructors] = useState([]);
@@ -51,7 +51,7 @@ const InstructorsPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formattedSpeciality = formData.speciality.join(',');
-        const dataToSubmit = { ...formData, speciality: formattedSpeciality };
+        const dataToSubmit = { ...formData, speciality: formattedSpeciality, phoneNumber: normalizePhone(formData.phoneNumber) };
 
         try {
             if (editingInstructor) {
@@ -89,6 +89,8 @@ const InstructorsPage = () => {
                 updatedSpeciality = updatedSpeciality.filter(item => item !== value);
             }
             setFormData({ ...formData, speciality: updatedSpeciality });
+        } else if (name === 'phoneNumber') {
+            setFormData({ ...formData, phoneNumber: formatPhoneDisplay(value) });
         } else {
             setFormData({ ...formData, [name]: value });
         }
@@ -118,7 +120,7 @@ const InstructorsPage = () => {
             lastName: instructor.lastName,
             firstName: instructor.firstName,
             email: instructor.email,
-            phoneNumber: instructor.phoneNumber,
+            phoneNumber: formatPhoneDisplay(instructor.phoneNumber),
             adress: instructor.adress,
             speciality: instructor.speciality ? instructor.speciality.split(',').map(spec => spec.trim()) : []
         });
@@ -126,26 +128,20 @@ const InstructorsPage = () => {
     };
 
     // Fonction pour gérer la recherche
-    const handleSearch = (searchTerm, type) => {
-        if (searchTerm === "") {
+    const handleSearch = (searchTerm) => {
+        if (!searchTerm) {
             setFilteredInstructors(instructors);
             setIsSearchActive(false);
             return;
         }
 
-        if (type === 'Instructeur') {
-            const lowercasedTerm = searchTerm.toLowerCase();
-            const filtered = instructors.filter(instructor => 
-                instructor.lastName.toLowerCase().includes(lowercasedTerm) ||
-                instructor.firstName.toLowerCase().includes(lowercasedTerm)
-            );
-            setFilteredInstructors(filtered);
-            setIsSearchActive(true);
-        } else {
-            // Si la recherche concerne un étudiant ou une recherche générale, ne pas filtrer les instructeurs
-            setFilteredInstructors(instructors);
-            setIsSearchActive(false);
-        }
+        const lowercasedTerm = searchTerm.toLowerCase();
+        const filtered = instructors.filter(instructor =>
+            instructor.lastName.toLowerCase().startsWith(lowercasedTerm) ||
+            instructor.firstName.toLowerCase().startsWith(lowercasedTerm)
+        );
+        setFilteredInstructors(filtered.length > 0 ? filtered : instructors);
+        setIsSearchActive(filtered.length > 0);
     };
 
     // Fonction pour recharger la page
@@ -160,20 +156,16 @@ const InstructorsPage = () => {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center-title">Liste des Moniteurs</h1>
+            <h1 className="text-center mb-3">Liste des Moniteurs</h1>
             
             {/* Intégration du composant SearchForm */}
-            <SearchForm 
-                onSearch={handleSearch} 
-                instructors={instructors} 
-                students={[]} 
-                isSearchActive={isSearchActive}
-                reloadPage={reloadPage}
+            <SearchForm
+                onSearch={handleSearch}
             />
 
-            <div className="add-instructor-container">
+            <div className="text-center mt-4 mb-3">
                 <button
-                    className="btn btn-success mb-3 btn-add-instructor"
+                    className="btn btn-success"
                     onClick={() => setShowForm(!showForm)}
                 >
                     {showForm ? 'Annuler' : 'Ajouter Instructeur'}
@@ -189,60 +181,65 @@ const InstructorsPage = () => {
                         <form onSubmit={handleSubmit}>
                             <div className="row">
                                 <div className="col-md-6 mb-3">
+                                    <label className="form-label">Nom de famille</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         name="lastName"
-                                        placeholder="Nom"
+                                        placeholder="Ex : Dupont"
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         required
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
+                                    <label className="form-label">Prénom</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         name="firstName"
-                                        placeholder="Prénom"
+                                        placeholder="Ex : Jean"
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         required
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
+                                    <label className="form-label">Adresse e-mail</label>
                                     <input
                                         type="email"
                                         className="form-control"
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="jean.dupont@email.com"
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
+                                    <label className="form-label">Numéro de téléphone</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         name="phoneNumber"
-                                        placeholder="Téléphone"
+                                        placeholder="Ex : 06 12 34 56 78"
                                         value={formData.phoneNumber}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
+                                    <label className="form-label">Adresse</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         name="adress"
-                                        placeholder="Adresse"
+                                        placeholder="Ex : 1 rue de la Paix, Paris"
                                         value={formData.adress}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <div className="form-group">
+                                    <div className="mb-3">
                                         <label>Spécialités:</label>
                                         <div>
                                             <div className="form-check">
@@ -278,13 +275,13 @@ const InstructorsPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="btn-group-center mt-3">
-                                <button type="submit" className="btn btn-success btn-action">
+                            <div className="d-flex justify-content-center gap-2 mt-3">
+                                <button type="submit" className="btn btn-success">
                                     Ajouter
                                 </button>
                                 <button
                                     type="button"
-                                    className="btn btn-danger btn-action ml-2"
+                                    className="btn btn-danger ms-2"
                                     onClick={() => setShowForm(false)}
                                 >
                                     Annuler
@@ -338,60 +335,65 @@ const InstructorsPage = () => {
                                                         <div className="row">
                                                             {/* Formulaire d'édition */}
                                                             <div className="col-md-6 mb-3">
+                                                                <label className="form-label">Nom de famille</label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     name="lastName"
-                                                                    placeholder="Nom"
+                                                                    placeholder="Ex : Dupont"
                                                                     value={formData.lastName}
                                                                     onChange={handleChange}
                                                                     required
                                                                 />
                                                             </div>
                                                             <div className="col-md-6 mb-3">
+                                                                <label className="form-label">Prénom</label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     name="firstName"
-                                                                    placeholder="Prénom"
+                                                                    placeholder="Ex : Jean"
                                                                     value={formData.firstName}
                                                                     onChange={handleChange}
                                                                     required
                                                                 />
                                                             </div>
                                                             <div className="col-md-6 mb-3">
+                                                                <label className="form-label">Adresse e-mail</label>
                                                                 <input
                                                                     type="email"
                                                                     className="form-control"
                                                                     name="email"
-                                                                    placeholder="Email"
+                                                                    placeholder="jean.dupont@email.com"
                                                                     value={formData.email}
                                                                     onChange={handleChange}
                                                                     required
                                                                 />
                                                             </div>
                                                             <div className="col-md-6 mb-3">
+                                                                <label className="form-label">Numéro de téléphone</label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     name="phoneNumber"
-                                                                    placeholder="Téléphone"
+                                                                    placeholder="Ex : 06 12 34 56 78"
                                                                     value={formData.phoneNumber}
                                                                     onChange={handleChange}
                                                                 />
                                                             </div>
                                                             <div className="col-md-6 mb-3">
+                                                                <label className="form-label">Adresse</label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     name="adress"
-                                                                    placeholder="Adresse"
+                                                                    placeholder="Ex : 1 rue de la Paix, Paris"
                                                                     value={formData.adress}
                                                                     onChange={handleChange}
                                                                 />
                                                             </div>
                                                             <div className="col-md-6 mb-3">
-                                                                <div className="form-group">
+                                                                <div className="mb-3">
                                                                     <label>Spécialités:</label>
                                                                     <div>
                                                                         <div className="form-check">
@@ -427,13 +429,13 @@ const InstructorsPage = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="btn-group-center mt-3">
-                                                            <button type="submit" className="btn btn-success btn-action">
+                                                        <div className="d-flex justify-content-center gap-2 mt-3">
+                                                            <button type="submit" className="btn btn-success">
                                                                 Modifier
                                                             </button>
                                                             <button
                                                                 type="button"
-                                                                className="btn btn-danger btn-action ml-2"
+                                                                className="btn btn-danger ms-2"
                                                                 onClick={() => {
                                                                     setShowForm(false);
                                                                     setEditingInstructor(null);
@@ -456,18 +458,18 @@ const InstructorsPage = () => {
                                     </td>
                                     <td>{instructor.firstName}</td>
                                     <td>{instructor.email}</td>
-                                    <td>{instructor.phoneNumber}</td>
+                                    <td>{formatPhoneDisplay(instructor.phoneNumber)}</td>
                                     <td>{instructor.adress}</td>
                                     <td>{instructor.speciality}</td>
                                     <td>
                                         <button
-                                            className="btn btn-modifier"
+                                            className="btn btn-primary"
                                             onClick={() => handleEdit(instructor)}
                                         >
                                             Modifier
                                         </button>
                                         <button
-                                            className="btn btn-danger ml-2"
+                                            className="btn btn-danger ms-2"
                                             onClick={() => handleDelete(instructor.id)}
                                         >
                                             Supprimer
