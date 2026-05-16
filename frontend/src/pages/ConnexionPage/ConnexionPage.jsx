@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiClient from '../../api/api-client';
+import apiClient from '../../api/apiClient';
 
 const ConnexionPage = () => {
   const [admin, setAdmin] = useState({
