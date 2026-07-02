@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Student {
+  id                     Int               @id @default(autoincrement())
+  lastName               String
+  firstName              String
+  email                  String            @unique
+  phoneNumber            String
+  birthdate              DateTime
+  formationStart         DateTime
+  formationDesiredEnd    DateTime?
+  formationMaxEndingDate DateTime?
+  formationMaxDuration   Int               @default(350)
+  isRemote               Boolean           @default(false)
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  documents              StudentDocument[]
+  remarks                Remark[]
+
+  @@map("students")
+}
+
+model Instructor {
+  id          Int                  @id @default(autoincrement())
+  lastName    String
+  firstName   String
+  email       String               @unique
+  phoneNumber String               @unique
+  adress      String?
+  speciality  String?
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  documents   InstructorDocument[]
+  remarks     Remark[]
+
+  @@map("instructors")
+}
+
+model Remark {
+  id           Int         @id @default(autoincrement())
+  content      String
+  studentId    Int?
+  instructorId Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  student      Student?    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructor   Instructor? @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@map("remarks")
+}
+
+model StudentDocument {
+  id              Int       @id @default(autoincrement())
+  convocationTime DateTime?
+  type            String?
+  document        Bytes?
+  studentId       Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  student         Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@map("studentsdocuments")
+}
+
+model InstructorDocument {
+  id            Int        @id @default(autoincrement())
+  type          String?
+  baseExtension String
+  document      Bytes
+  instructorId  Int
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  instructor    Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@map("instructorsdocuments")
+}
+
+model EmailMessage {
+  id        Int        @id @default(autoincrement())
+  messageId String     @unique @db.VarChar(191)
+  studentId String     @db.VarChar(64)
+  recipient String     @db.VarChar(191)
+  template  String?    @db.VarChar(64)
+  sentAt    DateTime?
+  meta      Json       @default("{}")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  open      EmailOpen?
+
+  @@map("email_messages")
+}
+
+model EmailOpen {
+  id            Int          @id @default(autoincrement())
+  messageId     String       @unique @db.VarChar(191)
+  studentId     String       @db.VarChar(64)
+  emailHash     String       @db.VarChar(64)
+  opensCount    Int          @default(0) @db.UnsignedInt
+  firstOpenedAt DateTime?
+  lastOpenedAt  DateTime?
+  userAgents    Json         @default("[]")
+  ips           Json         @default("[]")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  message       EmailMessage @relation(fields: [messageId], references: [messageId])
+
+  @@map("email_opens")
+}
