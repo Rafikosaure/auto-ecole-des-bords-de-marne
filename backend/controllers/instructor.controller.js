@@ -1,195 +1,143 @@
 const fs = require('fs');
-const { Instructor, InstructorsDocument, Remark } = require("../models");
-const { ENV } = require("../config/env.js");
-const { errorHandler,
-    createError,
-    contexts,
-    errors } = require('../middlewares/errorHandler.js');
 const path = require('path');
+const { prisma } = require("../prisma/client.js");
+const { ENV } = require("../config/env.js");
+const { errorHandler, createError, contexts, errors } = require('../middlewares/errorHandler.js');
 const { processImage } = require('../middlewares/processImage.js');
+
+const INSTRUCTOR_INCLUDE = { documents: true, remarks: true };
 
 const addInstructor = async (req, res, next) => {
     try {
-        // SQL create query
-        await Instructor.create({
-            ...req.body,
-        });
+        await prisma.instructor.create({ data: { ...req.body } });
         res.status(201).json(`Instructor ${req.body.lastName} ${req.body.firstName} has been registered!`);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
     }
-}
+};
 
 const getAllInstructors = async (req, res, next) => {
     try {
-        // SQL Select query to get all instructors
-        const instructors = await Instructor.findAll({
-            // includes values from other tables
-            include: [
-                {
-                    model: InstructorsDocument,
-                    as: "documents"
-                },
-                {
-                    model: Remark,
-                    as: "remarks"
-                }
-            ],
-            order: [['lastName', 'ASC']],
+        const instructors = await prisma.instructor.findMany({
+            include: INSTRUCTOR_INCLUDE,
+            orderBy: { lastName: 'asc' },
         });
-        // converts documents buffer to base64 for an easy frontend integration
-        instructors.map(instructor => {
-            instructor.dataValues.documents.map(instructorsDocument => {
-                data = instructorsDocument.dataValues;
-                data.document = Buffer.from(data.document).toString("base64");
+        instructors.forEach(instructor => {
+            instructor.documents.forEach(doc => {
+                if (doc.document) doc.document = doc.document.toString("base64");
             });
         });
         res.status(200).json(instructors);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
     }
-}
+};
 
 const getInstructor = async (req, res, next) => {
     try {
-        // SQL Select query to get one instructor by ID
-        const instructor = await Instructor.findByPk(req.params.id,
-            {
-                // includes values from other tables
-                include: [
-                    {
-                        model: InstructorsDocument,
-                        as: "documents"
-                    },
-                    {
-                        model: Remark,
-                        as: "remarks"
-                    }
-                ]
-            }
-        );
-        // error if no instructor is found given the id
+        const instructor = await prisma.instructor.findUnique({
+            where: { id: parseInt(req.params.id) },
+            include: INSTRUCTOR_INCLUDE,
+        });
         if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
-        // converts documents buffer to base64 for an easy frontend integration
-        instructor.dataValues.documents.map(instructorsDocument => {
-            data = instructorsDocument.dataValues;
-            data.document = Buffer.from(data.document).toString("base64");
+        instructor.documents.forEach(doc => {
+            if (doc.document) doc.document = doc.document.toString("base64");
         });
         res.status(200).json(instructor);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
     }
-}
+};
 
 const updateInstructor = async (req, res, next) => {
     try {
-        // SQL Select query to get one instructor by ID
-        const instructor = await Instructor.findByPk(req.params.id);
-        // return an error if no instructor found
-        if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
-        // SQL Select query to update selected instructor with request's body
-        await instructor.update(req.body);
+        const exists = await prisma.instructor.findUnique({ where: { id: parseInt(req.params.id) } });
+        if (!exists) throw createError(req, errors.notExist, contexts.instructor);
+        const instructor = await prisma.instructor.update({
+            where: { id: parseInt(req.params.id) },
+            data: { ...req.body },
+        });
         res.status(200).json({ message: "instructor updated", instructor });
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
     }
-}
+};
 
 const deleteInstructor = async (req, res, next) => {
     try {
-        // SQL Delete query to delete one instructor by ID
-        const instructor = await Instructor.destroy({ where: { id: req.params.id } });
-        // return error if instructor not found
-        if (!instructor) throw createError(req, errors.notExist, contexts.instructor);
+        const exists = await prisma.instructor.findUnique({ where: { id: parseInt(req.params.id) } });
+        if (!exists) throw createError(req, errors.notExist, contexts.instructor);
+        await prisma.instructor.delete({ where: { id: parseInt(req.params.id) } });
         res.status(200).json({ message: "Instructor Deleted" });
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
     }
-}
+};
 
 const addDocument = async (req, res, next) => {
     try {
-        // checks if an instructorId is provided with the request
         if (!req.body.instructorId) throw createError(req, errors.undefinedKey, contexts.instructorDocuments);
-        // checks if instructorId is valid
-        if (!await Instructor.findByPk(req.body.instructorId)) throw createError(req, errors.notExist, contexts.instructor);
-        // checks if any file has been sent with the request
-        if (req.files.length == 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
-        // maps over the req.files.filenames array that stores the filenames of the file recieved
-        // the actual files are then found in the assets/instructors directory
+        const instructorExists = await prisma.instructor.findUnique({ where: { id: parseInt(req.body.instructorId) } });
+        if (!instructorExists) throw createError(req, errors.notExist, contexts.instructor);
+        if (req.files.length === 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
+
         for (const filename of req.files.filenames) {
-            // full path to file
             const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
             const index = req.files.filenames.indexOf(filename);
-            // SQL create query
-            await InstructorsDocument.create({
-                ...req.body,
-                // type will be null if a filesType stringified ARRAY is not provided
-                // ?. are here to avoid errors if the filesType stringified ARRAY is not provided
-                // req.files.filenames.indexOf(filename) gets the index of the current file in the req.files.filenames object
-                type: eval(req.body?.filesType)?.[index] ?? null,
-                // resizes the file
-                document: await processImage(file, req.files.extensions[index]),
-                baseExtension: req.files.extensions[index]
+            await prisma.instructorDocument.create({
+                data: {
+                    instructorId: parseInt(req.body.instructorId),
+                    type: eval(req.body?.filesType)?.[index] ?? null,
+                    document: await processImage(file, req.files.extensions[index]),
+                    baseExtension: req.files.extensions[index],
+                },
             });
-            // deletes the file from instructor folder
             fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, filename));
         }
         return res.status(200).json({ message: "The files have been saved" });
     } catch (error) {
-        // wipes the entire instructor folder in case an error occured
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).forEach(file => {
             fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
-        })
+        });
         return errorHandler(req, res, error, contexts.instructorDocuments);
     }
-}
+};
 
-const updateDocument = async (req, res, any) => {
+const updateDocument = async (req, res, next) => {
     try {
-        // checks if any file has been sent with the request
-        if (req.files.length == 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
-        // SQL select query
-        const document = await InstructorsDocument.findByPk(req.params.id);
+        if (req.files.length === 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
+        const document = await prisma.instructorDocument.findUnique({ where: { id: parseInt(req.params.id) } });
         if (!document) throw createError(req, errors.notExist, contexts.instructorDocuments);
-        // full path to file
         const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + req.files.filenames[0]);
-        await document.update({
-            ...req.body,
-            // resizes the file
-            document: await processImage(file, req.files.extensions[0]),
-            baseExtension: req.files.extensions[0]
+        await prisma.instructorDocument.update({
+            where: { id: parseInt(req.params.id) },
+            data: {
+                ...req.body,
+                document: await processImage(file, req.files.extensions[0]),
+                baseExtension: req.files.extensions[0],
+            },
         });
-
-        // deletes the file from instructor folder
         fs.rmSync(path.join(ENV.INSTRUCTORSDOCUMENTSPATH, req.files.filenames[0]));
         return res.status(200).json({ message: "The document has been updated" });
     } catch (error) {
-        // wipes the entire instructor folder in case an error occured
-        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).map(file => {
+        fs.readdirSync(ENV.INSTRUCTORSDOCUMENTSPATH).forEach(file => {
             fs.rmSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + file);
-        })
+        });
         return errorHandler(req, res, error, contexts.instructorDocuments);
     }
-}
+};
 
 const deleteDocument = async (req, res, next) => {
     try {
-        // checks if the document exists and throws an error if not
-        const document = await InstructorsDocument.findByPk(req.params.id);
+        const document = await prisma.instructorDocument.findUnique({ where: { id: parseInt(req.params.id) } });
         if (!document) throw createError(req, errors.notExist, contexts.instructorDocuments);
-        // SQL Delete request
-        await document.destroy({
-            ...req.body,
-        });
+        await prisma.instructorDocument.delete({ where: { id: parseInt(req.params.id) } });
         return res.status(200).json({ message: "The document has been deleted" });
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructorDocuments);
     }
-}
+};
 
-
-// exports
 exports.addInstructor = addInstructor;
 exports.getAllInstructors = getAllInstructors;
 exports.getInstructor = getInstructor;
