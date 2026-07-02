@@ -1,3 +1,5 @@
+const { PrismaClientKnownRequestError } = require('@prisma/client/runtime/library');
+
 // errors references for createError switch case
 const errors = {
     notExist: "notExist",
@@ -42,12 +44,17 @@ const errorHandler = (req, res, error, context) => {
     const target = context == "Admin" && req.body.username
                     || (context == "Student" || context == "Instructor") && `${req.body.lastName} ${req.body.firstName}`
     // responses
+    if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002')
+            return res.status(400).json({ error: error.message, message: `${context} ${target} already exists` });
+        if (error.code === 'P2003')
+            return res.status(409).json({ error: error.message, message: 'Invalid body provided' });
+        if (error.code === 'P2025')
+            return res.status(404).json({ error: error.name, message: `${context} does not exist` });
+        return res.status(500).json({ error: error.name, message: 'An error has occured' });
+    }
+
     switch (error.name) {
-        case "SequelizeUniqueConstraintError":
-            return res.status(400).json({error: error.message, message: `${context} ${target} already exists`});
-        case "SequelizeValidationError":
-        case "SequelizeForeignKeyConstraintError":
-            error.status ??= 409;
         case "noFileProvided":
             return res.status(error.status).json({error: error.message, message: `Invalid body provided`});
         case "DoesNotExistInDb":
