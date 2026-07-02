@@ -13,12 +13,13 @@
         "multer": "^2.0.2",
         "mysql2": "^3.14.3",
         "nodemailer": "^9.0.1",
-        "sequelize": "^3.30.0",
         "sharp": "^0.34.3"
     },
     "devDependencies": {
         "@playwright/test": "^1.55.0",
-        "@types/node": "^24.3.0"
+        "@prisma/client": "^6.19.3",
+        "@types/node": "^24.3.0",
+        "prisma": "^6.19.3"
     },
     "scripts": {
         "start": "node server.js",
