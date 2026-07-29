@@ -1,7 +1,15 @@
 // imports
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
+
+// Chemin (absolu, local au projet) où Playwright doit chercher/installer ses
+// navigateurs. Doit être appliqué à process.env AVANT le premier `require('playwright')`
+// de l'application (Playwright lit cette variable à l'import) — c'est pourquoi
+// c'est fait ici, dans le module chargé en tout premier par le reste du code.
+const PLAYWRIGHT_BROWSERS_PATH = process.env.PLAYWRIGHT_BROWSERS_PATH || path.join(__dirname, "..", ".cache", "browsers");
+process.env.PLAYWRIGHT_BROWSERS_PATH = PLAYWRIGHT_BROWSERS_PATH;
 
 // stores env variables into process.env
 const ENV = {
@@ -13,7 +21,6 @@ const ENV = {
   DBUSER: process.env.DBUSER,
   DBPASSWORD: process.env.DBPASSWORD,
   DBDIALECT: process.env.DBDIALECT,
-  TRACKING_SECRET: process.env.TRACKING_SECRET || 'change-me',
   TOKEN: process.env.TOKEN,
   RESETTOKEN: process.env.RESETTOKEN,
   FRONTENDROUTE: process.env.FRONTENDROUTE,
@@ -29,11 +36,10 @@ const ENV = {
   GMAIL_APP_PASSWORD: process.env.GMAIL_APP_PASSWORD,
   EMAIL_HOST: process.env.EMAIL_HOST,
   EMAIL_PORT: process.env.EMAIL_PORT,
-  EMAIL_TRACKING_ENDPOINT: process.env.EMAIL_TRACKING_ENDPOINT,
   COMPLETE_IMAGES_SIGNATURES_PATH: process.env.COMPLETE_IMAGES_SIGNATURES_PATH,
 
   // Chemin d'installation de playwright
-  PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH || './.cache/browsers',
+  PLAYWRIGHT_BROWSERS_PATH,
 }
 
 // exports

@@ -1,6 +1,7 @@
 // imports
 const { app } = require("./app")
 const { ENV } = require("./config/env")
+require("./models/index.js") // connecte à la BDD et crée l'administrateur par défaut si besoin
 
 // sets the server port
 const PORT =  ENV.SERVERPORT || 8000;

@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -91,36 +91,4 @@ model InstructorDocument {
   instructor    Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
   @@map("instructorsdocuments")
-}
-
-model EmailMessage {
-  id        Int        @id @default(autoincrement())
-  messageId String     @unique @db.VarChar(191)
-  studentId String     @db.VarChar(64)
-  recipient String     @db.VarChar(191)
-  template  String?    @db.VarChar(64)
-  sentAt    DateTime?
-  meta      Json       @default("{}")
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  open      EmailOpen?
-
-  @@map("email_messages")
-}
-
-model EmailOpen {
-  id            Int          @id @default(autoincrement())
-  messageId     String       @unique @db.VarChar(191)
-  studentId     String       @db.VarChar(64)
-  emailHash     String       @db.VarChar(64)
-  opensCount    Int          @default(0) @db.UnsignedInt
-  firstOpenedAt DateTime?
-  lastOpenedAt  DateTime?
-  userAgents    Json         @default("[]")
-  ips           Json         @default("[]")
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  message       EmailMessage @relation(fields: [messageId], references: [messageId])
-
-  @@map("email_opens")
 }

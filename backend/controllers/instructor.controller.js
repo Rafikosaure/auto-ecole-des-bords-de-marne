@@ -81,13 +81,20 @@ const addDocument = async (req, res, next) => {
         if (!instructorExists) throw createError(req, errors.notExist, contexts.instructor);
         if (req.files.length === 0) throw createError(req, errors.noFileProvided, contexts.instructorDocuments);
 
+        let filesType = null;
+        try {
+            filesType = req.body?.filesType ? JSON.parse(req.body.filesType) : null;
+        } catch {
+            filesType = null;
+        }
+
         for (const filename of req.files.filenames) {
             const file = fs.readFileSync(ENV.INSTRUCTORSDOCUMENTSPATH + "/" + filename);
             const index = req.files.filenames.indexOf(filename);
             await prisma.instructorDocument.create({
                 data: {
                     instructorId: parseInt(req.body.instructorId),
-                    type: eval(req.body?.filesType)?.[index] ?? null,
+                    type: filesType?.[index] ?? null,
                     document: await processImage(file, req.files.extensions[index]),
                     baseExtension: req.files.extensions[index],
                 },

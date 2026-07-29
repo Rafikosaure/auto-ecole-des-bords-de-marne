@@ -6,5 +6,6 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/.cache/
 /tests/
 /tests-examples/

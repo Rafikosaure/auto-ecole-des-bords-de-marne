@@ -127,54 +127,24 @@ const deleteDocumentsAfterContractGeneration = async (req, res) => {
 
 
 
-const addAllDocuments = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
+// Ces routes CRUD génériques pour StudentDocument n'ont jamais été implémentées
+// (aucune n'envoyait de réponse, laissant tout appelant bloqué jusqu'au timeout).
+// La gestion réelle des documents étudiant passe par uploadOneImage,
+// downloadOneDocument et deleteDocumentsAfterContractGeneration ci-dessus.
+// En l'absence de spécification pour ces routes, on répond explicitement
+// "non implémenté" plutôt que de laisser la requête sans réponse.
+const notImplemented = (req, res) => {
+    res.status(501).json({ message: "Cette fonctionnalité n'est pas implémentée." });
 }
 
-const addDocument = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
-
-const getDocument = async (req, res, next) => {
-    try {
-    } catch (e) {
-
-    }
-}
-
-const getAllDocuments = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
-
-const updateAllDocuments = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
-
-const updateDocument = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
-
-const deleteAllDocuments = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
-
-const deleteDocument = async (req, res, next) => {
-    try {
-    } catch (e) {        
-    }
-}
+const addAllDocuments = notImplemented;
+const addDocument = notImplemented;
+const getDocument = notImplemented;
+const getAllDocuments = notImplemented;
+const updateAllDocuments = notImplemented;
+const updateDocument = notImplemented;
+const deleteAllDocuments = notImplemented;
+const deleteDocument = notImplemented;
 
 
 // exports

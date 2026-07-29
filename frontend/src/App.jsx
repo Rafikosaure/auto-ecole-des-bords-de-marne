@@ -5,12 +5,12 @@ import {
 } from "react-router-dom";
 
 import Template from "./components/Template/Template";
-import OneStudentPage from "./pages/OneStudentPage/OneStudentPage";
-import InstructorsPage from "./pages/InstructorsPage/InstructorsPage";
-import AdminPage from "./pages/AdminPage/AdminPage";
-import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
-import StudentPage from "./pages/StudentsPage/StudentsPage";
-import InstructorProfilPage from "./pages/InstructorProfilPage/InstructorProfilPage";
+import OneStudent from "./features/students/OneStudent";
+import InstructorsPage from "./features/instructors/InstructorsPage";
+import AdminPage from "./features/admins/AdminPage";
+import ConnexionPage from "./features/auth/ConnexionPage";
+import StudentsPage from "./features/students/StudentsPage";
+import InstructorProfilPage from "./features/instructors/InstructorProfilPage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       },
       {
         path: "students",
-        element: <StudentPage />,
+        element: <StudentsPage />,
       },
       {
         path: "instructors",
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "student/:id",
-        element: <OneStudentPage />,
+        element: <OneStudent />,
       },
       {
         path: "admin",

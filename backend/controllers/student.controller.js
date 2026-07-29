@@ -1,11 +1,12 @@
 const { prisma } = require("../prisma/client.js");
 const { errorHandler, createError, contexts, errors } = require("../middlewares/errorHandler.js");
+const { normalizeStudentPayload } = require("../utils/normalizeDates.js");
 
 const STUDENT_INCLUDE = { documents: true, remarks: true };
 
 const addStudent = async (req, res, next) => {
     try {
-        await prisma.student.create({ data: { ...req.body } });
+        await prisma.student.create({ data: normalizeStudentPayload(req.body) });
         res.status(201).json(`Student ${req.body.lastName} ${req.body.firstName} has been registered!`);
     } catch (error) {
         return errorHandler(req, res, error, contexts.student);
@@ -70,7 +71,7 @@ const updateStudent = async (req, res, next) => {
         if (!exists) throw createError(req, errors.notExist, contexts.student);
         const student = await prisma.student.update({
             where: { id: parseInt(req.params.id) },
-            data: { ...req.body },
+            data: normalizeStudentPayload(req.body),
         });
         res.status(200).json({ message: "Student updated", student });
     } catch (error) {

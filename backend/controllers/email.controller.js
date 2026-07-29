@@ -5,24 +5,11 @@ const { emailRelaunch } = require('../models/emails/relaunchEmail')
 const { emailConvocPermis } = require('../models/emails/convocPermisEmail')
 const { transporter } = require('../utils/transporter')
 const { datetimeConfig } = require('../utils/dateTimeConfig')
-const { verifySignature, hashEmail, anonymizeIp } = require('../utils/tracking');
-const crypto = require('crypto');
-const { signParams } = require('../utils/tracking');
-const { prisma } = require('../prisma/client.js');
-
-const PIXEL = Buffer.from(
-  '89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000a49444154789c630001000101000018dddc0d0000000049454e44ae426082',
-  'hex'
-);
-
 
 exports.sendMail = async (req, res) => {
     try {
         const to = req.body.studentData.studentEmail;
-        const messageId = crypto.randomUUID();
         const sid = String(req.params.studentId);
-        const base = `${ENV.BACKENDROUTE}/api/tracking/tracking`;
-        const sig = signParams({ mid: messageId, sid });
         let emailSentToastMessage;
         const datetime = datetimeConfig();
 
@@ -95,79 +82,3 @@ const sendingProcess = async (dataRequest, sid, sendMailOptions) => {
     }
     return data.accepted.includes(dataRequest.studentData.studentEmail);
 }
-
-
-exports.getTrackingStats = async (req, res) => {
-    try {
-        const messages = await prisma.emailMessage.findMany({
-            where: { studentId: String(req.params.studentId) },
-            include: { open: true },
-            orderBy: { sentAt: 'desc' },
-        });
-        res.status(200).json({ stats: messages });
-    } catch (err) {
-        console.error('[getTrackingStats] erreur:', err);
-        res.status(500).json({ message: 'Impossible de récupérer les statistiques de tracking.' });
-    }
-};
-
-exports.trackEmailOpen = async (req, res) => {
-    const { mid, sid, e, sig } = req.query;
-
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Content-Length', PIXEL.length);
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
-    res.end(PIXEL);
-
-    if (!mid || !sid || !e || !verifySignature({ mid, sid, sig })) {
-        const ipRaw = (req.headers['x-forwarded-for'] || req.ip || '').toString().split(',')[0].trim();
-        console.warn('[trackEmailOpen] requête bloquée — signature invalide ou paramètres manquants', {
-            mid: mid || '(absent)', sid: sid || '(absent)',
-            hasEmail: !!e, hasSig: !!sig,
-            ip: anonymizeIp(ipRaw), ua: req.get('user-agent') || 'unknown',
-            at: new Date().toISOString(),
-        });
-        return;
-    }
-
-    const now = new Date();
-    const ua = req.get('user-agent') || 'unknown';
-    const ipRaw = (req.headers['x-forwarded-for'] || req.ip || '').toString().split(',')[0].trim();
-    const ip = anonymizeIp(ipRaw);
-    const emailHash = hashEmail(e);
-
-    try {
-        await prisma.$transaction(async (tx) => {
-            const row = await tx.emailOpen.findUnique({ where: { messageId: mid } });
-
-            if (!row) {
-                await tx.emailOpen.create({
-                    data: {
-                        messageId: mid, studentId: sid, emailHash,
-                        opensCount: 1, firstOpenedAt: now, lastOpenedAt: now,
-                        userAgents: [ua], ips: [ip],
-                    },
-                });
-            } else {
-                const nextAgents = Array.isArray(row.userAgents) ? [...row.userAgents] : [];
-                const nextIps = Array.isArray(row.ips) ? [...row.ips] : [];
-                if (ua && !nextAgents.includes(ua)) nextAgents.push(ua);
-                if (ip && !nextIps.includes(ip)) nextIps.push(ip);
-
-                await tx.emailOpen.update({
-                    where: { messageId: mid },
-                    data: {
-                        opensCount: row.opensCount + 1,
-                        lastOpenedAt: now,
-                        userAgents: nextAgents,
-                        ips: nextIps,
-                    },
-                });
-            }
-        });
-    } catch (err) {
-        console.error('[trackEmailOpen] DB error:', err);
-    }
-};

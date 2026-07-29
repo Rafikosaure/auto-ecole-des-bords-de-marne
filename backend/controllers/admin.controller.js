@@ -37,9 +37,12 @@ const updateAdmin = async (req, res, next) => {
     try {
         const exists = await prisma.admin.findUnique({ where: { id: parseInt(req.params.id) } });
         if (!exists) throw createError(req, errors.notExist, contexts.admin);
+        // Mot de passe optionnel : laissé vide, il reste inchangé (pas de re-hachage).
+        const { password, ...rest } = req.body;
+        const data = password ? { ...rest, password: await passwordHashing(password) } : rest;
         const admin = await prisma.admin.update({
             where: { id: parseInt(req.params.id) },
-            data: { ...req.body, password: await passwordHashing(req.body.password) },
+            data,
             select: ADMIN_SELECT,
         });
         res.status(200).json({ message: "admin updated", admin });

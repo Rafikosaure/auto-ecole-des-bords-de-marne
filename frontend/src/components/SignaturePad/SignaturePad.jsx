@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
 import config from "../../config.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./SignaturePad.css";
@@ -92,11 +91,16 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
     };
 
     try {
-      await axios.post(`${config.apiBaseUrl}/document/uploadOneDocument/${student.id}`, signatureData, {
+      const response = await fetch(`${config.apiBaseUrl}/document/uploadOneDocument/${student.id}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-        }
+        },
+        body: JSON.stringify(signatureData),
       });
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
       setNumberOfComponent(numberOfComponent + 1);
     } catch (error) {
       console.error(error);

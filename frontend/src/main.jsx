@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { store } from './redux/store';
-import { Provider } from 'react-redux';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/queryClient';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <App />
       <ToastContainer
         position="top-right"
@@ -27,6 +27,6 @@ root.render(
           fontSize: '14px'
         }}
       />
-    </Provider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

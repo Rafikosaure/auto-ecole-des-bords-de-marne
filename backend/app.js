@@ -34,10 +34,6 @@ app.options('*', cors());
 app.use('/contract-signatures', express.static(path.join(__dirname, './assets/contractImages')));
 app.use('/instructors-documents', express.static(path.join(__dirname, './assets/instructorsDocuments')));
 
-// EMAIL TRACKING
-app.use('/api/tracking', emailRouter);
-app.set('trust proxy', true);
-
 // URLS API PREFIX
 app.use("/api/student", studentRouter);
 app.use("/api/instructor", instructorRouter);
