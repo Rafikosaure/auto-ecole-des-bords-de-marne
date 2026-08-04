@@ -1,5 +1,4 @@
 import './ContractPages.css'
-import { useState, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import TableGrid from './pagesImages/tableGrid.png'
 import config from '../../../config'
@@ -7,15 +6,7 @@ import config from '../../../config'
 export default function ContractPage2({ currentPageNumber, student }) {
     const { register, watch } = useFormContext()
 
-    const [pageDisplay, setPageDisplay] = useState('block')
-
-    useEffect(() => {
-        if (currentPageNumber === 2) {
-            setPageDisplay('block')
-        } else {
-            setPageDisplay('none')
-        }
-    }, [pageDisplay, currentPageNumber])
+    const pageDisplay = currentPageNumber === 2 ? 'block' : 'none'
 
     const initialsPage2 = watch('fileData.studentContractData.initialsOptions.ifInitialed_page2')
 

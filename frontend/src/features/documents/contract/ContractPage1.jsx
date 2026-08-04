@@ -1,20 +1,11 @@
 import './ContractPages.css'
-import { useState, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import config from '../../../config'
 
 export default function ContractPage1({ currentPageNumber, student }) {
     const { register, watch } = useFormContext()
 
-    const [pageDisplay, setPageDisplay] = useState('block')
-
-    useEffect(() => {
-        if (currentPageNumber === 1) {
-            setPageDisplay('block')
-        } else {
-            setPageDisplay('none')
-        }
-    }, [pageDisplay, currentPageNumber])
+    const pageDisplay = currentPageNumber === 1 ? 'block' : 'none'
 
     const initialsPage1 = watch('fileData.studentContractData.initialsOptions.ifInitialed_page1')
 

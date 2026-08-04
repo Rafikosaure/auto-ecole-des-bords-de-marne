@@ -1,5 +1,5 @@
 import './ContractPages.css'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import SecondTable from './pagesImages/secondTable.png'
 import config from '../../../config'
@@ -7,20 +7,12 @@ import config from '../../../config'
 export default function ContractPage5({ currentPageNumber, datetime, student }) {
     const { register, watch } = useFormContext()
 
-    const [pageDisplay, setPageDisplay] = useState('block')
+    const pageDisplay = currentPageNumber === 5 ? 'block' : 'none'
     // Bascules d'aperçu local uniquement : ces cases ne font pas partie du payload
     // envoyé au backend (contratStagiaire.ejs affiche ces deux signatures sans
     // condition), elles ne servent qu'à prévisualiser les images déjà uploadées.
     const [legalRepresent, setLegalRepresent] = useState(false)
     const [entrepriseSignatureAndStamp, setEntrepriseSignatureAndStamp] = useState(false)
-
-    useEffect(() => {
-        if (currentPageNumber === 5) {
-            setPageDisplay('block')
-        } else {
-            setPageDisplay('none')
-        }
-    }, [pageDisplay, currentPageNumber])
 
     const initialsPage5 = watch('fileData.studentContractData.initialsOptions.ifInitialed_page5')
     const studentSignature = watch('fileData.studentContractData.isReadAndApproved')

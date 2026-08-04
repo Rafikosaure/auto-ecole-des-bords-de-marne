@@ -20,18 +20,21 @@ const StudentsPage = () => {
 
   const students = useMemo(() => pageData?.students ?? [], [pageData]);
   const totalPages = pageData?.totalPages ?? 0;
+  const displayedStudents = isSearchActive ? filteredStudents : students;
 
-  useEffect(() => {
-    if (!isSearchActive) {
-      setFilteredStudents(students);
-    }
-  }, [students, isSearchActive]);
+  // Réinitialise l'index surligné dès que la liste affichée change, sans
+  // passer par un Effect (cf. https://react.dev/learn/you-might-not-need-an-effect
+  // -> "Adjusting some state when a prop changes").
+  const [prevDisplayedStudents, setPrevDisplayedStudents] = useState(displayedStudents);
+  if (displayedStudents !== prevDisplayedStudents) {
+    setPrevDisplayedStudents(displayedStudents);
+    setHighlightedCardIndex(-1);
+  }
 
   const handleSearch = (query) => {
     const trimmed = query ? query.trim() : '';
 
     if (!trimmed) {
-      setFilteredStudents(students);
       setIsSearchActive(false);
       return;
     }
@@ -45,7 +48,6 @@ const StudentsPage = () => {
     });
 
     if (filtered.length === 0) {
-      setFilteredStudents(students);
       setIsSearchActive(false);
     } else {
       setFilteredStudents(filtered);
@@ -54,50 +56,46 @@ const StudentsPage = () => {
   };
 
   useEffect(() => {
-    setHighlightedCardIndex(-1);
-  }, [filteredStudents]);
-
-  useEffect(() => {
     const handleKeyDown = (e) => {
-      if (filteredStudents.length === 0) return;
+      if (displayedStudents.length === 0) return;
 
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setHighlightedCardIndex((prev) =>
-          prev < filteredStudents.length - 1 ? prev + 1 : 0
+          prev < displayedStudents.length - 1 ? prev + 1 : 0
         );
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         setHighlightedCardIndex((prev) =>
-          prev > 0 ? prev - 1 : filteredStudents.length - 1
+          prev > 0 ? prev - 1 : displayedStudents.length - 1
         );
       } else if (e.key === 'Enter' && highlightedCardIndex >= 0) {
         if (document.activeElement?.tagName === 'INPUT') return;
-        navigate(`/student/${filteredStudents[highlightedCardIndex].id}`);
+        navigate(`/student/${displayedStudents[highlightedCardIndex].id}`);
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [filteredStudents, highlightedCardIndex, navigate]);
+  }, [displayedStudents, highlightedCardIndex, navigate]);
 
   const handleCardKeyDown = (e) => {
-    if (filteredStudents.length === 0) return;
+    if (displayedStudents.length === 0) return;
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       e.stopPropagation();
       setHighlightedCardIndex((prev) =>
-        prev < filteredStudents.length - 1 ? prev + 1 : 0
+        prev < displayedStudents.length - 1 ? prev + 1 : 0
       );
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       e.stopPropagation();
       setHighlightedCardIndex((prev) =>
-        prev > 0 ? prev - 1 : filteredStudents.length - 1
+        prev > 0 ? prev - 1 : displayedStudents.length - 1
       );
     } else if (e.key === 'Enter' && highlightedCardIndex >= 0) {
       e.preventDefault();
-      navigate(`/student/${filteredStudents[highlightedCardIndex].id}`);
+      navigate(`/student/${displayedStudents[highlightedCardIndex].id}`);
     }
   };
 
@@ -152,8 +150,8 @@ const StudentsPage = () => {
       <div className="row students-list-min-height">
         <div className="col">
           <div>
-            {filteredStudents.length > 0 ? (
-              filteredStudents.map((student, index) => (
+            {displayedStudents.length > 0 ? (
+              displayedStudents.map((student, index) => (
                 <StudentCard
                   key={student.id}
                   id={student.id}

@@ -1,20 +1,11 @@
 import './ContractPages.css'
-import { useState, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import config from '../../../config'
 
 export default function ContractPage3({ currentPageNumber, student }) {
     const { register, watch } = useFormContext()
 
-    const [pageDisplay, setPageDisplay] = useState('block')
-
-    useEffect(() => {
-        if (currentPageNumber === 3) {
-            setPageDisplay('block')
-        } else {
-            setPageDisplay('none')
-        }
-    }, [pageDisplay, currentPageNumber])
+    const pageDisplay = currentPageNumber === 3 ? 'block' : 'none'
 
     const initialsPage3 = watch('fileData.studentContractData.initialsOptions.ifInitialed_page3')
     const pricePerMonth = watch('formationData.formationPrices.Theorie.packwebAppAccessCodePrices.pricePerMonth')
