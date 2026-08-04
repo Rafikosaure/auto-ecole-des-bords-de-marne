@@ -7,9 +7,23 @@ const { processImage } = require('../middlewares/processImage.js');
 
 const INSTRUCTOR_INCLUDE = { documents: true, remarks: true };
 
+// Liste blanche des champs réellement modifiables : évite qu'un corps de
+// requête ne fournisse des champs additionnels (id, createdAt, updatedAt, ou
+// une écriture imbriquée sur les relations documents/remarks) transmis tels
+// quels à Prisma.
+const INSTRUCTOR_WRITABLE_FIELDS = ['lastName', 'firstName', 'email', 'phoneNumber', 'adress', 'speciality'];
+
+const pickWritableFields = (body, fields) => {
+    const picked = {};
+    for (const field of fields) {
+        if (body[field] !== undefined) picked[field] = body[field];
+    }
+    return picked;
+};
+
 const addInstructor = async (req, res, next) => {
     try {
-        await prisma.instructor.create({ data: { ...req.body } });
+        await prisma.instructor.create({ data: pickWritableFields(req.body, INSTRUCTOR_WRITABLE_FIELDS) });
         res.status(201).json(`Instructor ${req.body.lastName} ${req.body.firstName} has been registered!`);
     } catch (error) {
         return errorHandler(req, res, error, contexts.instructor);
@@ -55,7 +69,7 @@ const updateInstructor = async (req, res, next) => {
         if (!exists) throw createError(req, errors.notExist, contexts.instructor);
         const instructor = await prisma.instructor.update({
             where: { id: parseInt(req.params.id) },
-            data: { ...req.body },
+            data: pickWritableFields(req.body, INSTRUCTOR_WRITABLE_FIELDS),
         });
         res.status(200).json({ message: "instructor updated", instructor });
     } catch (error) {
@@ -119,7 +133,7 @@ const updateDocument = async (req, res, next) => {
         await prisma.instructorDocument.update({
             where: { id: parseInt(req.params.id) },
             data: {
-                ...req.body,
+                type: req.body.type,
                 document: await processImage(file, req.files.extensions[0]),
                 baseExtension: req.files.extensions[0],
             },

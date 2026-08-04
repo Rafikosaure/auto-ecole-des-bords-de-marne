@@ -2,6 +2,7 @@
 const express = require("express");
 const controller = require("../controllers/admin.controller.js");
 const { verifyToken } = require("../middlewares/verifyToken.js");
+const { loginLimiter, forgotPasswordLimiter } = require("../middlewares/rateLimit.js");
 
 // router initialization
 const router = express.Router();
@@ -20,11 +21,11 @@ router.delete("/delete/:id", verifyToken, controller.deleteAdmin);
         // sign-up
 router.post("/signup", verifyToken, controller.registerAdmin);
         // login
-router.post("/login", controller.loginAdmin);
+router.post("/login", loginLimiter, controller.loginAdmin);
         // logout
 router.post("/logout", verifyToken, controller.logoutAdmin);
     // PASSWORD RESET
-router.post("/password/forgot", controller.forgotPassword);
+router.post("/password/forgot", forgotPasswordLimiter, controller.forgotPassword);
 router.put("/password/reset", controller.resetPassword);
 
 module.exports = router;

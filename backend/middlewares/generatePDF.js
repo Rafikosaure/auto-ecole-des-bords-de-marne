@@ -32,8 +32,15 @@ exports.generatePDFfromHTML = async (req, res, next) => {
             const templateContent = fs.readFileSync(path.resolve(__dirname, `../models/files/${documentType}.ejs`), "utf-8");
             const compiledTemplate = ejs.compile(templateContent);
 
-            // Render HTML content using the template
-            const htmlContent = compiledTemplate({ ...req.body, ...ENV });
+            // Render HTML content using the template. On ne fournit que la
+            // seule variable d'environnement réellement utilisée par les
+            // templates (le chemin des images de signature), plutôt que
+            // l'intégralité de ENV (secrets JWT, identifiants BDD/email...)
+            // qui n'a aucune raison de transiter par le contexte de rendu.
+            const htmlContent = compiledTemplate({
+                ...req.body,
+                COMPLETE_IMAGES_SIGNATURES_PATH: ENV.COMPLETE_IMAGES_SIGNATURES_PATH,
+            });
 
             // Launch browser
             const browser = await chromium.launch({ headless: true });
@@ -43,6 +50,20 @@ exports.generatePDFfromHTML = async (req, res, next) => {
 
             // Create a new page
             const page = await context.newPage();
+
+            // Le HTML rendu peut contenir des données fournies par
+            // l'appelant (ex. noms de fichiers de signature) : on limite les
+            // requêtes réseau que cette page peut effectuer à notre propre
+            // serveur (pour charger les images de signature), afin d'écarter
+            // tout risque de SSRF vers un hôte interne ou externe arbitraire.
+            const allowedOrigin = new URL(ENV.BACKENDROUTE).origin;
+            await page.route('**/*', (route) => {
+                const requestUrl = route.request().url();
+                if (requestUrl === 'about:blank' || new URL(requestUrl).origin === allowedOrigin) {
+                    return route.continue();
+                }
+                return route.abort();
+            });
 
             // Set HTML content directly using setContent
             await page.setContent(htmlContent);

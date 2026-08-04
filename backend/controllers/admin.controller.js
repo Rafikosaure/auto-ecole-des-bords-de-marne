@@ -8,6 +8,18 @@ const { sendEmail } = require("../middlewares/sendEmail.js");
 
 const ADMIN_SELECT = { id: true, username: true, email: true, createdAt: true, updatedAt: true };
 
+// Liste blanche des champs réellement modifiables : évite qu'un corps de
+// requête ne fournisse des champs additionnels (id, createdAt, updatedAt)
+// transmis tels quels à Prisma.
+const ADMIN_WRITABLE_FIELDS = ['username', 'email'];
+const pickWritableFields = (body, fields) => {
+    const picked = {};
+    for (const field of fields) {
+        if (body[field] !== undefined) picked[field] = body[field];
+    }
+    return picked;
+};
+
 const getAllAdmins = async (req, res, next) => {
     try {
         const admins = await prisma.admin.findMany({
@@ -38,8 +50,8 @@ const updateAdmin = async (req, res, next) => {
         const exists = await prisma.admin.findUnique({ where: { id: parseInt(req.params.id) } });
         if (!exists) throw createError(req, errors.notExist, contexts.admin);
         // Mot de passe optionnel : laissé vide, il reste inchangé (pas de re-hachage).
-        const { password, ...rest } = req.body;
-        const data = password ? { ...rest, password: await passwordHashing(password) } : rest;
+        const rest = pickWritableFields(req.body, ADMIN_WRITABLE_FIELDS);
+        const data = req.body.password ? { ...rest, password: await passwordHashing(req.body.password) } : rest;
         const admin = await prisma.admin.update({
             where: { id: parseInt(req.params.id) },
             data,
@@ -74,7 +86,7 @@ const deleteAdmin = async (req, res, next) => {
 const registerAdmin = async (req, res, next) => {
     try {
         await prisma.admin.create({
-            data: { ...req.body, password: await passwordHashing(req.body.password) },
+            data: { ...pickWritableFields(req.body, ADMIN_WRITABLE_FIELDS), password: await passwordHashing(req.body.password) },
         });
         res.status(201).json(`Admin ${req.body.username} has been registered!`);
     } catch (error) {
@@ -87,7 +99,7 @@ const loginAdmin = async (req, res, next) => {
         const admin = await prisma.admin.findFirst({ where: { username: req.body.username } });
         if (!admin || !await passwordCompare(req.body.password, admin.password))
             throw createError(req, errors.wrongCredentials, contexts.admin);
-        const token = jwt.sign({ id: admin.id }, ENV.TOKEN, { expiresIn: '8h' });
+        const token = jwt.sign({ id: admin.id }, ENV.TOKEN, { expiresIn: '8h', algorithm: 'HS256' });
         res.cookie("access_token", token, {
             httpOnly: true,
             sameSite: 'strict',
@@ -110,20 +122,44 @@ const forgotPassword = async (req, res, next) => {
     try {
         if (!req.body.email) throw createError(req, errors.undefinedKey, contexts.admin);
         const admin = await prisma.admin.findFirst({ where: { email: req.body.email } });
-        if (!admin) throw createError(req, errors.notExist, contexts.admin);
-        const date = new Date();
-        const mailOption = {
-            email: admin.email,
-            subject: "Réinitialisation du mot de passe",
-            message: forgotPasswordTemplate(
-                admin.username,
-                date.toLocaleDateString("fr-FR"),
-                `${date.toLocaleTimeString("fr-FR").slice(0, 5)}`,
-                `${ENV.FRONTENDROUTE}/password/reset?token=${jwt.sign({ id: admin.id }, ENV.RESETTOKEN, { expiresIn: '10m' })}`,
-            ),
-        };
-        await sendEmail(mailOption);
-        res.status(200).json({ message: "email has been sent" });
+        // Ne jamais révéler si l'email correspond à un compte existant (évite
+        // l'énumération de comptes) : la réponse au client est toujours la
+        // même, que l'email soit trouvé ou non. Le cas "non trouvé" est
+        // simplement journalisé côté serveur.
+        if (admin) {
+            const date = new Date();
+            // pwdVersion lie le jeton au mot de passe actuel : une fois la
+            // réinitialisation effectuée, updatedAt change et ce même jeton
+            // ne peut plus être réutilisé (usage unique, sans avoir besoin
+            // d'une table de jetons révoqués).
+            const resetToken = jwt.sign(
+                { id: admin.id, pwdVersion: admin.updatedAt.getTime() },
+                ENV.RESETTOKEN,
+                { expiresIn: '10m', algorithm: 'HS256' }
+            );
+            const mailOption = {
+                email: admin.email,
+                subject: "Réinitialisation du mot de passe",
+                message: forgotPasswordTemplate(
+                    admin.username,
+                    date.toLocaleDateString("fr-FR"),
+                    `${date.toLocaleTimeString("fr-FR").slice(0, 5)}`,
+                    `${ENV.FRONTENDROUTE}/password/reset?token=${resetToken}`,
+                ),
+            };
+            // Un échec d'envoi (SMTP indisponible, etc.) est journalisé mais
+            // ne doit jamais changer la réponse envoyée au client : sinon,
+            // l'énumération de comptes redevient possible en observant les
+            // erreurs d'envoi.
+            try {
+                await sendEmail(mailOption);
+            } catch (sendError) {
+                console.error('Password reset email failed to send:', sendError);
+            }
+        } else {
+            console.log(`Password reset requested for an unknown email: ${req.body.email}`);
+        }
+        res.status(200).json({ message: "If this email is registered, a reset link has been sent." });
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
     }
@@ -132,15 +168,23 @@ const forgotPassword = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
     try {
         if (!req.query.token) throw createError(req, errors.noToken, contexts.admin);
-        jwt.verify(req.query.token, ENV.RESETTOKEN, (error, data) => {
-            if (error) {
-                if (error.name === 'TokenExpiredError')
-                    throw createError(req, errors.expiredToken, contexts.admin);
-                throw createError(req, errors.invalidToken, contexts.admin);
-            }
-            req.params.id = data.id;
-            updateAdmin(req, res, next);
-        });
+        let data;
+        try {
+            data = jwt.verify(req.query.token, ENV.RESETTOKEN, { algorithms: ['HS256'] });
+        } catch (error) {
+            if (error.name === 'TokenExpiredError')
+                throw createError(req, errors.expiredToken, contexts.admin);
+            throw createError(req, errors.invalidToken, contexts.admin);
+        }
+        const admin = await prisma.admin.findUnique({ where: { id: data.id } });
+        if (!admin || admin.updatedAt.getTime() !== data.pwdVersion) {
+            // Le mot de passe a changé depuis l'émission du jeton (déjà
+            // utilisé, ou compte modifié entre-temps) : le jeton n'est plus
+            // valide.
+            throw createError(req, errors.invalidToken, contexts.admin);
+        }
+        req.params.id = data.id;
+        return updateAdmin(req, res, next);
     } catch (error) {
         return errorHandler(req, res, error, contexts.admin);
     }

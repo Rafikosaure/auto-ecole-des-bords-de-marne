@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
         if (!token) throw createError(req, errors.noToken, contexts.token);
 
         // Vérifier la validité du jeton en utilisant jwt.verify
-        jwt.verify(token, ENV.TOKEN, (error, user) => {
+        jwt.verify(token, ENV.TOKEN, { algorithms: ['HS256'] }, (error, user) => {
             // si une erreur se produit lors de la vérification du jeton
             if (error) {
                 // Renvoie une erreur 403 (interdit)

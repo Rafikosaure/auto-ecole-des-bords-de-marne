@@ -2,6 +2,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 const { ENV } = require("./config/env.js");
 const path = require('path');
 const studentRouter = require("./routes/student.router.js");
@@ -15,6 +16,14 @@ const emailRouter = require("./routes/email.router.js")
 const app = express();
 
 // middlewares
+// API pure (pas de pages HTML servies ici) consommée par une SPA sur une
+// autre origine : la CSP par défaut de helmet ne s'applique à rien ici et la
+// politique cross-origin par défaut casserait le chargement des images
+// (signatures, documents) par le frontend, donc les deux sont désactivées.
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
 app.use(express.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 app.use(cookieParser());
 
