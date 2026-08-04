@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-// import { Link } from "react-router-dom";
+// import { Link } from "react-router";
 
 const Footer = () => {
   return (

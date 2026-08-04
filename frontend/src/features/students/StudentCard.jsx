@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Card, Row, Col } from "react-bootstrap";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";

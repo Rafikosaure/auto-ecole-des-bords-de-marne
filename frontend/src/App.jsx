@@ -2,7 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
-} from "react-router-dom";
+} from "react-router";
 
 import Template from "./components/Template/Template";
 import OneStudent from "./features/students/OneStudent";

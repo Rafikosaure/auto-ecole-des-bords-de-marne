@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useInstructor, useUploadInstructorDocument, useDeleteInstructorDocument } from './api';
 
 const cardTypes = [

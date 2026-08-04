@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import { Container, Table, Button } from "react-bootstrap";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { format } from "date-fns";

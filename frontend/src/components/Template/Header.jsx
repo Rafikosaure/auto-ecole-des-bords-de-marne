@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router';
 import Logo from "../../images/logo.webp";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import config from "../../config";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";

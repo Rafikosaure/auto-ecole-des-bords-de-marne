@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import "./StudentsPage.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import StudentCard from "./StudentCard";
