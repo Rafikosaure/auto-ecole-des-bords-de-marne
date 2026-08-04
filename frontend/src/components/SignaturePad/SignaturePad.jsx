@@ -92,6 +92,7 @@ const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberO
     try {
       const response = await fetch(`${config.apiBaseUrl}/document/uploadOneDocument/${student.id}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

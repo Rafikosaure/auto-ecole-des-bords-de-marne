@@ -24,6 +24,7 @@ export default function PrintContractButton({ setNumberOfComponent, student }) {
         `${config.apiBaseUrl}/document/downloadOneDocument/${student.id}`,
         {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(validation.data),
         }

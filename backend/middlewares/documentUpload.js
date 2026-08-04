@@ -45,7 +45,8 @@ const createUpload = (multiple=true) => {
         storage: storage,
         // sets files upload limit
         limits: {
-            files: multiple ? 4 : 1
+            files: multiple ? 4 : 1,
+            fileSize: 10 * 1024 * 1024 // 10 Mo par fichier
         },
         // sets the accepted extensions
         // any other extension will trigger a multer error

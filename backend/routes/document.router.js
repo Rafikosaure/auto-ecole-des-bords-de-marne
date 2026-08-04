@@ -27,10 +27,10 @@ router.delete("/delete/:studentId", verifyToken, controller.deleteAllDocuments);
 // deletes one document of a student
 router.delete("/delete/:studentId/:documentId", verifyToken, controller.deleteDocument);
 // Upload contracts images (signatures and initials)
-router.post('/uploadOneDocument/:studentId', uploadImageMiddleware, controller.uploadOneImage);
+router.post('/uploadOneDocument/:studentId', verifyToken, uploadImageMiddleware, controller.uploadOneImage);
 // Download one document
-router.post("/downloadOneDocument/:studentId", generatePDFfromHTML, controller.downloadOneDocument);
+router.post("/downloadOneDocument/:studentId", verifyToken, generatePDFfromHTML, controller.downloadOneDocument);
 // Deletion of temporary documents after contract generation
-router.delete('/deleteDocumentsAfterContractGeneration/:studentId', controller.deleteDocumentsAfterContractGeneration);
+router.delete('/deleteDocumentsAfterContractGeneration/:studentId', verifyToken, controller.deleteDocumentsAfterContractGeneration);
 
 module.exports = router;

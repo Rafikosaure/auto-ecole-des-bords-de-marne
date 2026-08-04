@@ -55,6 +55,15 @@ const deleteAdmin = async (req, res, next) => {
     try {
         const exists = await prisma.admin.findUnique({ where: { id: parseInt(req.params.id) } });
         if (!exists) throw createError(req, errors.notExist, contexts.admin);
+
+        // Le tout premier compte administrateur (id le plus bas, indépendant
+        // de tout tri d'affichage) ne peut pas être supprimé, pour éviter de
+        // se retrouver sans aucun moyen de ré-accéder à l'administration.
+        const firstAdmin = await prisma.admin.findFirst({ orderBy: { id: 'asc' } });
+        if (firstAdmin && firstAdmin.id === exists.id) {
+            return res.status(403).json({ message: "Le compte administrateur principal ne peut pas être supprimé." });
+        }
+
         await prisma.admin.delete({ where: { id: parseInt(req.params.id) } });
         res.status(200).json({ message: "Admin Deleted" });
     } catch (error) {

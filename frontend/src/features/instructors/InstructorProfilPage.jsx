@@ -9,6 +9,11 @@ const cardTypes = [
   'Contrat de travail',
 ];
 
+// Doit rester cohérent avec les extensions acceptées côté serveur
+// (middlewares/documentUpload.js) : .png, .jpg, .jpeg, .pdf.
+const ACCEPTED_DOCUMENT_TYPES = ['image/png', 'image/jpeg', 'application/pdf'];
+const MAX_DOCUMENT_SIZE_BYTES = 10 * 1024 * 1024; // 10 Mo
+
 const InstructorProfilPage = () => {
   const { id } = useParams();
   const [selectedDocument, setSelectedDocument] = useState(null);
@@ -23,6 +28,16 @@ const InstructorProfilPage = () => {
 
   const handleUpload = async (type, files) => {
     if (!files || files.length === 0) return;
+
+    const file = files[0];
+    if (!ACCEPTED_DOCUMENT_TYPES.includes(file.type)) {
+      setError('Format de fichier non accepté (image PNG/JPEG ou PDF uniquement).');
+      return;
+    }
+    if (file.size > MAX_DOCUMENT_SIZE_BYTES) {
+      setError('Le fichier est trop volumineux (10 Mo maximum).');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('documents', files[0]);
@@ -146,6 +161,7 @@ const InstructorProfilPage = () => {
         </div>
         <input
           type="file"
+          accept=".png,.jpg,.jpeg,.pdf,image/png,image/jpeg,application/pdf"
           ref={(el) => (cardRefs.current[type] = el)}
           className="d-none"
           onChange={(e) => handleUpload(type, e.target.files)}

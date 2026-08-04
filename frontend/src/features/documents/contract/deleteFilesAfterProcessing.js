@@ -5,6 +5,7 @@ import config from "../../../config";
 const deleteFilesAfterProcessing = (studentId) => {
     fetch(`${config.apiBaseUrl}/document/deleteDocumentsAfterContractGeneration/${studentId}`, {
         method: "DELETE",
+        credentials: "include",
     })
     .then(response => {
         if (!response.ok) {

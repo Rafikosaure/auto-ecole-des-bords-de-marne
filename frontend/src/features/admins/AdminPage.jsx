@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import { useAdmins, useAddAdmin, useUpdateAdmin, useDeleteAdmin } from './api';
+import { newAdminSchema } from './schema';
+
+const MIN_PASSWORD_LENGTH = 8;
 
 const AdminPage = () => {
   const { data: admins = [] } = useAdmins();
+  // Le compte administrateur "principal" (id le plus bas) est protégé contre
+  // la suppression côté backend ; on aligne l'affichage sur ce même critère
+  // plutôt que sur l'ordre d'affichage (qui est trié par nom d'utilisateur).
+  const firstAdminId = admins.length > 0 ? Math.min(...admins.map((a) => a.id)) : null;
   const addAdmin = useAddAdmin();
   const updateAdmin = useUpdateAdmin();
   const deleteAdmin = useDeleteAdmin();
@@ -18,7 +25,7 @@ const AdminPage = () => {
       setMessage('Administrateur supprimé avec succès');
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'admin:', error);
-      setMessage("Erreur lors de la suppression de l'administrateur.");
+      setMessage(error.response?.data?.message || "Erreur lors de la suppression de l'administrateur.");
     }
   };
 
@@ -28,6 +35,12 @@ const AdminPage = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    // Le mot de passe est optionnel en modification (vide = inchangé),
+    // mais s'il est renseigné, il doit respecter la même politique de robustesse.
+    if (editingAdmin.password && editingAdmin.password.length < MIN_PASSWORD_LENGTH) {
+      setMessage(`Le mot de passe doit contenir au moins ${MIN_PASSWORD_LENGTH} caractères.`);
+      return;
+    }
     try {
       await updateAdmin.mutateAsync({ id: editingAdmin.id, ...editingAdmin });
       setEditingAdmin(null);
@@ -45,6 +58,11 @@ const AdminPage = () => {
 
   const handleRegisterAdmin = async (e) => {
     e.preventDefault();
+    const validation = newAdminSchema.safeParse(newAdmin);
+    if (!validation.success) {
+      setMessage(validation.error.issues[0].message);
+      return;
+    }
     try {
       await addAdmin.mutateAsync(newAdmin);
       setNewAdmin({ username: '', password: '', email: '' });
@@ -183,7 +201,7 @@ const AdminPage = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map((admin, index) => (
+          {admins.map((admin) => (
             <tr key={admin.id}>
               <td className="text-center">{admin.username}</td>
               <td className="text-center">{admin.email}</td>
@@ -192,7 +210,7 @@ const AdminPage = () => {
                   <button type="button" className="btn btn-warning me-2" onClick={() => handleEditClick(admin)}>
                     Modifier
                   </button>
-                  {index !== 0 &&
+                  {admin.id !== firstAdminId &&
                     <button type="button" className="btn btn-danger" onClick={() => handleDelete(admin.id)}>
                       Supprimer
                     </button>

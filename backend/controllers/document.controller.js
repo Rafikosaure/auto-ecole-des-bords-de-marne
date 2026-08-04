@@ -1,19 +1,27 @@
 const path = require('path')
 const { deleteFile } = require('../utils/deleteFile.js')
+const { isValidId } = require('../utils/validateId.js')
 const sharp = require('sharp');
 const fs = require('fs');
 
-
+// Liste blanche des noms d'image légitimes envoyés par le SignaturePad
+// (studentInitials, studentSignature, legalRepresentSignature). Empêche
+// qu'une valeur arbitraire ne soit injectée dans le chemin de fichier écrit
+// sur le disque.
+const ALLOWED_IMAGE_NAMES = ['studentInitials', 'studentSignature', 'legalRepresentSignature']
 
 const uploadOneImage = async (req, res) => {
     try {
         // Définir l'identifiant de l'étudiant
         const studentId = req.params.studentId
+        if (!isValidId(studentId)) {
+            return res.status(400).json({ error: "Identifiant d'étudiant invalide" });
+        }
 
         // Définir le nom du fichier
         const { fileName } = req.body;
-        if (!fileName) {
-            return res.status(400).json({ error: 'Le nom du fichier est requis' });
+        if (!fileName || !ALLOWED_IMAGE_NAMES.includes(fileName)) {
+            return res.status(400).json({ error: 'Le nom du fichier est invalide ou manquant' });
         }
 
         const imageName = `${fileName}-${studentId}`
@@ -51,6 +59,9 @@ const downloadOneDocument = async (req, res) => {
     try {
         // Définir l'identifiant de l'étudiant
         const studentId = req.params.studentId
+        if (!isValidId(studentId)) {
+            return res.status(400).json({ message: "Identifiant d'étudiant invalide" });
+        }
 
         // Définir le nom du fichier
         const filename = `${req.body.fileData.documentType}-${studentId}`
@@ -82,6 +93,9 @@ const deleteDocumentsAfterContractGeneration = async (req, res) => {
     try {
         // Récupérer l'identifiant de l'étudiant
         const studentId = req.params.studentId
+        if (!isValidId(studentId)) {
+            return res.status(400).json({ message: "Identifiant d'étudiant invalide" });
+        }
 
         // Constitution des données
         const file1 = {

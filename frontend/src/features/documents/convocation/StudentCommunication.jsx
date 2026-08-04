@@ -204,6 +204,7 @@ const StudentCommunication = ({ student }) => {
       // Envoi de la requête
       fetch(`${config.apiBaseUrl}/email/send-mail/${student.id}`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(validation.data),
       })
