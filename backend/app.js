@@ -1,7 +1,6 @@
 // imports
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const bodyParser = require('body-parser');
 const cors = require("cors");
 const { ENV } = require("./config/env.js");
 const path = require('path');
@@ -16,9 +15,8 @@ const emailRouter = require("./routes/email.router.js")
 const app = express();
 
 // middlewares
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 app.use(cookieParser());
-app.use(bodyParser.json({ limit: '50mb' })); // Limite des requêtes à 50MB (pour les images base64)
 
 // cors config
 app.use(cors({
@@ -28,7 +26,9 @@ app.use(cors({
 }));
 
 // Preflight Requests
-app.options('*', cors());
+// Express 5 (path-to-regexp v8) n'accepte plus le wildcard nu '*' : il doit
+// être nommé, ex. '/{*splat}'.
+app.options('/{*splat}', cors());
 
 // STATIC FILES FOR STUDENT CONTRACT
 app.use('/contract-signatures', express.static(path.join(__dirname, './assets/contractImages')));

@@ -41,8 +41,8 @@ const errorHandler = (req, res, error, context) => {
         }}
     );
     // proper string formatting for more accurate description
-    const target = context == "Admin" && req.body.username
-                    || (context == "Student" || context == "Instructor") && `${req.body.lastName} ${req.body.firstName}`
+    const target = context == "Admin" && req.body?.username
+                    || (context == "Student" || context == "Instructor") && `${req.body?.lastName} ${req.body?.firstName}`
     // responses
     if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002')
@@ -86,7 +86,7 @@ const createError = (req, issue, context) => {
         case errors.notExist:
             error.name = "DoesNotExistInDb";
             req.params.id && (error.message = `${context} with id={${req.params.id}} does not exsist`);
-            req.body.instructorId && (error.message = `${context} with id={${req.body.instructorId}} does not exsist`);
+            req.body?.instructorId && (error.message = `${context} with id={${req.body.instructorId}} does not exsist`);
             break;
         case errors.wrongCredentials:
             error.name = "WrongCredentials";
