@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import config from "../../config.js";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./SignaturePad.css";
 
 const SignaturePad = ({ imageName, title, student, numberOfComponent, setNumberOfComponent }) => {

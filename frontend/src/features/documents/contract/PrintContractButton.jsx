@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import deleteFilesAfterProcessing from './deleteFilesAfterProcessing';
@@ -54,6 +53,6 @@ export default function PrintContractButton({ setNumberOfComponent, student }) {
   };
 
   return (
-    <Button variant="primary" onClick={downloadFile}>Télécharger le fichier</Button>
+    <button type="button" className="btn btn-primary" onClick={downloadFile}>Télécharger le fichier</button>
   );
 }

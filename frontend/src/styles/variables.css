@@ -1,0 +1,40 @@
+:root {
+  /* Couleurs (reprises telles quelles depuis l'ancienne palette Bootstrap pour un rendu identique) */
+  --color-primary: #0d6efd;
+  --color-primary-hover: #0b5ed7;
+  --color-secondary: #6c757d;
+  --color-secondary-hover: #5c636a;
+  --color-success: #198754;
+  --color-success-hover: #157347;
+  --color-danger: #dc3545;
+  --color-danger-hover: #bb2d3b;
+  --color-warning: #ffc107;
+  --color-warning-hover: #ffca2c;
+  --color-info: #0dcaf0;
+  --color-info-hover: #31d2f2;
+  --color-light: #f8f9fa;
+  --color-dark: #212529;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-body-text: #212529;
+  --color-border: #dee2e6;
+
+  /* Échelle d'espacement (base 1rem, calée sur les classes margin/padding réellement utilisées) */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 3rem;
+
+  /* Rayons et ombres */
+  --border-radius: 0.375rem;
+  --border-radius-sm: 0.25rem;
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  /* Points de rupture (référence, utilisés dans les media queries) */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+}

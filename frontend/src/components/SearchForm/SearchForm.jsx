@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
 
 const SearchForm = ({ onSearch, onInputKeyDown }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -11,16 +10,17 @@ const SearchForm = ({ onSearch, onInputKeyDown }) => {
   };
 
   return (
-    <Form onSubmit={(e) => e.preventDefault()}>
-      <Form.Control
+    <form onSubmit={(e) => e.preventDefault()}>
+      <input
         type="text"
+        className="form-control"
         placeholder="Entrez le nom ou le prénom"
         value={searchValue}
         onChange={handleChange}
         onKeyDown={onInputKeyDown}
         autoComplete="off"
       />
-    </Form>
+    </form>
   );
 };
 

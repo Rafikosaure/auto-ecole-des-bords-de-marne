@@ -12,9 +12,6 @@ import ConnexionPage from "./features/auth/ConnexionPage";
 import StudentsPage from "./features/students/StudentsPage";
 import InstructorProfilPage from "./features/instructors/InstructorProfilPage";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-
 const router = createBrowserRouter([
   {
     path: "/",

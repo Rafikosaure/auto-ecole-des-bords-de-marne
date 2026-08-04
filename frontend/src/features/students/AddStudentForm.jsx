@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, Button, Container, Row, Col, InputGroup } from "react-bootstrap";
 import { studentSchema } from "./schema";
 import { useAddStudent } from "./api";
 import { formatPhoneDisplay, normalizePhone } from "../../utils/phoneUtils";
@@ -58,135 +57,143 @@ const AddStudentForm = ({ onAdded }) => {
   };
 
   return (
-    <Container className="mt-4" style={{ maxWidth: "800px" }}>
+    <div className="container mt-4" style={{ maxWidth: "800px" }}>
       <h1 className="text-center mb-4">Ajouter un étudiant</h1>
-      <Form onSubmit={handleSubmit(onSubmit, onInvalid)} autoComplete="off">
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="lastName" className="mb-3">
-              <Form.Label>Nom de famille</Form.Label>
-              <Form.Control
+      <form onSubmit={handleSubmit(onSubmit, onInvalid)} autoComplete="off">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-lastName">Nom de famille</label>
+              <input
+                id="add-lastName"
                 type="text"
+                className={`form-control${errors.lastName ? ' is-invalid' : ''}`}
                 placeholder="Entrez le nom de famille"
-                isInvalid={Boolean(errors.lastName)}
                 {...register("lastName")}
               />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="firstName" className="mb-3">
-              <Form.Label>Prénom</Form.Label>
-              <Form.Control
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-firstName">Prénom</label>
+              <input
+                id="add-firstName"
                 type="text"
+                className={`form-control${errors.firstName ? ' is-invalid' : ''}`}
                 placeholder="Entrez le prénom"
-                isInvalid={Boolean(errors.firstName)}
                 {...register("firstName")}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="email" className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-email">Email</label>
+              <input
+                id="add-email"
                 type="email"
+                className={`form-control${errors.email ? ' is-invalid' : ''}`}
                 placeholder="Entrez l'email"
-                isInvalid={Boolean(errors.email)}
                 {...register("email")}
               />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="phoneNumber" className="mb-3">
-              <Form.Label>Numéro de téléphone</Form.Label>
-              <Form.Control
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-phoneNumber">Numéro de téléphone</label>
+              <input
+                id="add-phoneNumber"
                 type="text"
+                className={`form-control${errors.phoneNumber ? ' is-invalid' : ''}`}
                 placeholder="Entrez le numéro de téléphone"
-                isInvalid={Boolean(errors.phoneNumber)}
                 value={watch("phoneNumber")}
                 onChange={(e) => setValue("phoneNumber", formatPhoneDisplay(e.target.value), { shouldValidate: true })}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="birthdate" className="mb-3">
-              <Form.Label>Date de naissance</Form.Label>
-              <Form.Control
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-birthdate">Date de naissance</label>
+              <input
+                id="add-birthdate"
                 type="date"
-                isInvalid={Boolean(errors.birthdate)}
+                className={`form-control${errors.birthdate ? ' is-invalid' : ''}`}
                 {...register("birthdate")}
               />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="formationStart" className="mb-3">
-              <Form.Label>Date de début de la formation</Form.Label>
-              <Form.Control
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-formationStart">Date de début de la formation</label>
+              <input
+                id="add-formationStart"
                 type="date"
-                isInvalid={Boolean(errors.formationStart)}
+                className={`form-control${errors.formationStart ? ' is-invalid' : ''}`}
                 {...register("formationStart")}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
-          <Row>
-          <Col md={6}>
-            <Form.Group controlId="formationMaxEndingDate" className="mb-3">
-              <Form.Label>Date maximale de fin de formation</Form.Label>
-              <Form.Control
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-formationMaxEndingDate">Date maximale de fin de formation</label>
+              <input
+                id="add-formationMaxEndingDate"
                 type="date"
-                isInvalid={Boolean(errors.formationMaxEndingDate)}
+                className={`form-control${errors.formationMaxEndingDate ? ' is-invalid' : ''}`}
                 {...register("formationMaxEndingDate")}
               />
-            </Form.Group>
-          </Col>
+            </div>
+          </div>
 
-          <Col md={6}>
-            <Form.Group controlId="formationMaxDuration" className="mb-3">
-              <Form.Label>Durée maximale de la formation</Form.Label>
-              <InputGroup>
-                <Form.Control
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-formationMaxDuration">Durée maximale de la formation</label>
+              <div className="input-group">
+                <input
+                  id="add-formationMaxDuration"
                   type="text"
+                  className={`form-control${errors.formationMaxDuration ? ' is-invalid' : ''}`}
                   placeholder="Ex : 8"
-                  isInvalid={Boolean(errors.formationMaxDuration)}
                   {...register("formationMaxDuration")}
                 />
-                <InputGroup.Text>mois</InputGroup.Text>
-              </InputGroup>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-        <Col md={6}>
-            <Form.Group controlId="formationDesiredEnd" className="mb-3">
-              <Form.Label>Date de fin souhaitée de la formation</Form.Label>
-              <Form.Control
+                <span className="input-group-text">mois</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label" htmlFor="add-formationDesiredEnd">Date de fin souhaitée de la formation</label>
+              <input
+                id="add-formationDesiredEnd"
                 type="date"
-                isInvalid={Boolean(errors.formationDesiredEnd)}
+                className={`form-control${errors.formationDesiredEnd ? ' is-invalid' : ''}`}
                 {...register("formationDesiredEnd")}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
         <div className="text-center">
-          <Button
-            variant="primary"
+          <button
             type="submit"
-            className="mt-3"
+            className="btn btn-primary mt-3"
             style={{ width: "200px" }}
           >
             Ajouter un étudiant
-          </Button>
+          </button>
         </div>
-      </Form>
-    </Container>
+      </form>
+    </div>
   );
 };
 

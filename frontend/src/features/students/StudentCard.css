@@ -1,5 +1,5 @@
 .student-card {
-  border-radius: var(--bs-border-radius);
+  border-radius: var(--border-radius);
   transition: box-shadow 0.2s ease;
 }
 

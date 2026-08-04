@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Container, Table, Button } from "react-bootstrap";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { format } from "date-fns";
 import { formatPhoneDisplay } from "../../utils/phoneUtils";
@@ -58,22 +57,23 @@ const OneStudent = () => {
 
   return (
     <>
-      <Container className="my-4">
+      <div className="container my-4">
         <div className="d-flex align-items-center justify-content-between mb-4">
           <h2 className="fw-bold text-uppercase mb-0 fs-3">
             {student.lastName} {student.firstName}
           </h2>
           <div className="d-flex gap-2">
-            <Button variant="warning" onClick={() => setIsEditing(!isEditing)}>
+            <button type="button" className="btn btn-warning" onClick={() => setIsEditing(!isEditing)}>
               <FaEdit />
-            </Button>
-            <Button variant="danger" onClick={deleteOneStudent}>
+            </button>
+            <button type="button" className="btn btn-danger" onClick={deleteOneStudent}>
               <FaTrash />
-            </Button>
+            </button>
           </div>
         </div>
 
-        <Table bordered hover responsive>
+        <div className="table-responsive">
+        <table className="table table-bordered table-hover">
           <tbody>
             <tr className="table-secondary">
               <th colSpan={2} className="text-uppercase fs-6 py-2">
@@ -122,25 +122,26 @@ const OneStudent = () => {
               <td>{student.formationMaxDuration} mois</td>
             </tr>
           </tbody>
-        </Table>
-      </Container>
+        </table>
+        </div>
+      </div>
 
       {isEditing && (
-        <Container>
+        <div className="container">
           <UpdateStudent student={student} onUpdate={onStudentUpdated} />
-        </Container>
+        </div>
       )}
 
-        <Container>
+        <div className="container">
           <StudentCommunication student={student} />
-        </Container>
+        </div>
 
 
 
-        <Container style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '30px', marginBottom: '70px' }}>
+        <div className="container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '30px', marginBottom: '70px' }}>
           <h2 className="fs-4" style={{ width: '100%', textAlign: 'center', marginTop: '15px' }}>Contrat de formation</h2>
           {numberOfComponent !== 1 && (
-            <Button variant="warning" style={{ maxWidth: '200px' }} onClick={() => setNumberOfComponent(1)}>Annuler la procédure</Button>
+            <button type="button" className="btn btn-warning" style={{ maxWidth: '200px' }} onClick={() => setNumberOfComponent(1)}>Annuler la procédure</button>
           )}
           {numberOfComponent === 1 && (
             <SignaturePad imageName={'studentInitials'} title={"Initiales de l'étudiant"} student={student} numberOfComponent={numberOfComponent} setNumberOfComponent={setNumberOfComponent} />
@@ -154,7 +155,7 @@ const OneStudent = () => {
           {numberOfComponent === 4 && (
             <PrintContractView setNumberOfComponent={setNumberOfComponent} student={student} />
           )}
-        </Container>
+        </div>
     </>
   );
 };

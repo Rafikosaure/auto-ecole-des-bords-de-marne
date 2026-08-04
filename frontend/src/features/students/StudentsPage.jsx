@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router";
 import "./StudentsPage.css";
-import { Container, Row, Col, Button } from "react-bootstrap";
 import StudentCard from "./StudentCard";
 import { useStudents, useAllStudents } from "./api";
 import SearchForm from "../../components/SearchForm/SearchForm";
@@ -109,7 +108,7 @@ const StudentsPage = () => {
   };
 
   return (
-    <Container className="my-4">
+    <div className="container my-4">
       <div ref={listTopRef} style={{ scrollMarginTop: '80px' }}>
         <SearchForm
           onSearch={handleSearch}
@@ -122,14 +121,14 @@ const StudentsPage = () => {
         <div className="d-flex justify-content-center align-items-center mb-3">
           <div className="d-flex justify-content-center" style={{ width: '70px' }}>
             {currentPage > 1 && (
-              <Button
-                variant="link"
+              <button
+                type="button"
+                className="btn btn-link text-decoration-none px-3 py-2"
                 onClick={() => handlePageChange(currentPage - 1)}
-                className="text-decoration-none px-3 py-2"
                 style={{ fontSize: '2rem', lineHeight: 1 }}
               >
                 ←
-              </Button>
+              </button>
             )}
           </div>
           <span className="fs-5 mx-3">
@@ -137,21 +136,21 @@ const StudentsPage = () => {
           </span>
           <div className="d-flex justify-content-center" style={{ width: '70px' }}>
             {currentPage < totalPages && (
-              <Button
-                variant="link"
+              <button
+                type="button"
+                className="btn btn-link text-decoration-none px-3 py-2"
                 onClick={() => handlePageChange(currentPage + 1)}
-                className="text-decoration-none px-3 py-2"
                 style={{ fontSize: '2rem', lineHeight: 1 }}
               >
                 →
-              </Button>
+              </button>
             )}
           </div>
         </div>
       )}
 
-      <Row className="students-list-min-height">
-        <Col>
+      <div className="row students-list-min-height">
+        <div className="col">
           <div>
             {filteredStudents.length > 0 ? (
               filteredStudents.map((student, index) => (
@@ -170,11 +169,11 @@ const StudentsPage = () => {
               <p className="text-center">Aucun étudiant trouvé</p>
             )}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       <AddStudentForm onAdded={() => setCurrentPage(1)} />
-    </Container>
+    </div>
   );
 };
 
